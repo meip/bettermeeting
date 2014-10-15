@@ -1,4 +1,5 @@
 import com.google.inject.{Guice, AbstractModule}
+import play.api._
 import play.api.GlobalSettings
 import services.{SimpleUUIDGenerator, UUIDGenerator}
 
@@ -21,4 +22,10 @@ object Global extends GlobalSettings {
    * that we can override to resolve a given controller. This resolution is required by the Play router.
    */
   override def getControllerInstance[A](controllerClass: Class[A]): A = injector.getInstance(controllerClass)
+
+  override def onStart(app: Application) =
+    Logger.info("bettermeeting app has started")
+
+  override def onStop(app: Application) =
+    Logger.info("bettermeeting app shutdown...")
 }

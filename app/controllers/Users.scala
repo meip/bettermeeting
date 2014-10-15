@@ -34,7 +34,7 @@ class Users extends Controller with MongoController {
   // ------------------------------------------ //
 
   import models._
-  import models.JsonFormats._
+  import models.User._
 
   def createUser = Action.async(parse.json) {
     request =>
