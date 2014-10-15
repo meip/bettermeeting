@@ -19,7 +19,8 @@ libraryDependencies ++= Seq(
   "org.webjars" % "bootstrap" % "3.2.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angularjs" % "1.3.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angular-ui-bootstrap" % "0.11.0-3",
-  "org.mockito" % "mockito-core" % "1.9.5" % "test")
+  "org.mockito" % "mockito-core" % "1.9.5" % "test",
+  "com.github.nscala-time" %% "nscala-time" % "1.4.0")
 
 // Scala Compiler Options
 scalacOptions in ThisBuild ++= Seq(
@@ -39,5 +40,3 @@ scalacOptions in ThisBuild ++= Seq(
 // https://github.com/sbt/sbt-web
 //
 
-// All work and no play...
-emojiLogs
