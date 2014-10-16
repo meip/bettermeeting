@@ -12,5 +12,13 @@ GET     /randomUUID                 @controllers.Application.randomUUID
 GET     /users                      @controllers.Users.findUsers
 POST    /user                       @controllers.Users.createUser
 
+# Products
+GET         /meetings               @controllers.Meetings.list
+POST        /meetings               @controllers.Meetings.create
+DELETE      /meetings/:id           @controllers.Meetings.delete(id)
+GET         /meetings/:id           @controllers.Meetings.get(id)
+PUT         /meetings/:id           @controllers.Meetings.update(id)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
