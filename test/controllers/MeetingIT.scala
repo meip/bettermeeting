@@ -9,6 +9,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import java.util.concurrent.TimeUnit
 
+import utils.MongoDBTestUtils.withMongoDb
+
 
 /**
  * You can mock out a whole application including requests, plugins etc.
@@ -37,34 +39,31 @@ class MeetingIT extends Specification {
 
   "Meetings" should {
 
-    "insert a valid json" in {
-      running(FakeApplication()) {
-        val request = FakeRequest.apply(POST, "/meetings").withJsonBody(Json.obj(
-          "date" -> "2014-12-16",
-          "goal" -> "Setup the Project test",
-          "organizer" -> userOrganizer,
-          "attendees" -> attendees)
-        )
-        val response = route(request)
-        response.isDefined mustEqual true
-        val result = Await.result(response.get, timeout)
-        result.header.status must equalTo(CREATED)
-      }
+    "insert a valid json" in withMongoDb { implicit app =>
+      val request = FakeRequest.apply(POST, "/meetings").withJsonBody(Json.obj(
+        "date" -> "2014-12-16",
+        "goal" -> "Setup the Project test",
+        "organizer" -> userOrganizer,
+        "attendees" -> attendees)
+      )
+      val response = route(request)
+      response.isDefined mustEqual true
+      val result = Await.result(response.get, timeout)
+      result.header.status must equalTo(CREATED)
     }
 
-    "fail inserting a non valid json, goal is missing" in {
-      running(FakeApplication()) {
-        val request = FakeRequest.apply(POST, "/meetings").withJsonBody(Json.obj(
-          "date" -> "2014-12-16",
-          "organizer" -> userOrganizer,
-          "attendees" -> attendees)
-        )
-        val response = route(request)
-        response.isDefined mustEqual true
-        val result = Await.result(response.get, timeout)
-        contentAsString(response.get) mustEqual "invalid json"
-        result.header.status mustEqual BAD_REQUEST
-      }
+    "fail inserting a non valid json, goal is missing" in withMongoDb { implicit app =>
+      val request = FakeRequest.apply(POST, "/meetings").withJsonBody(Json.obj(
+        "date" -> "2014-12-16",
+        "organizer" -> userOrganizer,
+        "attendees" -> attendees)
+      )
+      val response = route(request)
+      response.isDefined mustEqual true
+      val result = Await.result(response.get, timeout)
+      contentAsString(response.get) mustEqual "invalid json"
+      result.header.status mustEqual BAD_REQUEST
+
     }
 
   }
