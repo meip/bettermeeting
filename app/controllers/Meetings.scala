@@ -10,11 +10,10 @@ import play.modules.reactivemongo.MongoController
 import play.modules.reactivemongo.json.BSONFormats._
 import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.api.Cursor
-import reactivemongo.bson.BSONObjectID
 
 import scala.concurrent.Future
 
-class Meetings extends Controller with MongoController {
+class Meetings extends Controller with MongoController with OIDValidator {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Meetings])
 
@@ -32,32 +31,36 @@ class Meetings extends Controller with MongoController {
       }.getOrElse(Future.successful(BadRequest("invalid json")))
   }
 
-  def update(id: String) = Action.async( parse.json ) {
+  def update(id: String) = Action.async(parse.json) {
     request =>
-      request.body.validate[ Meeting ].map {
+      request.body.validate[Meeting].map {
         meeting =>
-          val newData = meeting.copy( _id = Some( BSONObjectID( id ) ) )
-          collection.save( newData ).map {
-            lastError =>
-              logger.debug( s"Successfully updated with LastError: $lastError" )
-              Created( s"Meeting updated" )
+          validateOID(id) { meetingId =>
+            val newData = meeting.copy(_id = Some(meetingId))
+            collection.save(newData).map {
+              lastError =>
+                logger.debug(s"Successfully updated with LastError: $lastError")
+                Created(s"Meeting updated")
+            }
           }
-      }.getOrElse( Future.successful( BadRequest( "invalid json" ) ) )
+      }.getOrElse(Future.successful(BadRequest("invalid json")))
   }
 
   def get(id: String) = Action.async {
-    val cursor: Cursor[Meeting] = collection
-      .find(Json.obj("_id" -> BSONObjectID(id)))
-      .sort(Json.obj("created" -> -1))
-      .cursor[Meeting]
+    validateOID(id) { meetingId =>
+      val cursor: Cursor[Meeting] = collection
+        .find(Json.obj("_id" -> meetingId))
+        .sort(Json.obj("created" -> -1))
+        .cursor[Meeting]
 
-    cursor.collect[List]().map {
-      meetings =>
-        if (meetings.isEmpty)
-          NotFound
-        else {
-          Ok(Json.toJson(meetings.head))
-        }
+      cursor.collect[List]().map {
+        meetings =>
+          if (meetings.isEmpty)
+            NotFound
+          else {
+            Ok(Json.toJson(meetings.head))
+          }
+      }
     }
   }
 
@@ -76,17 +79,19 @@ class Meetings extends Controller with MongoController {
   }
 
   def delete(id: String) = Action.async {
-    val cursor: Cursor[Meeting] = collection.find(Json.obj("_id" -> BSONObjectID(id))).sort(Json.obj("created" -> -1)).cursor[Meeting]
+    validateOID(id) { meetingId =>
+      val cursor: Cursor[Meeting] = collection.find(Json.obj("_id" -> meetingId)).sort(Json.obj("created" -> -1)).cursor[Meeting]
 
-    cursor.collect[List]().map {
-      meetings =>
-        if (meetings.isEmpty)
-          NoContent
-        else {
-          logger.debug(s"The meeting to be removed: ${id}")
-          collection.remove(meetings.head)
-          NoContent
-        }
+      cursor.collect[List]().map {
+        meetings =>
+          if (meetings.isEmpty)
+            NoContent
+          else {
+            logger.debug(s"The meeting to be removed: ${id}")
+            collection.remove(meetings.head)
+            NoContent
+          }
+      }
     }
   }
 
