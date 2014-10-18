@@ -11,7 +11,7 @@ class MeetingService
     @$log.debug "listMeetings()"
     deferred = @$q.defer()
 
-    @$http.get("/meetings")
+    @$http.get("/api/meetings")
     .success((data, status, headers) =>
       @$log.info("Successfully listed Meetings - status #{status}")
       deferred.resolve(data)
@@ -26,7 +26,7 @@ class MeetingService
     @$log.debug "createMeeting #{angular.toJson(meeting, true)}"
     deferred = @$q.defer()
 
-    @$http.post('/meetings', meeting)
+    @$http.post('/api/meetings', meeting)
     .success((data, status, user) =>
       @$log.info("Successfully created Meeting - status #{status}")
       deferred.resolve(data)
