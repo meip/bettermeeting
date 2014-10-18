@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/meip/bettermeeting.svg)](https://travis-ci.org/meip/bettermeeting)
 # Verbesserung von Meetingnotizen durch Gamification (HSR SA)
 
 ## Intro
