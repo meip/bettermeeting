@@ -5,10 +5,11 @@ import com.github.nscala_time.time.Imports.DateTime
 
 case class Meeting(
                     _id: Option[BSONObjectID] = Some(BSONObjectID.generate),
-                    date: DateTime,
+                    // date: DateTime,
                     goal: String,
-                    organizer: User,
-                    attendees: List[User]
+                    organizer: String,
+                    attendees: List[String],
+                    active: Boolean
                     ) extends MongoEntity {}
 
 case class PointType(

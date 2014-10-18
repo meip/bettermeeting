@@ -1,0 +1,61 @@
+
+
+<div class="row" ng-controller="MeetingCtrl as mc">
+    &NonBreakingSpace;
+    <div class="jumbotron">
+        <h2>A Modern Web Template</h2>
+
+        <p class="pull-right">... a UI created using AngularJS and Bootstrap</p>
+    </div>
+
+
+    <div class="row">
+        <div class="form-group">
+            <h3>
+                Meetings
+                <a ng-href="/#/meetings/create" class="btn btn-primary pull-right" id="btn_meetings_create">Add Meeting</a>
+            </h3>
+            <hr>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" ng-model="searchText" placeholder="Type here to filter Meetings...">
+            <hr>
+        </div>
+
+
+        <table id="meeting_list" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Goal</th>
+                <th>Attendees</th>
+                <th>Organizer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="meeting in mc.meetings | filter:searchText">
+                <td>
+                    {{ meeting.goal }}
+                </td>
+                <td>
+                    <span ng-repeat="attendee in meeting.attendees">
+                        {{attendee}}<br />
+                    </span>
+                </td>
+                <td>
+                    {{ meeting.organizer }}
+                </td>
+            </tr>
+            <tr ng-hide="mc.meetings.length">
+                <td colspan="3">
+                    <p class="text-center">No Meetings Found</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <hr>
+        <h4>Debug:</h4>
+        <pre>{{ mc.meetings | json }}</pre>
+    </div>
+
+</div>

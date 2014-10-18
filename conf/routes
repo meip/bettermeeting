@@ -12,7 +12,7 @@ GET     /randomUUID                 @controllers.Application.randomUUID
 GET     /users                      @controllers.Users.findUsers
 POST    /user                       @controllers.Users.createUser
 
-# Products
+# Meeting management API
 GET         /meetings               @controllers.Meetings.list
 POST        /meetings               @controllers.Meetings.create
 DELETE      /meetings/:id           @controllers.Meetings.delete(id)
