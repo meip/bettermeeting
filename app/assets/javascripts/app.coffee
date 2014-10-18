@@ -2,17 +2,17 @@
 dependencies = [
     'ngRoute',
     'ui.bootstrap',
-    'myApp.filters',
-    'myApp.services',
-    'myApp.controllers',
-    'myApp.directives',
-    'myApp.common',
-    'myApp.routeConfig'
+    'bmApp.filters',
+    'bmApp.services',
+    'bmApp.controllers',
+    'bmApp.directives',
+    'bmApp.common',
+    'bmApp.routeConfig'
 ]
 
-app = angular.module('myApp', dependencies)
+app = angular.module('bmApp', dependencies)
 
-angular.module('myApp.routeConfig', ['ngRoute'])
+angular.module('bmApp.routeConfig', ['ngRoute'])
     .config ($routeProvider) ->
         $routeProvider
             .when('/', {
@@ -31,9 +31,9 @@ angular.module('myApp.routeConfig', ['ngRoute'])
                 templateUrl: '/assets/partials/users/create.html'
             })
             .otherwise({redirectTo: '/'})
-@commonModule = angular.module('myApp.common', [])
-@controllersModule = angular.module('myApp.controllers', [])
-@servicesModule = angular.module('myApp.services', [])
-@modelsModule = angular.module('myApp.models', [])
-@directivesModule = angular.module('myApp.directives', [])
-@filtersModule = angular.module('myApp.filters', [])
+@commonModule = angular.module('bmApp.common', [])
+@controllersModule = angular.module('bmApp.controllers', [])
+@servicesModule = angular.module('bmApp.services', [])
+@modelsModule = angular.module('bmApp.models', [])
+@directivesModule = angular.module('bmApp.directives', [])
+@filtersModule = angular.module('bmApp.filters', [])
