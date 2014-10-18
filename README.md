@@ -26,9 +26,3 @@ Deployment:
 
 
 This uses the uglified JavaScript files, versioned and compressed assets, and loads WebJars resources from the jsDelivr CDN.
-
-### Activator
-
-This application is also published as a Typesafe Activator template:
-
-http://typesafe.com/activator/template/play-angular-require-seed
