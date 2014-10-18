@@ -16,19 +16,21 @@ angular.module('myApp.routeConfig', ['ngRoute'])
     .config ($routeProvider) ->
         $routeProvider
             .when('/', {
-                templateUrl: '/assets/partials/view.html'
+                templateUrl: '/assets/partials/home.html'
+            })
+            .when('/meetings', {
+                templateUrl: '/assets/partials/meetings/view.html'
+            })
+            .when('/meetings/create', {
+                templateUrl: '/assets/partials/meetings/create.html'
+            })
+            .when('/users', {
+                templateUrl: '/assets/partials/users/view.html'
             })
             .when('/users/create', {
-                templateUrl: '/assets/partials/create.html'
-            })
-            .when('/show-meetings', {
-                templateUrl: '/assets/partials/view-meetings.html'
-            })
-            .when('/show-meetings/create', {
-                templateUrl: '/assets/partials/create-meetings.html'
+                templateUrl: '/assets/partials/users/create.html'
             })
             .otherwise({redirectTo: '/'})
-
 @commonModule = angular.module('myApp.common', [])
 @controllersModule = angular.module('myApp.controllers', [])
 @servicesModule = angular.module('myApp.services', [])
