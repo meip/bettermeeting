@@ -6,7 +6,7 @@ organization in ThisBuild := "ch.hsr"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
