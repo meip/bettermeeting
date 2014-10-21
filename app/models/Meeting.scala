@@ -5,7 +5,7 @@ import com.github.nscala_time.time.Imports.DateTime
 
 case class Meeting(
                     _id: Option[BSONObjectID] = Some(BSONObjectID.generate),
-                    //date: DateTime,
+                    date: String,
                     goal: String,
                     organizer: String,
                     attendees: List[String]

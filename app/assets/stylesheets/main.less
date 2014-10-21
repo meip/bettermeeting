@@ -1,6 +1,6 @@
 @import "lib/bootstrap/less/bootstrap.less";
 
-/*
+
 @tourquoise: #1ABC9C;
 @tourquoise-dark: #16A085;
 
@@ -34,7 +34,7 @@
 @white: #FFFFFF;
 @black: #000000;
 
-*/
+
 
 html {
   position: relative;
@@ -56,13 +56,14 @@ body{
 
 .container {
   width: auto;
-  max-width: 1024px;
+  max-width: 1200px;
   padding: 0 15px;
 }
 .container .text-muted {
   margin: 20px 0;
 }
 
+/* Klare Struktur erstellen */
 .form-horizontal .form-group {
   margin-left: 0px;
   margin-right: 0px;
@@ -101,8 +102,83 @@ body{
   padding-left: 0px;
 }
 
+/* Navigation */
+.navbar-default{
+  background-color: @dark-blue-dark;
+  border-color: @dark-blue-dark;
+  background-image: none;
+  border-radius: 0px;
+}
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a {
+  color: @white;
+  text-shadow: none;
+  &:hover{
+    background-color: @dark-blue;
+    color: @tourquoise;
+    text-shadow: none;
+  }
+}
 
-/*
+.meeting-notes{
+  padding: 50px;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
+}
+
+.meeting-control{
+  height: 42px;
+  padding: 8px 12px;
+  font-size: 15px;
+  line-height: 1.467;
+  color: @dark-blue;
+  border: 2px solid @grey-dark;
+  border-radius: 6px;
+  box-shadow: none;
+  &:focus{
+    border-color: #1abc9c;
+    outline: 0;
+    box-shadow: none;
+  }
+}
+
+.meeting-control.ng-invalid.ng-dirty{
+  color: @red;
+  border-color: @red-dark;
+  box-shadow: none;
+}
+
+.meeting-control.ng-valid.ng-dirty{
+  color: @dark-blue;
+  border: 0;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+.meeting-control[disabled]{
+  color: #d5dbdb;
+  cursor: default;
+  background-color: #f4f6f6;
+  border-color: #d5dbdb;
+  opacity: .7;
+}
+
+#goal{
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  height: 70px;
+}
+
+div.meeting-notes hr {
+  border-top: 3px solid @dark-blue;
+}
+
+
+
+
 .table-meetingnotes{
 
   margin-top:33px;
@@ -156,15 +232,6 @@ body{
 
 }
 
-div > .buttonbar {
-  margin-top:33px;
-  margin-bottom:33px;
-}
-
-label[for] {
-  font-size:80%;
-  color:@blue;
-}
 
 .btn-danger {
   color: #fff;
@@ -189,6 +256,19 @@ label[for] {
     background-color: @tourquoise-dark;
   }
 }
+
+/*
+div > .buttonbar {
+  margin-top:33px;
+  margin-bottom:33px;
+}
+
+label[for] {
+  font-size:80%;
+  color:@blue;
+}
+
+
 
 a{
   color: @blue;
