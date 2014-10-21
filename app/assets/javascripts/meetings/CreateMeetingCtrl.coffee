@@ -1,9 +1,13 @@
 
 class CreateMeetingCtrl
 
-  constructor: (@$log, @$location,  @MeetingService) ->
+  constructor: (@$log, @$location, @$scope, @MeetingService) ->
     @$log.debug "constructing CreateMeetingController"
     @meeting = {}
+    @meeting.attendees = []
+    @meeting.organizer = ""
+    @meeting.goal = ""
+    @meeting.attendees.push("")
 
   createMeeting: () ->
     @$log.debug "createMeeting()"
@@ -13,10 +17,18 @@ class CreateMeetingCtrl
       (data) =>
         @$log.debug "Promise returned #{data} Meeting"
         @meeting = data
-        @$location.path("/show-meetings")
+        @$location.path("/meetings")
     ,
     (error) =>
       @$log.error "Unable to create Meeting: #{error}"
     )
+
+  addAttendee: () ->
+    @$log.debug "addAttendee()"
+    @meeting.attendees.push("")
+
+  removeAttendee: (@attendeeIndex) ->
+    @$log.debug "removeAttendee()"
+    @meeting.attendees.splice(attendeeIndex, 1)
 
 controllersModule.controller('CreateMeetingCtrl', CreateMeetingCtrl)
