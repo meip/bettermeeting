@@ -9,15 +9,15 @@ GET     /                               @controllers.Application.index
 GET     /api/randomUUID                 @controllers.Application.randomUUID
 
 # User management API
-GET     /api/users                      @controllers.Users.findUsers
-POST    /api/user                       @controllers.Users.createUser
+GET     /api/users                      controllers.Users.list
+POST    /api/user                       controllers.Users.create
 
 # Meeting management API
 GET         /api/meetings               @controllers.Meetings.list
 POST        /api/meetings               @controllers.Meetings.create
-DELETE      /api/meetings/:id           @controllers.Meetings.delete(id)
-GET         /api/meetings/:id           @controllers.Meetings.get(id)
-PUT         /api/meetings/:id           @controllers.Meetings.update(id)
+DELETE      /api/meetings/:id           @controllers.Meetings.delete(id: BSONObjectID)
+GET         /api/meetings/:id           @controllers.Meetings.get(id: BSONObjectID)
+PUT         /api/meetings/:id           @controllers.Meetings.update(id: BSONObjectID)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

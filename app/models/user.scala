@@ -3,11 +3,11 @@ package models
 import reactivemongo.bson.BSONObjectID
 
 case class User(
-                 _id: Option[BSONObjectID] = Some(BSONObjectID.generate),
+                 _id: BSONObjectID = BSONObjectID.generate,
                  age: Int,
                  firstName: String,
                  lastName: String,
-                 active: Boolean) extends MongoEntity {}
+                 active: Boolean = true)
 
 object User {
 
@@ -16,4 +16,5 @@ object User {
 
   // Generates Writes and Reads for Feed and User thanks to Json Macros
   implicit val userFormat = Json.format[User]
+
 }

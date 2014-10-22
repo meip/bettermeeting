@@ -1,97 +1,102 @@
 package controllers
 
+import dao.dao.MeetingDao
 import models.Meeting
-import models.MeetingJsonFormat._
+import models.MeetingFormats._
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import play.api.mvc._
-import play.modules.reactivemongo.MongoController
-import play.modules.reactivemongo.json.BSONFormats._
-import play.modules.reactivemongo.json.collection.JSONCollection
-import reactivemongo.api.Cursor
+import reactivemongo.bson.BSONObjectID
+import reactivemongo.extensions.json.dsl.JsonDsl
 
 import scala.concurrent.Future
 
-class Meetings extends Controller with MongoController with OIDValidator {
+class Meetings extends Controller with JsonDsl {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Meetings])
 
-  def collection: JSONCollection = db.collection[JSONCollection]("meetings")
-
-  def create = Action.async(parse.json) {
-    request =>
-      request.body.validate[Meeting].map {
-        meeting =>
-          collection.insert(meeting).map {
-            lastError =>
-              logger.debug(s"Successfully inserted with LastError: $lastError")
-              Created(s"Meeting Created")
-          }
-      }.getOrElse(Future.successful(BadRequest("invalid json")))
-  }
-
-  def update(id: String) = Action.async(parse.json) {
-    request =>
-      request.body.validate[Meeting].map {
-        meeting =>
-          validateOID(id) { meetingId =>
-            val newData = meeting.copy(_id = Some(meetingId))
-            collection.save(newData).map {
-              lastError =>
-                logger.debug(s"Successfully updated with LastError: $lastError")
-                Created(s"Meeting updated")
-            }
-          }
-      }.getOrElse(Future.successful(BadRequest("invalid json")))
-  }
-
-  def get(id: String) = Action.async {
-    validateOID(id) { meetingId =>
-      val cursor: Cursor[Meeting] = collection
-        .find(Json.obj("_id" -> meetingId))
-        .sort(Json.obj("created" -> -1))
-        .cursor[Meeting]
-
-      cursor.collect[List]().map {
-        meetings =>
-          if (meetings.isEmpty)
-            NotFound
-          else {
-            Ok(Json.toJson(meetings.head))
-          }
+  /**
+   * Creates and persists meetings with coming HTTP request data.
+   *
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
+  def create = Action.async(BodyParsers.parse.json) { implicit request =>
+    val meetingResult = request.body.validate[Meeting]
+    meetingResult.fold(
+      errors => {
+        Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
+      },
+      meeting => {
+        MeetingDao.createMeeting(meeting).map(
+          _ => Ok(Json.obj("status" -> "OK", "message" -> s"Meeting ${meeting.goal} sent."))).recover {
+          case t: Throwable =>
+            logger.error("CREATE ERROR", t)
+            InternalServerError("Unknown error (CREATE).")
+        }
       }
+    )
+  }
+
+  /**
+   * Updates meeting
+   *
+   * @param id BSONObject will be updated.
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
+  def update(id: BSONObjectID) = Action.async(BodyParsers.parse.json) { implicit request =>
+    val meetingResult = request.body.validate[Meeting]
+    meetingResult.fold(
+      errors => {
+        Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
+      },
+      meeting => {
+        MeetingDao.updateById(id, meeting).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Mail updated"))).recover {
+          case t: Throwable =>
+            logger.error("UPDATE ERROR", t)
+            InternalServerError("Unknown error (UPDATE).")
+        }
+      }
+    )
+  }
+
+  /**
+   * Get Meeting.
+   *
+   * @param id ID of the meeting.
+   * @return A Ok [[play.api.mvc.Result]]
+   */
+  def get(id: BSONObjectID) = Action.async {
+    MeetingDao.get(id).map {
+      case None => Ok(Json.toJson(""))
+      case meeting => Ok(Json.toJson(meeting))
     }
   }
 
+
+  /**
+   * Gets all Meeting.
+   *
+   * @return A Ok [[play.api.mvc.Result]]
+   */
   def list = Action.async {
-    val cursor: Cursor[Meeting] = collection.find(Json.obj()).sort(Json.obj("created" -> -1)).cursor[Meeting]
-    val futureMeetingsList: Future[List[Meeting]] = cursor.collect[List]()
-    val futureMeetingsJsonArray: Future[JsArray] = futureMeetingsList.map {
-      meetings =>
-        Json.arr(meetings)
-    }
-
-    futureMeetingsJsonArray.map {
-      meetings =>
-        Ok(meetings(0))
+    MeetingDao.listMeetings.map {
+      case Nil => Ok(Json.toJson(""))
+      case meetings => Ok(Json.toJson(meetings))
     }
   }
 
-  def delete(id: String) = Action.async {
-    validateOID(id) { meetingId =>
-      val cursor: Cursor[Meeting] = collection.find(Json.obj("_id" -> meetingId)).sort(Json.obj("created" -> -1)).cursor[Meeting]
-
-      cursor.collect[List]().map {
-        meetings =>
-          if (meetings.isEmpty)
-            NoContent
-          else {
-            logger.debug(s"The meeting to be removed: ${id}")
-            collection.remove(meetings.head)
-            NoContent
-          }
-      }
+  /**
+   * Deletes a meeting from database.
+   *
+   * @param id BSONObject will deleted.
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
+  def delete(id: BSONObjectID) = Action.async {
+    MeetingDao.deleteMeeting(id).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Meeting deleted"))).recover {
+      case t: Throwable =>
+        logger.error("DELETE ERROR", t)
+        InternalServerError("Unknown error (DELETE).")
     }
   }
 

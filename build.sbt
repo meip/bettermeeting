@@ -1,4 +1,5 @@
 import WebKeys._
+import PlayKeys._
 
 name := "ibettermeeting"
 
@@ -16,6 +17,7 @@ libraryDependencies ++= Seq(
   "com.google.inject" % "guice" % "3.0",
   "javax.inject" % "javax.inject" % "1",
   "org.reactivemongo" %% "play2-reactivemongo" % "0.10.5.akka23-SNAPSHOT",
+  "org.reactivemongo" %% "reactivemongo-extensions-json" % "0.10.5.0.0.akka23",
   "org.webjars" % "bootstrap" % "3.2.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angularjs" % "1.3.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angular-ui-bootstrap" % "0.11.0-3",
@@ -38,4 +40,4 @@ scalacOptions in ThisBuild ++= Seq(
 // sbt-web configuration
 // https://github.com/sbt/sbt-web
 //
-
+routesImport ++= Seq("extensions.Binders._", "reactivemongo.bson.BSONObjectID")
