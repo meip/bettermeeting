@@ -152,7 +152,7 @@ body{
 
 .meeting-control.ng-valid.ng-dirty{
   color: @dark-blue;
-  border: 0;
+  border: 2px solid #FFF;
   border-radius: 0px;
   box-shadow: none;
 }
@@ -178,14 +178,41 @@ div.meeting-notes hr {
 
 
 
+.table-meeting-head{
+  width: 100%;
+
+  thead > tr > th {
+    padding-bottom: 30px;
+    border-bottom: 5px solid #34495E;
+    input {
+      width: 100%;
+    }
+  }
+
+  tbody > tr > td {
+    padding-top: 30px;
+    input {
+      width: 100%;
+    }
+  }
+}
+
 
 .table-meetingnotes{
 
   margin-top:33px;
 
-  tbody > tr:nth-child(odd) > td {
+    tbody > tr:nth-child(odd) > td {
     background-color: @grey;
+    input{
+      border: 1px solid @grey;
+    }
+    .meeting-control.ng-valid.ng-dirty{
+      border: 1px solid @grey;
+    }
+
   }
+
   tbody > tr.todo > td{
     color: @orange;
     span.type {
@@ -228,9 +255,28 @@ div.meeting-notes hr {
       border-radius: .5em;
       padding: .3em .6em .3em;
     }
+    input {
+      margin: 0;
+      font-size: 90%;
+      background: none;
+      height: auto !important;
+      border: 1px solid @white;
+      &:focus {
+        border: 1px solid @green;
+      }
+    }
+    select {
+
+    }
   }
 
+
 }
+
+.testerich{
+  background-color: blue;
+}
+
 
 
 .btn-danger {
