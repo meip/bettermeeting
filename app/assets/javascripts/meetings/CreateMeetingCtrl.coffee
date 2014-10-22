@@ -1,13 +1,21 @@
 
 class CreateMeetingCtrl
 
-  constructor: (@$log, @$location, @$scope, @MeetingService) ->
+  constructor: (@$log, @$location, @$element, @MeetingService) ->
     @$log.debug "constructing CreateMeetingController"
     @meeting = {}
-    @meeting.attendees = []
+    @meeting.date = ""
     @meeting.organizer = ""
     @meeting.goal = ""
+    @meeting.attendees = []
     @meeting.attendees.push("")
+    @meeting.meetingPoints = []
+    @meeting.meetingPoints.push({
+      pointType: "information",
+      note: "",
+      owner: "",
+      date: ""
+    })
 
   createMeeting: () ->
     @$log.debug "createMeeting()"
@@ -30,5 +38,19 @@ class CreateMeetingCtrl
   removeAttendee: (@attendeeIndex) ->
     @$log.debug "removeAttendee()"
     @meeting.attendees.splice(attendeeIndex, 1)
+
+  addMeetingPoint: () ->
+    @$log.debug "addMeetingPoint()"
+    @meeting.meetingPoints.push({
+      pointType: "information",
+      note: "",
+      owner: "",
+      date: ""
+    })
+
+  removeMeetingPoint: (@meetingPointIndex) ->
+    @$log.debug "removeMeetingPoint()"
+    @meeting.meetingPoints.splice(@meetingPointIndex, 1)
+
 
 controllersModule.controller('CreateMeetingCtrl', CreateMeetingCtrl)

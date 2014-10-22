@@ -5,68 +5,58 @@
         </h1>
         <hr>
     </div>
+    <br /><br />
+    <div class="meeting-notes">
     <form id="CreateMeetingForm" name="CreateMeetingForm" class="form-horizontal" role="form"
           ng-submit="cmc.createMeeting()">
-        <div class="row">
-            <div>
-                <p class="lead">Enter the goal of this meeting!</p>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-screenshot"></span></div>
-                        <input type="text" class="form-control" id="goal" name="goal" placeholder="Meetinggoal"
+        <table class="table-meeting-head">
+            <thead>
+                <tr>
+                    <th colspan="5">
+                        <input type="text" class="meeting-control" id="goal" name="goal" placeholder="Meetinggoal"
                                ng-model="cmc.meeting.goal">
-                    </div>
-                    <label for="goal">What do you want to achieve with this meeting?</label>
-                </div>
-            </div>
-            <div>
-                <p class="lead">Organizer</p>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        <input type="email" class="form-control" name="organizer" id="organizer" placeholder="Organizer"
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width:10%">
+                        <span style="color: #95A5A6">Date:</span>
+                    </td>
+                    <td style="width:30%; padding-right: 20px;">
+                        <input type="text" class="meeting-control" name="meetingTime" id="meetingTime" placeholder="Meetingtime"
+                               ng-model="cmc.meeting.date">
+                    </td>
+                    <td style="width:10%">
+                        <span style="color: #95A5A6">Organizer:</span>
+                    </td>
+                    <td>
+                        <input type="email" class="meeting-control" name="organizer" id="organizer" placeholder="Organizer"
                                ng-model="cmc.meeting.organizer">
-                    </div>
-                    <label for="organizer">Who needs to attend to the meeting?</label>
-                </div>
-            </div>
-            <div>
-                <p class="lead">Time and Date</p>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-time"></span></div>
-                        <input type="datetime" class="form-control" id="meetingTime" placeholder="Meetingtime">
-                    </div>
-                    <label for="meetingTime">When is the meeting going to start</label>
-                </div>
-            </div>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <span style="color: #95A5A6; padding-top: 30px;">Attendees:</span>
+                    </td>
+                    <td colspan="3" style="width: 100%;">
+                        <div style="margin-bottom: 5px;"
+                             ng-repeat="attendee in cmc.meeting.attendees track by $index">
+                            <input type="email" class="meeting-control" id="attendees[$index]" placeholder="Attendees" multiple
+                                   ng-model="cmc.meeting.attendees[$index]">
+                        </div>
+
+                    </td>
+                    <td style="width:10px; padding-left: 10px; vertical-align: bottom;">
+                        <a class="btn btn-primary" ng-click="cmc.addAttendee()">Add</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
 
-            <div>
-                <p class="lead">Attendees</p>
-                <div class="form-group">
-                    <div class="input-group"
-                         ng-repeat="attendee in cmc.meeting.attendees track by $index" id="attendees">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        <input type="email" class="form-control" id="attendees[$index]" placeholder="Meetingattendee"
-                               ng-model="cmc.meeting.attendees[$index]">
-                        <span class="input-group-btn">
-                            <a class="btn btn-danger" type="button"
-                               ng-click="cmc.removeAttendee($index)">
-                               X
-                            </a>
-                        </span>
-
-                    </div>
-                    <label for="attendees">Who needs to attend to the meeting?</label>
-                    <p><a class="btn btn-primary" ng-click="cmc.addAttendee()">Add</a></p>
-                </div>
-            </div>
-        </div>
-
-
-
-<!--
+        <hr />
 
 
         <div class="row">
@@ -110,13 +100,45 @@
                         <td>&nbsp;</td>
                         <td><a href="#" class="delete">x</a></td>
                     </tr>
+                    <tr class="meetingPoint {{meetingPoint.pointType}}" data-id="{{$index}}"
+                        ng-repeat="meetingPoint in cmc.meeting.meetingPoints track by $index">
+                        <td>
+
+                            <select class="form-control" ng-model="meetingPoint.pointType">
+                                <option value="todo">To-Do</option>
+                                <option value="decision">Decision</option>
+                                <option value="information">Info</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="meeting-control" id="meetingPoint.note" placeholder="Note"
+                                    ng-model="meetingPoint.note">
+                        </td>
+                        <td>
+                            <input type="email" class="meeting-control" id="meetingPoint.owner" name="owner" placeholder="Owner"
+                                    ng-model="meetingPoint.owner">
+                        </td>
+                        <td>
+                            <input type="text" class="meeting-control" id="meetingPoint.date" name="date" placeholder="Date"
+                                    ng-model="meetingPoint.date">
+                        </td>
+                        <td>
+                            <a class="delete" ng-click="cmc.removeMeetingPoint($index)">
+                                x
+                            </a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
-                <a href="#">+ Add new</a>
+                <a class="btn btn-primary" ng-click="cmc.addMeetingPoint()">+ Add new</a>
             </div>
         </div>
--->
-        <div class="row buttonbar">
+
+
+
+
+
+        <div class="row buttonbar" style="margin-top: 30px;">
             <div class="col-md-8">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary disabled"><span class="glyphicon glyphicon-send"></span> Send & Save</button>
@@ -125,17 +147,104 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <a type="button" class="btn btn-warning pull-right"
+                <a type="button" class="btn btn-danger pull-right"
                         ng-href="/#/meetings" >
                     <span class="glyphicon glyphicon-chevron-left"></span> Back
                 </a>
             </div>
         </div>
     </form>
-
+    </div>
     <pre>{{ cmc.meeting | json }}</pre>
 
 </div>
+
+
+
+
+
+
+<!--
+<div class="row">
+    <div>
+        <input type="text" class="meeting-control" id="goal" name="goal" placeholder="Meetinggoal" style="width:100%"
+               ng-model="cmc.meeting.goal">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        Date: <input type="datetime" class="meeting-control" name="organizer" id="meetingTime" placeholder="Meetingtime"
+                     ng-model="cmc.meeting.time">
+
+    </div>
+    <div class="col-md-4">
+        Organizer: <input type="email" class="meeting-control" name="organizer" id="organizer" placeholder="Organizer"
+                     ng-model="cmc.meeting.organizer">
+
+    </div>
+</div>
+<div class="row">
+    Attendees:
+</div>
+        <span class="lead">Meetinggoal</span>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-screenshot"></span></div>
+                <input type="text" class="form-control" id="goal" name="goal" placeholder="Meetinggoal"
+                       ng-model="cmc.meeting.goal">
+            </div>
+            <label for="goal">What do you want to achieve with this meeting?</label>
+        </div>
+
+    </div>
+    <div>
+        <p class="lead">Organizer</p>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                <input type="email" class="form-control" name="organizer" id="organizer" placeholder="Organizer"
+                       ng-model="cmc.meeting.organizer">
+            </div>
+            <label for="organizer">Who needs to attend to the meeting?</label>
+        </div>
+
+    </div>
+    <div>
+        <p class="lead">Time and Date</p>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-time"></span></div>
+                <input type="datetime" class="form-control" id="meetingTime" placeholder="Meetingtime">
+            </div>
+            <label for="meetingTime">When is the meeting going to start</label>
+        </div>
+    </div>
+
+<div>
+    <div>
+        <p class="lead">Attendees</p>
+        <div class="form-group">
+            <div class="input-group"
+                 ng-repeat="attendee in cmc.meeting.attendees track by $index" id="attendees">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                <input type="email" class="form-control" id="attendees[$index]" placeholder="Meetingattendee"
+                       ng-model="cmc.meeting.attendees[$index]">
+                <span class="input-group-btn">
+                    <a class="btn btn-danger" type="button"
+                       ng-click="cmc.removeAttendee($index)">
+                       X
+                    </a>
+                </span>
+
+            </div>
+            <label for="attendees">Who needs to attend to the meeting?</label>
+            <p><a class="btn btn-primary" ng-click="cmc.addAttendee()">Add</a></p>
+        </div>
+    </div>
+</div>
+
+-->
 
 
 
