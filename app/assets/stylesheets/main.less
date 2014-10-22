@@ -1,13 +1,201 @@
 @import "lib/bootstrap/less/bootstrap.less";
 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+/*
+@tourquoise: #1ABC9C;
+@tourquoise-dark: #16A085;
 
-body {
-  padding-top: 70px;
-  padding-bottom: 30px;
-  min-width: 970px;
+@green: #2ECC71;
+@green-dark: #27AE60;
+
+@blue: #3498DB;
+@blue-dark: #2980B9;
+
+@violet: #9B59B6;
+@violet-dark: #8E44AD;
+
+@dark-blue: #34495E;
+@dark-blue-dark: #2C3E50;
+
+@yellow: #F1C40F;
+@yellow-dark: #F39C12;
+
+@orange: #E67E22;
+@orange-dark: #D35400;
+
+@red: #E74C3C;
+@red-dark: #C0392B;
+
+@grey: #ECF0F1;
+@grey-dark: #BDC3C7;
+
+@dark-grey: #95A5A6;
+@dark-grey-dark: #7F8C8D;
+
+@white: #FFFFFF;
+@black: #000000;
+
+*/
+
+html {
+  position: relative;
+  min-height: 100%;
 }
 
-h1 {
-  color: @font-size-h1;
+body{
+  margin-bottom: 60px;
 }
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.container {
+  width: auto;
+  max-width: 1024px;
+  padding: 0 15px;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.form-horizontal .form-group {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.col-xs-1, .col-sm-1,
+.col-md-1, .col-lg-1,
+.col-xs-2, .col-sm-2,
+.col-md-2, .col-lg-2,
+.col-xs-3, .col-sm-3,
+.col-md-3, .col-lg-3,
+.col-xs-4, .col-sm-4,
+.col-md-4, .col-lg-4,
+.col-xs-5, .col-sm-5,
+.col-md-5, .col-lg-5,
+.col-xs-6, .col-sm-6,
+.col-md-6, .col-lg-6,
+.col-xs-7, .col-sm-7,
+.col-md-7, .col-lg-7,
+.col-xs-8, .col-sm-8,
+.col-md-8, .col-lg-8,
+.col-xs-9, .col-sm-9,
+.col-md-9, .col-lg-9,
+.col-xs-10, .col-sm-10,
+.col-md-10, .col-lg-10,
+.col-xs-11, .col-sm-11,
+.col-md-11, .col-lg-11,
+.col-xs-12, .col-sm-12,
+.col-md-12, .col-lg-12 {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+
+/*
+.table-meetingnotes{
+
+  margin-top:33px;
+
+  tbody > tr:nth-child(odd) > td {
+    background-color: @grey;
+  }
+  tbody > tr.todo > td{
+    color: @orange;
+    span.type {
+      background-color: @orange;
+      &:hover {
+        background-color: @orange-dark;
+      }
+    }
+  }
+  tbody > tr.decision > td{
+    color: @blue;
+    span.type {
+      background-color: @blue;
+      &:hover {
+        background-color: @blue-dark;
+      }
+    }
+  }
+  tbody > tr.information > td{
+    color: @tourquoise;
+    span.type {
+      background-color: @tourquoise;
+      &:hover {
+        background-color: @tourquoise-dark;
+      }
+    }
+  }
+
+  tbody > tr > td{
+    a{
+      &:link, &:visited {
+        color: @red;
+      }
+      &:hover{
+        color: @black;
+      }
+    }
+    span.type {
+      font-size: 100%;
+      border-radius: .5em;
+      padding: .3em .6em .3em;
+    }
+  }
+
+}
+
+div > .buttonbar {
+  margin-top:33px;
+  margin-bottom:33px;
+}
+
+label[for] {
+  font-size:80%;
+  color:@blue;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: @red;
+  border-color: @red-dark;
+  &:hover {
+    background-color: @red-dark;
+  }
+}
+
+.btn-primary{
+  background-color: @dark-blue;
+  border-color: @dark-blue-dark;
+  &:hover{
+    background-color: @dark-blue-dark;
+  }
+}
+.btn-info{
+  background-color: @tourquoise;
+  border-color: @tourquoise-dark;
+  &:hover{
+    background-color: @tourquoise-dark;
+  }
+}
+
+a{
+  color: @blue;
+  &:hover{
+    color: @blue-dark;
+  }
+}
+
+
+*/

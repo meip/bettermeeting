@@ -1,20 +1,12 @@
 
 
-<div class="row" ng-controller="MeetingCtrl as mc">
-    &NonBreakingSpace;
-    <div class="jumbotron">
-        <h2>A Modern Web Template</h2>
+    <div class="row" ng-controller="MeetingCtrl as mc">
 
-        <p class="pull-right">... a UI created using AngularJS and Bootstrap</p>
-    </div>
-
-
-    <div class="row">
         <div class="form-group">
-            <h3>
+            <h1>
                 Meetings
                 <a ng-href="/#/meetings/create" class="btn btn-primary pull-right" id="btn_meetings_create">Add Meeting</a>
-            </h3>
+            </h1>
             <hr>
         </div>
         <div class="form-group">
@@ -56,6 +48,5 @@
         <hr>
         <h4>Debug:</h4>
         <pre>{{ mc.meetings | json }}</pre>
-    </div>
 
-</div>
+    </div>

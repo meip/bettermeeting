@@ -1,51 +1,143 @@
-<div class="row">
-    <div ng-controller="CreateMeetingCtrl as cmc">
-        <h1>Create Meeting</h1>
-
-        <form id="CreateMeetingForm" name="CreateMeetingForm" class="form-horizontal" role="form"
-              ng-submit="cmc.createMeeting()">
-            <legend class="sm-col-12">Basic Information</legend>
-
-            <div class="form-group">
-                <label id="lbl_goal" for="goal" class="col-sm-4 control-label">Goal</label>
-
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="goal" id="goal" placeholder=""
-                           ng-model="cmc.meeting.goal">
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label id="lbl_organizer" for="organizer" class="col-sm-4 control-label">Organizer</label>
-
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="organizer" id="organizer" placeholder=""
-                           ng-model="cmc.meeting.organizer">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lbl_attendees" for="attendees" class="col-sm-4 control-label">Attendees</label>
-
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="attendees" id="attendees" placeholder=""
-                           ng-model="cmc.meeting.attendees">
-                </div>
-            </div>
-
-            <pre>{{ cmc.meeting | json }}</pre>
-
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-8 text-right">
-                    <a ng-href="/#/meetings" id="btn_cancel" class="btn btn-warning">Cancel</a>
-
-                    <button type="submit" class="btn btn-success" id="btn_create">Create Meeting</button>
-                </div>
-            </div>
-
-
-        </form>
+<div ng-controller="CreateMeetingCtrl as cmc">
+    <div class="form-group">
+        <h1>
+            Meeting Notes
+        </h1>
+        <hr>
     </div>
+    <form id="CreateMeetingForm" name="CreateMeetingForm" class="form-horizontal" role="form"
+          ng-submit="cmc.createMeeting()">
+        <div class="row">
+            <div>
+                <p class="lead">Enter the goal of this meeting!</p>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-screenshot"></span></div>
+                        <input type="text" class="form-control" id="goal" name="goal" placeholder="Meetinggoal"
+                               ng-model="cmc.meeting.goal">
+                    </div>
+                    <label for="goal">What do you want to achieve with this meeting?</label>
+                </div>
+            </div>
+            <div>
+                <p class="lead">Organizer</p>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        <input type="email" class="form-control" name="organizer" id="organizer" placeholder="Organizer"
+                               ng-model="cmc.meeting.organizer">
+                    </div>
+                    <label for="organizer">Who needs to attend to the meeting?</label>
+                </div>
+            </div>
+            <div>
+                <p class="lead">Time and Date</p>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-time"></span></div>
+                        <input type="datetime" class="form-control" id="meetingTime" placeholder="Meetingtime">
+                    </div>
+                    <label for="meetingTime">When is the meeting going to start</label>
+                </div>
+            </div>
+
+
+            <div>
+                <p class="lead">Attendees</p>
+                <div class="form-group">
+                    <div class="input-group"
+                         ng-repeat="attendee in cmc.meeting.attendees track by $index" id="attendees">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        <input type="email" class="form-control" id="attendees[$index]" placeholder="Meetingattendee"
+                               ng-model="cmc.meeting.attendees[$index]">
+                        <span class="input-group-btn">
+                            <a class="btn btn-danger" type="button"
+                               ng-click="cmc.removeAttendee($index)">
+                               X
+                            </a>
+                        </span>
+
+                    </div>
+                    <label for="attendees">Who needs to attend to the meeting?</label>
+                    <p><a class="btn btn-primary" ng-click="cmc.addAttendee()">Add</a></p>
+                </div>
+            </div>
+        </div>
+
+
+
+<!--
+
+
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-meetingnotes">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Note</th>
+                        <th>Owner</th>
+                        <th>Date</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="todo">
+                        <td><span class="label type">To-Do</span></td>
+                        <td>Create a new Mockup for Ideas</td>
+                        <td>r1bader</td>
+                        <td>10.10.2014</td>
+                        <td><a href="#" class="delete">x</a></td>
+                    </tr>
+                    <tr class="todo">
+                        <td><span class="label type">To-Do</span></td>
+                        <td>Write Concept down</td>
+                        <td>p1meier</td>
+                        <td>11.10.2014</td>
+                        <td><a href="#" class="delete">x</a></td>
+                    </tr>
+                    <tr class="decision">
+                        <td><span class="label type">Decision</span></td>
+                        <td>Decision for Prototype #1</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td><a href="#" class="delete">x</a></td>
+                    </tr>
+                    <tr class="information">
+                        <td><span class="label type">Info</span></td>
+                        <td>Watch out, that goals don't look like an agenda</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td><a href="#" class="delete">x</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a href="#">+ Add new</a>
+            </div>
+        </div>
+-->
+        <div class="row buttonbar">
+            <div class="col-md-8">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary disabled"><span class="glyphicon glyphicon-send"></span> Send & Save</button>
+                    <button type="submit" class="btn btn-info" id="btn_create"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                    <button type="button" class="btn btn-info disabled"><span class="glyphicon glyphicon-picture"></span> PDF</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a type="button" class="btn btn-warning pull-right"
+                        ng-href="/#/meetings" >
+                    <span class="glyphicon glyphicon-chevron-left"></span> Back
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <pre>{{ cmc.meeting | json }}</pre>
+
 </div>
+
+
+
+
 
