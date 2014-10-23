@@ -6,6 +6,9 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.{Reads, JsPath, Writes}
 
 object MeetingFormats {
+  implicit val datetimeReads = Reads.optionWithNull(Reads.jodaDateReads("dd.MM.yyyy HH:mm"))
+  implicit val datetimeWrites = Writes.optionWithNull(Writes.jodaDateWrites("dd.MM.yyyy HH:mm"))
+
   implicit def meetingWrites: Writes[Meeting] = (
     (JsPath \ "id").write[String] and
       (JsPath \ "date").write[Option[DateTime]] and
