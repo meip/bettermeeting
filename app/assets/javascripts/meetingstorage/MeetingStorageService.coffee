@@ -7,56 +7,107 @@ class MeetingStorageService
   constructor: (@$log, @$http, @$q, @localStorageService, @$location) ->
     @$log.debug "MeetingStorageService.constructor()"
 
-  meetingFactory: (@id) ->
+  meetingFactory: (_id) ->
     @$log.debug "meetingFactory()"
 
     if @localStorageService.isSupported
-      if @id == undefined
+      if _id == undefined
         @initializeMeeting()
       else
-        return @localStorageService.get(@id)
+        return @localStorageService.get(_id)
     else
       @$log.debug "Storage not Supported"
       return @createEmptyMeeting()
 
   initializeMeeting: () ->
     @$log.debug "initializeMeeting()"
-    @id = @createEmptyMeeting()
+    meeting = @createEmptyMeeting()
 
-    @localStorageService.set(@id, @meeting)
+    @localStorageService.set(meeting._id, meeting)
 
-    @saveMeetingLocal()
+    @saveMeetingLocal(meeting)
 
-    @$location.search(id: @id)
+    @$location.search(_id: meeting._id)
 
-  saveMeetingLocal: () ->
-    @localMeetings = @localStorageService.get("localMeetings")
-    if @localMeetings
-      @localMeetings.push(@id)
+  saveMeetingLocal: (meeting) ->
+    localMeetings = @localStorageService.get("localMeetings")
+    if localMeetings
+      localMeetings.push(meeting._id)
     else
-      @localMeetings = [@id]
-    @localStorageService.set("localMeetings", @localMeetings)
+      localMeetings = [meeting._id]
+    @localStorageService.set("localMeetings", localMeetings)
+
+  removeMeetingLocal: (_id) ->
+    @localStorageService.remove(_id)
+    localMeetings = @localStorageService.get("localMeetings")
+    index = localMeetings.indexOf(_id);
+    if index > -1
+      localMeetings.splice(index, 1)
+    @localStorageService.set("localMeetings", localMeetings)
+
 
   createEmptyMeeting: () ->
-    @id = Date.now()
-    @meeting = {
-      id: @id,
+    actualTime = Date.now()
+    meeting = {
+      _id: actualTime,
       goal: "",
-      time: "",
-      lastEdited: Date.now(),
-      published: false
-    }
-    return @id
+      date: "16.12.2014 16:30",
+      organizer: "",
+      lastEdited: actualTime,
+      published: false,
+      attendees: [
+        ""
+      ]
 
-  set: (@id, @meeting) ->
-    @$log.debug "Save Meeting-ID: " + @id
-    @meeting.lastEdited = Date.now()
+    }
+    return meeting
+
+  set: (_id, meeting) ->
+    @$log.debug "Save Meeting-ID: " + _id
+    meeting.lastEdited = Date.now()
     if @localStorageService.isSupported
-      @localStorageService.set(@id, @meeting)
+      @localStorageService.set(_id, meeting)
 
   flush: () ->
     @$log.debug "Delete all Entries in DB"
     @localStorageService.clearAll()
 
+  publishMeeting: (meeting) ->
+    @$log.debug "publishMeeting #{angular.toJson(meeting, true)}"
+    deferred = @$q.defer()
+
+    if meeting.published
+      @publishChangedMeeting(meeting, deferred)
+    else
+      @publishNewMeeting(meeting, deferred)
+
+    deferred.promise
+
+  publishNewMeeting: (meeting, deferred) ->
+    @$log.debug "publish New Meeting"
+
+    @$http.post('/api/meetings', meeting)
+    .success((data, status, user) =>
+      @$log.info("Successfully created Meeting - status #{status}")
+      deferred.resolve(data)
+      @removeMeetingLocal(meeting._id)
+    )
+    .error((data, status, headers) =>
+      @$log.error("Failed to create meeting - status #{status}")
+      deferred.reject(data);
+    )
+
+  publishChangedMeeting: (meeting, deferred) ->
+    @$log.debug "publish Changed Meeting"
+
+    @$http.put('/api/meetings', meeting)
+    .success((data, status, user) =>
+      @$log.info("Successfully changed Meeting - status #{status}")
+      deferred.resolve(data)
+    )
+    .error((data, status, headers) =>
+      @$log.error("Failed to changed meeting - status #{status}")
+      deferred.reject(data);
+    )
 
 servicesModule.service('MeetingStorageService', MeetingStorageService)

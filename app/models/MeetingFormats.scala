@@ -14,8 +14,10 @@ object MeetingFormats {
       (JsPath \ "date").write[Option[DateTime]] and
       (JsPath \ "goal").write[Option[String]] and
       (JsPath \ "organizer").write[Option[String]] and
-      (JsPath \ "attendees").write[List[String]]
-    )(meeting => (meeting._id.stringify, meeting.date, meeting.goal, meeting.organizer, meeting.attendees))
+      (JsPath \ "attendees").write[List[String]] and
+      (JsPath \ "lastEdited").write[Int] and
+      (JsPath \ "published").write[Boolean]
+    )(meeting => (meeting._id.stringify, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.lastEdited, meeting.published))
 
   implicit def meetingListWrites: Writes[List[Meeting]] = Writes.list(meetingWrites)
 
@@ -23,7 +25,9 @@ object MeetingFormats {
     (JsPath \ "date").read[Option[DateTime]] and
       (JsPath \ "goal").read[Option[String]] and
       (JsPath \ "organizer").read[Option[String]] and
-      (JsPath \ "attendees").read[List[String]]
-    )((date, goal, organizer, attendees) => Meeting(date = date, goal = goal, organizer = organizer, attendees = attendees))
+      (JsPath \ "attendees").read[List[String]] and
+      (JsPath \ "lastEdited").read[Int] and
+      (JsPath \ "published").read[Boolean]
+    )((date, goal, organizer, attendees, lastEdited, published) => Meeting(date = date, goal = goal, organizer = organizer, attendees = attendees, lastEdited = lastEdited, published = published))
 
 }

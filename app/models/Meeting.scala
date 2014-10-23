@@ -8,7 +8,9 @@ case class Meeting(
                     date: Option[DateTime],
                     goal: Option[String],
                     organizer: Option[String],
-                    attendees: List[String]
+                    attendees: List[String],
+                    lastEdited: Int,
+                    published: Boolean
                     )
 
 case class PointType(
