@@ -1,0 +1,17 @@
+
+    <div ng-controller="MeetingStorageCtrl as msc">
+
+        <h1>Hallo</h1>
+        <form ng-submit="msc.createMeeting()">
+        <input type="text" placeholder="name" ng-model="msc.meeting.name">
+
+        </form>
+        <br />
+        <br />
+        <br />
+
+        <pre>{{ msc.meeting | json }}</pre>
+
+
+
+    </div>

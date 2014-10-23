@@ -7,7 +7,8 @@ dependencies = [
     'bmApp.controllers',
     'bmApp.directives',
     'bmApp.common',
-    'bmApp.routeConfig'
+    'bmApp.routeConfig',
+    'bmApp.localStorage'
 ]
 
 app = angular.module('bmApp', dependencies)
@@ -30,6 +31,9 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/users/create', {
                 templateUrl: '/assets/partials/users/create.html'
             })
+            .when('/meetings/test', {
+              templateUrl: '/assets/partials/meetingstorage/view.html'
+            })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])
 @controllersModule = angular.module('bmApp.controllers', [])
@@ -37,3 +41,4 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
 @modelsModule = angular.module('bmApp.models', [])
 @directivesModule = angular.module('bmApp.directives', [])
 @filtersModule = angular.module('bmApp.filters', [])
+@localStorageModule = angular.module('bmApp.localStorage', ['LocalStorageModule'])
