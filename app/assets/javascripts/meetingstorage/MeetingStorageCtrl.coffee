@@ -1,22 +1,22 @@
 
 class MeetingStorageCtrl
 
-  constructor: (@$log, @$location, @$element, @MeetingStorageService, @localStorageService) ->
-    @$log.debug "constructing MeetingStorageCtrl"
-    @meeting = {}
-    @meeting.name = ""
 
-    if localStorageService.isSupported
-      @$log.debug "Storage Supported"
-      @$log.debug "Type: " + localStorageService.getStorageType()
-    else
-      @$log.debug "Storage not Supported"
+  @id
 
+  constructor: (@$log, @$routeParams, @MeetingStorageService) ->
+    @$log.debug "MeetingStorageCtrl.constructor()"
+    @id = @$routeParams.id
+    @meeting = @MeetingStorageService.meetingFactory(@id)
 
+  flush: () ->
+    @MeetingStorageService.flush()
 
+  updateDatabase: () ->
+    @MeetingStorageService.set(@id, @meeting)
 
-  createMeeting: () ->
-    @$log.debug "createMeeting()"
+  publishMeeting: () ->
+    @$log.debug "publishMeeting()"
 
 
 controllersModule.controller('MeetingStorageCtrl', MeetingStorageCtrl)

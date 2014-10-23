@@ -1,10 +1,13 @@
 
-    <div ng-controller="MeetingStorageCtrl as msc">
+    <div ng-controller="MeetingStorageCtrl as msc" ng-submit="msc.publishMeeting()">
 
         <h1>Hallo</h1>
         <form ng-submit="msc.createMeeting()">
-        <input type="text" placeholder="name" ng-model="msc.meeting.name">
-
+        <input type="text" placeholder="goal" ng-model="msc.meeting.goal"
+                ng-blur="msc.updateDatabase()">
+        <input type="text" placeholder="time" ng-model="msc.meeting.time"
+               ng-blur="msc.updateDatabase()">
+        <button type="submit">Publish</button>
         </form>
         <br />
         <br />
@@ -12,6 +15,6 @@
 
         <pre>{{ msc.meeting | json }}</pre>
 
-
+        <a ng-click="msc.flush()">Flush</a>
 
     </div>

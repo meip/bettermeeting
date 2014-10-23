@@ -4,37 +4,59 @@ class MeetingStorageService
   @headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
   @defaultConfig = { headers: @headers }
 
-  constructor: (@$log, @$http, @$q) ->
-    @$log.debug "constructing MeetingService"
+  constructor: (@$log, @$http, @$q, @localStorageService, @$location) ->
+    @$log.debug "MeetingStorageService.constructor()"
 
-  listMeetings: () ->
-    @$log.debug "listMeetings()"
-    deferred = @$q.defer()
+  meetingFactory: (@id) ->
+    @$log.debug "meetingFactory()"
 
-    @$http.get("/api/meetings")
-    .success((data, status, headers) =>
-      @$log.info("Successfully listed Meetings - status #{status}")
-      deferred.resolve(data)
-    )
-    .error((data, status, headers) =>
-      @$log.info("Failed to list Meetings - status #{status}")
-      deferred.resolve(data);
-    )
-    deferred.promise
+    if @localStorageService.isSupported
+      if @id == undefined
+        @initializeMeeting()
+      else
+        return @localStorageService.get(@id)
+    else
+      @$log.debug "Storage not Supported"
+      return @createEmptyMeeting()
 
-  createMeeting: (meeting) ->
-    @$log.debug "createMeeting #{angular.toJson(meeting, true)}"
-    deferred = @$q.defer()
+  initializeMeeting: () ->
+    @$log.debug "initializeMeeting()"
+    @id = @createEmptyMeeting()
 
-    @$http.post('/api/meetings', meeting)
-    .success((data, status, user) =>
-      @$log.info("Successfully created Meeting - status #{status}")
-      deferred.resolve(data)
-    )
-    .error((data, status, headers) =>
-      @$log.error("Failed to create meeting - status #{status}")
-      deferred.reject(data);
-    )
-    deferred.promise
+    @localStorageService.set(@id, @meeting)
+
+    @saveMeetingLocal()
+
+    @$location.search(id: @id)
+
+  saveMeetingLocal: () ->
+    @localMeetings = @localStorageService.get("localMeetings")
+    if @localMeetings
+      @localMeetings.push(@id)
+    else
+      @localMeetings = [@id]
+    @localStorageService.set("localMeetings", @localMeetings)
+
+  createEmptyMeeting: () ->
+    @id = Date.now()
+    @meeting = {
+      id: @id,
+      goal: "",
+      time: "",
+      lastEdited: Date.now(),
+      published: false
+    }
+    return @id
+
+  set: (@id, @meeting) ->
+    @$log.debug "Save Meeting-ID: " + @id
+    @meeting.lastEdited = Date.now()
+    if @localStorageService.isSupported
+      @localStorageService.set(@id, @meeting)
+
+  flush: () ->
+    @$log.debug "Delete all Entries in DB"
+    @localStorageService.clearAll()
+
 
 servicesModule.service('MeetingStorageService', MeetingStorageService)
