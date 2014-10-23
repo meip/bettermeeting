@@ -10,6 +10,7 @@ GET     /api/randomUUID                 @controllers.Application.randomUUID
 
 # User management API
 GET     /api/users                      controllers.Users.list
+GET     /api/user/email/:email         controllers.Users.findByEmail(email: String)
 POST    /api/user                       controllers.Users.create
 
 # Meeting management API

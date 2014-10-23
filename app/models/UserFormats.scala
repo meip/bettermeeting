@@ -6,18 +6,19 @@ import play.api.libs.json.{Reads, JsPath, Writes}
 object UserFormats {
   implicit def userWrites: Writes[User] = (
     (JsPath \ "id").write[String] and
-      (JsPath \ "age").write[Int] and
-      (JsPath \ "firstname").write[String] and
-      (JsPath \ "lastname").write[String] and
+      (JsPath \ "email").write[String] and
+      (JsPath \ "firstName").write[String] and
+      (JsPath \ "lastName").write[String] and
       (JsPath \ "active").write[Boolean]
-    )(user => (user._id.stringify, user.age, user.firstName, user.lastName, user.active))
+    )(user => (user._id.stringify, user.email, user.firstName, user.lastName, user.active))
 
   implicit def userListWrites: Writes[List[User]] = Writes.list(userWrites)
 
   implicit def userReads: Reads[User] = (
-    (JsPath \ "age").read[Int] and
+    (JsPath \ "email").read[String] and
       (JsPath \ "firstName").read[String] and
-      (JsPath \ "lastName").read[String]
-    )((age, firstName, lastName) => User(age = age, firstName = firstName, lastName = lastName))
+      (JsPath \ "lastName").read[String] and
+      (JsPath \ "active").read[Boolean]
+    )((email, firstName, lastName, active) => User(email = email, firstName = firstName, lastName = lastName, active = active))
 
 }

@@ -44,15 +44,15 @@ object Users extends Controller with JsonDsl {
   }
 
   /**
-   * Lists all user for Firstname.
+   * Lists all user for E-Mail.
    *
-   * @param firstName Firstname attribute of users.
+   * @param email E-Mail attribute of users.
    * @return A Ok [[play.api.mvc.Result]]
    */
-  def listUser(firstName: String) = Action.async {
-    UserDao.listUsersByFirstname(firstName).map {
-      case Nil => Ok(Json.toJson(""))
-      case users => Ok(Json.toJson(users))
+  def findByEmail(email: String) = Action.async {
+    UserDao.findByEMail(email).map {
+      case None => Ok(Json.toJson(""))
+      case user => Ok(Json.toJson(user))
     }
   }
 

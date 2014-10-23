@@ -5,12 +5,12 @@ import play.api.libs.json.Json
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.api.indexes.{Index, IndexType}
+import reactivemongo.api.indexes.IndexType.Ascending
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dao.JsonDao
 import models.User
-import models.User._
-
-import reactivemongo.extensions.json.dsl.JsonDsl._
+import models.UserFormats._
 
 object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "users") {
 
@@ -23,14 +23,13 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
   def listUsers = UserDao.findAll()
 
   /**
-   * Lists users for firstname.
-   * Fetchs from database according to firstname.
+   * Finds user for E-Mail.
    *
-   * @param firstName Firstname attribute for for the [[User]] object.
-   * @return [[scala.concurrent.Future]] as a [[List]]
+   * @param email E-Mail attribute for for the [[User]] object.
+   * @return [[scala.concurrent.Future]] as a [[Option]]
    */
-  def listUsersByFirstname(firstName: String) = {
-    UserDao.findAll(selector = "firstName" $eq firstName, sort = "_id" $eq 1)
+  def findByEMail(email: String) = {
+    UserDao.findOne(Json.obj("email" -> email))
   }
 
   /**
@@ -52,5 +51,9 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
   def deleteUser(id: BSONObjectID) = {
     UserDao.removeById(id)
   }
+
+  override def autoIndexes = Seq(
+    Index(Seq("_id"-> Ascending, "email" -> Ascending)),
+    Index(Seq("email" -> IndexType.Ascending), unique = true))
 
 }
