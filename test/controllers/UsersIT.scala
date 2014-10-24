@@ -20,9 +20,7 @@ class UsersIT extends ApiTest {
 
   val timeout: FiniteDuration = FiniteDuration(5, TimeUnit.SECONDS)
 
-  def endPoint(): String = {
-    "user"
-  }
+  val endPoint = "user"
 
   "Users" should {
 
@@ -30,7 +28,7 @@ class UsersIT extends ApiTest {
       val request = FakeRequest.apply(POST, apiUrl).withJsonBody(Json.obj(
         "firstName" -> "Jack",
         "lastName" -> "London",
-        "age" -> 27,
+        "email" -> "jack.london@testmail.com",
         "active" -> true))
       val response = route(request)
       response.isDefined mustEqual true
@@ -42,11 +40,11 @@ class UsersIT extends ApiTest {
       val request = FakeRequest.apply(POST, apiUrl).withJsonBody(Json.obj(
         "firstName" -> 98,
         "lastName" -> "London",
-        "age" -> 27))
+        "email" -> "jack.london@testmail.com"))
       val response = route(request)
       response.isDefined mustEqual true
       val result = Await.result(response.get, timeout)
-      contentAsString(response.get) mustEqual "invalid json"
+      (contentAsJson(response.get) \ "status").as[String] mustEqual "NOT OK"
       result.header.status mustEqual BAD_REQUEST
     }
 

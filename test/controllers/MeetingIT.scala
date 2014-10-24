@@ -20,37 +20,18 @@ class MeetingIT extends ApiTest {
 
   val timeout: FiniteDuration = FiniteDuration(5, TimeUnit.SECONDS)
 
-  def endPoint(): String = {
-    "meetings"
-  }
-
-  val userOrganizer = Json.obj(
-    "firstName" -> "Jack",
-    "lastName" -> "London",
-    "age" -> 27,
-    "active" -> true)
-  val attendees = List(
-    Json.obj(
-      "firstName" -> "Michael",
-      "lastName" -> "SirAttendee",
-      "age" -> 29,
-      "active" -> true),
-    Json.obj(
-      "firstName" -> "Thomas",
-      "lastName" -> "AnotherAttendee",
-      "age" -> 23,
-      "active" -> true))
+  val endPoint = "meetings"
 
   val meetingFull = Json.obj(
-    "date" -> "2014-12-16",
+    "date" -> "16.12.2014 13:30",
     "goal" -> "Setup the Project test",
-    "organizer" -> userOrganizer,
-    "attendees" -> attendees)
+    "organizer" -> "peter@organizer.com",
+    "attendees" -> List("attendee1@attendee.com","attendee1@attendee.com"))
 
   val meetingNoGoal = Json.obj(
-    "date" -> "2014-12-16",
-    "organizer" -> userOrganizer,
-    "attendees" -> attendees)
+    "date" -> "16.12.2014 13:30",
+    "organizer" -> "peter@organizer.com",
+    "attendees" -> List("attendee1@attendee.com","attendee1@attendee.com"))
 
 
   "Meetings" should {
@@ -68,7 +49,7 @@ class MeetingIT extends ApiTest {
       val response = route(request)
       response.isDefined mustEqual true
       val result = Await.result(response.get, timeout)
-      contentAsString(response.get) mustEqual "invalid json"
+      (contentAsJson(response.get) \ "status").as[String] mustEqual "NOT OK"
       result.header.status mustEqual BAD_REQUEST
 
     }
@@ -81,7 +62,7 @@ class MeetingIT extends ApiTest {
 
       val resultList = route(FakeRequest.apply(GET, apiUrl)).get
       status(resultList) must equalTo(OK)
-      val theMeetingId = ((contentAsJson(resultList) \\ "_id").head \ "$oid").as[String]
+      val theMeetingId = ((contentAsJson(resultList) \\ "id").head \ "$oid").as[String]
 
       val theMeeting = route(FakeRequest.apply(GET, apiUrl + "/" + theMeetingId)).get
       status(theMeeting) must equalTo(OK)

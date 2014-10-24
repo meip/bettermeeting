@@ -34,7 +34,7 @@ object Users extends Controller with JsonDsl {
       },
       user => {
         UserDao.createUser(user).map(
-          _ => Ok(Json.obj("status" -> "OK", "message" -> s"User ${user.firstName} created."))).recover {
+          _ => Created(Json.obj("status" -> "OK", "message" -> s"User ${user.firstName} created."))).recover {
           case t: Throwable =>
             Logger.error("CREATE ERROR", t)
             InternalServerError("Unknown error (CREATE).")

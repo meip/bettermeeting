@@ -6,9 +6,8 @@ trait ApiTest extends Specification {
 
   val apiPrefix = "/api"
 
-  def endPoint(): String
+  val endPoint: String
 
-
-  def apiUrl = apiPrefix + "/" + endPoint()
+  def apiUrl = apiPrefix + "/" + endPoint
 
 }
