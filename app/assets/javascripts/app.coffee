@@ -31,7 +31,10 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/users/create', {
                 templateUrl: '/assets/partials/users/create.html'
             })
-            .when('/meetings/test', {
+            .when('/test/create', {
+              templateUrl: '/assets/partials/meetingstorage/create.html'
+            })
+            .when('/test/view', {
               templateUrl: '/assets/partials/meetingstorage/view.html'
             })
             .otherwise({redirectTo: '/'})

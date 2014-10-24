@@ -14,7 +14,8 @@ class MeetingStorageService
       if _id == undefined
         @initializeMeeting()
       else
-        return @localStorageService.get(_id)
+        localMeeting = @localStorageService.get(_id)
+        return localMeeting
     else
       @$log.debug "Storage not Supported"
       return @createEmptyMeeting()
@@ -27,7 +28,7 @@ class MeetingStorageService
 
     @saveMeetingLocal(meeting)
 
-    @$location.search(_id: meeting._id)
+    @$location.search(id: meeting._id)
 
   saveMeetingLocal: (meeting) ->
     localMeetings = @localStorageService.get("localMeetings")
@@ -63,17 +64,17 @@ class MeetingStorageService
     return meeting
 
   set: (_id, meeting) ->
-    @$log.debug "Save Meeting-ID: " + _id
+    @$log.info "Save Meeting-_id: " + _id
     meeting.lastEdited = Date.now()
     if @localStorageService.isSupported
       @localStorageService.set(_id, meeting)
 
   flush: () ->
-    @$log.debug "Delete all Entries in DB"
+    @$log.info "Delete all Entries in LocalDB"
     @localStorageService.clearAll()
 
   publishMeeting: (meeting) ->
-    @$log.debug "publishMeeting #{angular.toJson(meeting, true)}"
+    @$log.info "publishMeeting #{angular.toJson(meeting, true)}"
     deferred = @$q.defer()
 
     if meeting.published
@@ -84,7 +85,9 @@ class MeetingStorageService
     deferred.promise
 
   publishNewMeeting: (meeting, deferred) ->
-    @$log.debug "publish New Meeting"
+    @$log.debug "MeetingStorageService.publishNewMeeting()"
+
+    meeting.published = true
 
     @$http.post('/api/meetings', meeting)
     .success((data, status, user) =>
@@ -98,7 +101,7 @@ class MeetingStorageService
     )
 
   publishChangedMeeting: (meeting, deferred) ->
-    @$log.debug "publish Changed Meeting"
+    @$log.debug "MeetingStorageService.publishChangedMeeting()"
 
     @$http.put('/api/meetings', meeting)
     .success((data, status, user) =>
@@ -109,5 +112,48 @@ class MeetingStorageService
       @$log.error("Failed to changed meeting - status #{status}")
       deferred.reject(data);
     )
+
+  getLocalMeetings: () ->
+    @$log.debug "MeetingStorageService.getLocalMeetings()"
+
+    localMeetingIndexes = @localStorageService.get("localMeetings")
+    localMeetings = []
+
+    for index in localMeetingIndexes
+      localMeetings.push(@localStorageService.get(index))
+
+    return localMeetings
+
+  getRemoteMeetings: () ->
+    @$log.debug "MeetingStorageService.getRemoteMeetings()"
+    deferred = @$q.defer()
+
+    @$http.get("/api/meetings")
+    .success((data, status, headers) =>
+      @$log.info("Successfully listed Meetings - status #{status}")
+      deferred.resolve(data)
+    )
+    .error((data, status, headers) =>
+      @$log.info("Failed to list Meetings - status #{status}")
+      deferred.resolve(data);
+    )
+    deferred.promise
+
+  getRemoteMeeting: (_id) ->
+    @$log.debug "MeetingStorageService.getRemoteMeeting(_id)"
+    deferred = @$q.defer()
+
+    @$http.get("/api/meetings/" )
+    .success((data, status, headers) =>
+      @$log.info("Successfully listed Meetings - status #{status}")
+      deferred.resolve(data)
+    )
+    .error((data, status, headers) =>
+      @$log.info("Failed to list Meetings - status #{status}")
+      deferred.resolve(data);
+    )
+    deferred.promise
+
+
 
 servicesModule.service('MeetingStorageService', MeetingStorageService)

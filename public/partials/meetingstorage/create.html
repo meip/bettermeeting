@@ -9,11 +9,9 @@
                ng-blur="msc.updateDatabase()">
         <button type="submit">Publish</button>
         </form>
-        <br />
-        <br />
-        <br />
-
-        <pre>{{ msc.meeting | json }}</pre>
+        <hr>
+        <h4>Debug:</h4>
+        <pre>{{ mc.meetings | json }}</pre>
 
         <a ng-click="msc.flush()">Flush</a>
 

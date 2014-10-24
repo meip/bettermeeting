@@ -4,14 +4,14 @@ class MeetingStorageCtrl
 
   constructor: (@$log, @$location, @$routeParams, @MeetingStorageService) ->
     @$log.debug "MeetingStorageCtrl.constructor()"
-    @_id = @$routeParams._id
+    @_id = @$routeParams.id
     @meeting = @MeetingStorageService.meetingFactory(@_id)
 
   flush: () ->
     @MeetingStorageService.flush()
 
   updateDatabase: () ->
-    @MeetingStorageService.set(@_id, @meeting)
+    @MeetingStorageService.set(@__id, @meeting)
 
   publishMeeting: () ->
     @$log.debug "publishMeeting()"

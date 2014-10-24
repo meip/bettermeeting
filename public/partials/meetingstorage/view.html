@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
 
-</body>
-</html>
+    <div ng-controller="MeetingStorageViewCtrl as msvc">
+        <h2>Local Meetings</h2>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>_id</th>
+                    <th>goal</th>
+                    <th>date</th>
+                    <th>organizer</th>
+                    <th>lastEdited</th>
+                    <th>published</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="meeting in msvc.meetings.localMeetings">
+                    <td><a ng-href="/#/test/create?id={{meeting._id}}">{{meeting._id}}</a></td>
+                    <td>{{meeting.goal}}</td>
+                    <td>{{meeting.date}}</td>
+                    <td>{{meeting.organizer}}</td>
+                    <td>{{meeting.lastEdited}}</td>
+                    <td>{{meeting.published}}</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <h2>Remote Meetings</h2>
+        <table style="width: 100%">
+            <thead>
+            <tr>
+                <th>_id</th>
+                <th>goal</th>
+                <th>date</th>
+                <th>organizer</th>
+                <th>lastEdited</th>
+                <th>published</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="meeting in msvc.meetings.remoteMeetings">
+                    <td><a ng-href="/#/test/create?id={{meeting._id}}">{{meeting._id}}</a></td>
+                    <td>{{meeting.goal}}</td>
+                    <td>{{meeting.date}}</td>
+                    <td>{{meeting.organizer}}</td>
+                    <td>{{meeting.lastEdited}}</td>
+                    <td>{{meeting.published}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4>Debug:</h4>
+        <pre>{{ msvc.meetings | json }}</pre>
+
+    </div>
