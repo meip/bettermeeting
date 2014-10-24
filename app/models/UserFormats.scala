@@ -1,9 +1,9 @@
 package models
 
+import extensions.BSONFormatsBM._
 import play.api.libs.functional.syntax._
-import play.api.libs.json.{Reads, JsPath, Writes}
+import play.api.libs.json.{JsPath, Reads, Writes}
 import reactivemongo.bson.BSONObjectID
-import play.modules.reactivemongo.json.BSONFormats._
 
 object UserFormats {
   implicit def userWrites: Writes[User] = (

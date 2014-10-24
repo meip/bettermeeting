@@ -2,10 +2,10 @@ package models
 
 
 import com.github.nscala_time.time.Imports.DateTime
+import extensions.BSONFormatsBM._
 import play.api.libs.functional.syntax._
-import play.api.libs.json.{Reads, JsPath, Writes}
+import play.api.libs.json.{JsPath, Reads, Writes}
 import reactivemongo.bson.BSONObjectID
-import play.modules.reactivemongo.json.BSONFormats._
 
 object MeetingFormats {
   implicit val datetimeOptionReads = Reads.optionWithNull(Reads.jodaDateReads("dd.MM.yyyy HH:mm"))

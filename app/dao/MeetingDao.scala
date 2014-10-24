@@ -2,12 +2,12 @@ package dao
 
 package dao
 
+import extensions.BSONFormatsBM._
 import models.Meeting
 import models.MeetingFormats._
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.modules.reactivemongo.ReactiveMongoPlugin
-import play.modules.reactivemongo.json.BSONFormats._
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dao.JsonDao
 

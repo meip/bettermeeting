@@ -64,7 +64,7 @@ class MeetingIT extends ApiTest {
 
       val resultList = route(FakeRequest.apply(GET, apiUrl)).get
       status(resultList) must equalTo(OK)
-      val theMeetingId = ((contentAsJson(resultList) \\ "_id").head \ "$oid").as[String]
+      val theMeetingId = ((contentAsJson(resultList) \\ "_id").head \ "oid").as[String]
 
       val theMeeting = route(FakeRequest.apply(GET, apiUrl + "/" + theMeetingId)).get
       status(theMeeting) must equalTo(OK)

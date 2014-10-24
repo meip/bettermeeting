@@ -1,16 +1,16 @@
 package dao
 
-import play.api.Play.current
-import play.api.libs.json.Json
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.modules.reactivemongo.ReactiveMongoPlugin
-import play.modules.reactivemongo.json.BSONFormats._
-import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.api.indexes.IndexType.Ascending
-import reactivemongo.bson.BSONObjectID
-import reactivemongo.extensions.json.dao.JsonDao
+import extensions.BSONFormatsBM._
 import models.User
 import models.UserFormats._
+import play.api.Play.current
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.json.Json
+import play.modules.reactivemongo.ReactiveMongoPlugin
+import reactivemongo.api.indexes.IndexType.Ascending
+import reactivemongo.api.indexes.{Index, IndexType}
+import reactivemongo.bson.BSONObjectID
+import reactivemongo.extensions.json.dao.JsonDao
 
 object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "users") {
 
@@ -53,7 +53,7 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
   }
 
   override def autoIndexes = Seq(
-    Index(Seq("_id"-> Ascending, "email" -> Ascending)),
+    Index(Seq("_id" -> Ascending, "email" -> Ascending)),
     Index(Seq("email" -> IndexType.Ascending), unique = true))
 
 }
