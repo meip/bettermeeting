@@ -26,12 +26,14 @@ class MeetingIT extends ApiTest {
     "date" -> "16.12.2014 13:30",
     "goal" -> "Setup the Project test",
     "organizer" -> "peter@organizer.com",
-    "attendees" -> List("attendee1@attendee.com","attendee1@attendee.com"))
+    "attendees" -> List("attendee1@attendee.com","attendee1@attendee.com"),
+    "published" -> true)
 
   val meetingNoGoal = Json.obj(
     "date" -> "16.12.2014 13:30",
     "organizer" -> "peter@organizer.com",
-    "attendees" -> List("attendee1@attendee.com","attendee1@attendee.com"))
+    "attendees" -> List("attendee1@attendee.com","attendee1@attendee.com"),
+    "published" -> true)
 
 
   "Meetings" should {
@@ -62,7 +64,7 @@ class MeetingIT extends ApiTest {
 
       val resultList = route(FakeRequest.apply(GET, apiUrl)).get
       status(resultList) must equalTo(OK)
-      val theMeetingId = ((contentAsJson(resultList) \\ "id").head \ "$oid").as[String]
+      val theMeetingId = ((contentAsJson(resultList) \\ "_id").head \ "$oid").as[String]
 
       val theMeeting = route(FakeRequest.apply(GET, apiUrl + "/" + theMeetingId)).get
       status(theMeeting) must equalTo(OK)
