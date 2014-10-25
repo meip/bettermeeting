@@ -10,21 +10,24 @@ case class Meeting(
                     organizer: String,
                     attendees: List[String],
                     override var created: Option[Long],
-                    override var updated: Option[Long]
+                    override var updated: Option[Long],
+                    meetingPoints: List[MeetingPoint]
                     ) extends TemporalModel
+
+
+case class MeetingPoint(
+                         _id: Option[BSONObjectID],
+                         subject: Option[String],
+                         lastEditor: Option[BSONObjectID],
+                         owner: Option[BSONObjectID],
+                         dueDate: Option[DateTime],
+                         pointType: String,
+                         dateCompleted: Option[DateTime],
+                         override var created: Option[DateTime],
+                         override var updated: Option[DateTime]
+                         ) extends TemporalModel
 
 case class PointType(
                       _id: BSONObjectID = BSONObjectID.generate,
-                      typeName: String,
-                      hasOwner: Boolean
+                      typeName: String
                       )
-
-case class MeetingPoint(
-                         _id: BSONObjectID = BSONObjectID.generate,
-                         lastEditDate: DateTime,
-                         subject: Option[String],
-                         lastEditor: Option[User],
-                         owner: Option[User],
-                         dueDate: Option[DateTime],
-                         pointType: Option[PointType]
-                         )
