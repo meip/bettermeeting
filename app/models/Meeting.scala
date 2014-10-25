@@ -10,7 +10,7 @@ case class Meeting(
                     organizer: String,
                     attendees: List[String],
                     override var created: Option[DateTime],
-                    override var updated: Option[Long],
+                    override var updated: Option[DateTime],
                     meetingPoints: List[MeetingPoint]
                     ) extends TemporalModel
 
@@ -18,13 +18,13 @@ case class Meeting(
 case class MeetingPoint(
                          _id: Option[BSONObjectID],
                          subject: Option[String],
-                         lastEditor: Option[BSONObjectID],
-                         owner: Option[BSONObjectID],
+                         lastEditor: Option[String],
+                         owner: Option[String],
                          dueDate: Option[DateTime],
                          pointType: String,
                          dateCompleted: Option[DateTime],
                          override var created: Option[DateTime],
-                         override var updated: Option[Long]
+                         override var updated: Option[DateTime]
                          ) extends TemporalModel
 
 case class PointType(

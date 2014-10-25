@@ -36,9 +36,15 @@ class OfflineCreationMeetingCreateCtrl
       goal: "Test",
       organizer: "Test",
       created: actualTime,
-      updated: actualTime,
       remote: false,
-      attendees: [""]
+      attendees: [""],
+      meetingPoints: [
+        subject: "Test",
+        lastEditor: "Test",
+        owner: "Test",
+        dueDate: "16.10.2014 16:30",
+        pointType: "Test"
+      ]
     }
     @saveLocalMeeting(meeting)
     @$location.path("/offlinecreation/create").search(id: meeting._id.oid).replace();
@@ -64,9 +70,8 @@ class OfflineCreationMeetingCreateCtrl
       date: @meeting.date,
       goal: @meeting.goal,
       organizer: @meeting.organizer,
-      created: @meeting.created,
-      updated: @meeting.updated,
-      attendees: @meeting.attendees
+      attendees: @meeting.attendees,
+      meetingPoints: @meeting.meetingPoints
     }
     if @meeting._id.oid.length ==24
       toPublish._id = {}
@@ -93,7 +98,7 @@ class OfflineCreationMeetingCreateCtrl
       )
 
   removeLocalMeeting: (meetingId) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.removeLocalMeeting("  + meetingId +")"
+    @$log.debug "OfflineCreationMeetingCreateCtrl.removeLocalMeeting("  + meetingId + ")"
     localMeetings = @localStorageService.get("localMeetings")
     index = localMeetings.indexOf(meetingId);
     if index > -1

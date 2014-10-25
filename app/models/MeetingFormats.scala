@@ -13,25 +13,25 @@ object MeetingFormats {
   implicit def meetingPointWrites: Writes[MeetingPoint] = (
     (JsPath \ "_id").writeNullable[BSONObjectID] and
       (JsPath \ "subject").writeNullable[String] and
-      (JsPath \ "lastEditor").writeNullable[BSONObjectID] and
-      (JsPath \ "owner").writeNullable[BSONObjectID] and
+      (JsPath \ "lastEditor").writeNullable[String] and
+      (JsPath \ "owner").writeNullable[String] and
       (JsPath \ "dueDate").writeNullable[DateTime] and
       (JsPath \ "pointType").write[String] and
       (JsPath \ "dateCompleted").writeNullable[DateTime] and
       (JsPath \ "created").writeNullable[DateTime] and
-      (JsPath \ "updated").writeNullable[Long]
+      (JsPath \ "updated").writeNullable[DateTime]
     )(meetingPoint => (meetingPoint._id, meetingPoint.subject, meetingPoint.lastEditor, meetingPoint.owner, meetingPoint.dueDate, meetingPoint.pointType, meetingPoint.dateCompleted, meetingPoint.created, meetingPoint.updated))
 
   implicit def meetingPointReads: Reads[MeetingPoint] = (
     (JsPath \ "_id").readNullable[BSONObjectID].map(_.getOrElse(BSONObjectID.generate)).map(Some(_)) and
       (JsPath \ "subject").readNullable[String] and
-      (JsPath \ "lastEditor").readNullable[BSONObjectID] and
-      (JsPath \ "owner").readNullable[BSONObjectID] and
+      (JsPath \ "lastEditor").readNullable[String] and
+      (JsPath \ "owner").readNullable[String] and
       (JsPath \ "dueDate").readNullable[DateTime] and
       (JsPath \ "pointType").read[String] and
       (JsPath \ "dateCompleted").readNullable[DateTime] and
       (JsPath \ "created").readNullable[DateTime] and
-      (JsPath \ "updated").readNullable[Long]
+      (JsPath \ "updated").readNullable[DateTime]
     )((_id, subject, lastEditor, owner, dueDate, pointType, dateCompleted, created, updated) => MeetingPoint(_id = _id, subject = subject, lastEditor = lastEditor, owner = owner, dueDate = dueDate, pointType = pointType, dateCompleted = dateCompleted, created = created, updated = updated))
 
   implicit def meetingWrites: Writes[Meeting] = (
@@ -41,7 +41,7 @@ object MeetingFormats {
       (JsPath \ "organizer").write[String] and
       (JsPath \ "attendees").write[List[String]] and
       (JsPath \ "created").writeNullable[DateTime] and
-      (JsPath \ "updated").writeNullable[Long] and
+      (JsPath \ "updated").writeNullable[DateTime] and
       (JsPath \ "meetingPoints").write[List[MeetingPoint]]
     )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.created, meeting.updated, meeting.meetingPoints))
 
@@ -54,7 +54,7 @@ object MeetingFormats {
       (JsPath \ "organizer").read[String] and
       (JsPath \ "attendees").read[List[String]] and
       (JsPath \ "created").readNullable[DateTime] and
-      (JsPath \ "updated").readNullable[Long] and
+      (JsPath \ "updated").readNullable[DateTime] and
       (JsPath \ "meetingPoints").readNullable[List[MeetingPoint]]
     )((_id, date, goal, organizer, attendees, created, updated, meetingPoints) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, attendees = attendees, created = created, updated = updated, meetingPoints = meetingPoints.getOrElse(Nil)))
 
