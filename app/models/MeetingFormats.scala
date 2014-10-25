@@ -18,7 +18,7 @@ object MeetingFormats {
       (JsPath \ "dueDate").writeNullable[DateTime] and
       (JsPath \ "pointType").write[String] and
       (JsPath \ "dateCompleted").writeNullable[DateTime] and
-      (JsPath \ "created").writeNullable[Long] and
+      (JsPath \ "created").writeNullable[DateTime] and
       (JsPath \ "updated").writeNullable[Long]
     )(meetingPoint => (meetingPoint._id, meetingPoint.subject, meetingPoint.lastEditor, meetingPoint.owner, meetingPoint.dueDate, meetingPoint.pointType, meetingPoint.dateCompleted, meetingPoint.created, meetingPoint.updated))
 
@@ -30,7 +30,7 @@ object MeetingFormats {
       (JsPath \ "dueDate").readNullable[DateTime] and
       (JsPath \ "pointType").read[String] and
       (JsPath \ "dateCompleted").readNullable[DateTime] and
-      (JsPath \ "created").readNullable[Long] and
+      (JsPath \ "created").readNullable[DateTime] and
       (JsPath \ "updated").readNullable[Long]
     )((_id, subject, lastEditor, owner, dueDate, pointType, dateCompleted, created, updated) => MeetingPoint(_id = _id, subject = subject, lastEditor = lastEditor, owner = owner, dueDate = dueDate, pointType = pointType, dateCompleted = dateCompleted, created = created, updated = updated))
 
@@ -40,11 +40,10 @@ object MeetingFormats {
       (JsPath \ "goal").write[String] and
       (JsPath \ "organizer").write[String] and
       (JsPath \ "attendees").write[List[String]] and
-      (JsPath \ "published").write[Boolean] and
-      (JsPath \ "created").writeNullable[Long] and
+      (JsPath \ "created").writeNullable[DateTime] and
       (JsPath \ "updated").writeNullable[Long] and
       (JsPath \ "meetingPoints").write[List[MeetingPoint]]
-    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.published, meeting.created, meeting.updated, meeting.meetingPoints))
+    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.created, meeting.updated, meeting.meetingPoints))
 
   implicit def meetingListWrites: Writes[List[Meeting]] = Writes.list(meetingWrites)
 
@@ -54,11 +53,10 @@ object MeetingFormats {
       (JsPath \ "goal").read[String] and
       (JsPath \ "organizer").read[String] and
       (JsPath \ "attendees").read[List[String]] and
-      (JsPath \ "published").read[Boolean] and
-      (JsPath \ "created").readNullable[Long] and
+      (JsPath \ "created").readNullable[DateTime] and
       (JsPath \ "updated").readNullable[Long] and
       (JsPath \ "meetingPoints").readNullable[List[MeetingPoint]]
-    )((_id, date, goal, organizer, attendees, published, created, updated, meetingPoints) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, attendees = attendees, published = published, created = created, updated = updated, meetingPoints = meetingPoints.getOrElse(Nil)))
+    )((_id, date, goal, organizer, attendees, created, updated, meetingPoints) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, attendees = attendees, created = created, updated = updated, meetingPoints = meetingPoints.getOrElse(Nil)))
 
   implicit object MeetingModelLifeCylce extends TemporalModelLifeCycle[Meeting]
   implicit object MeetingPointModelLifeCylce extends TemporalModelLifeCycle[MeetingPoint]
