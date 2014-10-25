@@ -19,10 +19,9 @@ object MeetingFormats {
       (JsPath \ "goal").write[String] and
       (JsPath \ "organizer").write[String] and
       (JsPath \ "attendees").write[List[String]] and
-      (JsPath \ "published").write[Boolean] and
-      (JsPath \ "created").writeNullable[DateTime] and
-      (JsPath \ "updated").writeNullable[DateTime]
-    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.published, meeting.created, meeting.updated))
+      (JsPath \ "created").writeNullable[Long] and
+      (JsPath \ "updated").writeNullable[Long]
+    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.created, meeting.updated))
 
   implicit def meetingListWrites: Writes[List[Meeting]] = Writes.list(meetingWrites)
 
@@ -32,9 +31,8 @@ object MeetingFormats {
       (JsPath \ "goal").read[String] and
       (JsPath \ "organizer").read[String] and
       (JsPath \ "attendees").read[List[String]] and
-      (JsPath \ "published").read[Boolean] and
-      (JsPath \ "created").readNullable[DateTime] and
-      (JsPath \ "updated").readNullable[DateTime]
-    )((_id, date, goal, organizer, attendees, published, created, updated) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, attendees = attendees, published = published, created = created, updated = updated))
+      (JsPath \ "created").readNullable[Long] and
+      (JsPath \ "updated").readNullable[Long]
+    )((_id, date, goal, organizer, attendees, created, updated) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, attendees = attendees, created = created, updated = updated))
 
 }

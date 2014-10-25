@@ -20,22 +20,22 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
                 templateUrl: '/assets/partials/home.html'
             })
             .when('/meetings', {
-                templateUrl: '/assets/partials/meetings/view.html'
+                templateUrl: '/assets/partials/meetings/list.html'
             })
             .when('/meetings/create', {
                 templateUrl: '/assets/partials/meetings/create.html'
             })
             .when('/users', {
-                templateUrl: '/assets/partials/users/view.html'
+                templateUrl: '/assets/partials/users/list.html'
             })
             .when('/users/create', {
                 templateUrl: '/assets/partials/users/create.html'
             })
-            .when('/test/create', {
-              templateUrl: '/assets/partials/meetingstorage/create.html'
+            .when('/offline/create', {
+              templateUrl: '/assets/partials/offline/create.html'
             })
-            .when('/test/view', {
-              templateUrl: '/assets/partials/meetingstorage/view.html'
+            .when('/offline/list', {
+              templateUrl: '/assets/partials/offline/list.html'
             })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])

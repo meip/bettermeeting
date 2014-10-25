@@ -1,0 +1,65 @@
+
+<div ng-controller="OfflineMeetingListCtrl as omlc">
+    <h4>Actions</h4>
+    <a href="/#/offline/create">Create new Meeting</a>
+    <h2>Local Meetings</h2>
+    <table style="width:100%">
+        <thead>
+        <tr>
+            <th>_id.oid</th>
+            <th>goal</th>
+            <th>date</th>
+            <th>organizer</th>
+            <th>created</th>
+            <th>updated</th>
+            <th>attendees</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="meeting in omlc.meetings.localMeetings">
+            <td><a ng-href="/#/offline/create?id={{meeting._id.oid}}">{{meeting._id.oid}}</a></td>
+            <td>{{meeting.goal}}</td>
+            <td>{{meeting.date}}</td>
+            <td>{{meeting.organizer}}</td>
+            <td>{{meeting.created | date:'dd.MM.yyyy hh:mm'}}</td>
+            <td>{{meeting.updated}}</td>
+            <td><span ng-repeat="attendee in meeting.attendees track by $index">{{meeting.attendees[$index]}}<br /></span></td>
+            <td><a ng-click="omlc.removeMeeting(meeting._id.oid)">Delete</a></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <h2>Remote Meetings</h2>
+    <table style="width: 100%">
+        <thead>
+        <tr>
+            <th>_id.oid</th>
+            <th>goal</th>
+            <th>date</th>
+            <th>organizer</th>
+            <th>created</th>
+            <th>updated</th>
+            <th>attendees</th>
+            <th>delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="meeting in omlc.meetings.remoteMeetings">
+            <td><a ng-href="/#/offline/create?id={{meeting._id.oid}}">{{meeting._id.oid}}</a></td>
+            <td>{{meeting.goal}}</td>
+            <td>{{meeting.date}}</td>
+            <td>{{meeting.organizer}}</td>
+            <td>{{meeting.created | date:'dd.MM.yyyy hh:mm'}}</td>
+            <td>{{meeting.updated}}</td>
+            <td><span ng-repeat="attendee in meeting.attendees track by $index">{{meeting.attendees[$index]}}<br /></span></td>
+            <td><a ng-click="omlc.removeMeeting(meeting._id.oid)">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h4>Debug:</h4>
+    <pre>{{ omlc.meetings | json }}</pre>
+
+</div>
