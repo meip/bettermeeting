@@ -112,13 +112,31 @@ class OfflineCreationMeetingCreateCtrl
     @localStorageService.set(@meeting._id.oid, @meeting)
 
   addAttendee: () ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.updateDatabase()"
+    @$log.debug "OfflineCreationMeetingCreateCtrl.addAttendee()"
     @meeting.attendees.push("")
     @updateDatabase()
 
   removeAttendee: (index) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.updateDatabase()"
-    @meeting.attendees.splice(index, 1)
+    @$log.debug "OfflineCreationMeetingCreateCtrl.removeAttendee()"
+    if @meeting.attendees.length > 1
+      @meeting.attendees.splice(index, 1)
+    @updateDatabase()
+
+  addMeetingPoint: () ->
+    @$log.debug "OfflineCreationMeetingCreateCtrl.addMeetingPoint()"
+    @meeting.meetingPoints.push({
+      subject: "Test",
+      lastEditor: "Test",
+      owner: "Test",
+      dueDate: "16.10.2014 16:30",
+      pointType: "Test"
+    })
+    @updateDatabase()
+
+  removeMeetingPoint: (index) ->
+    @$log.debug "OfflineCreationMeetingCreateCtrl.addMeetingPoint()"
+    if @meeting.meetingPoints.length > 1
+      @meeting.meetingPoints.splice(index, 1)
     @updateDatabase()
 
 controllersModule.controller('OfflineCreationMeetingCreateCtrl', OfflineCreationMeetingCreateCtrl)
