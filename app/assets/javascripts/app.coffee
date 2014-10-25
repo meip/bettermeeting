@@ -37,6 +37,12 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/offline/list', {
               templateUrl: '/assets/partials/offline/list.html'
             })
+            .when('/offlinecreation/create', {
+                templateUrl: '/assets/partials/offlinecreation/create.html'
+            })
+            .when('/offlinecreation/list', {
+                templateUrl: '/assets/partials/offlinecreation/list.html'
+            })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])
 @controllersModule = angular.module('bmApp.controllers', [])

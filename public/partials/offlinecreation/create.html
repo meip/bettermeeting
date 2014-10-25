@@ -1,0 +1,43 @@
+
+<div ng-controller="OfflineCreationMeetingCreateCtrl as omcc">
+
+
+    <form ng-submit="omcc.publishMeeting()">
+        <h1>Header</h1>
+        Goal: <input type="text" placeholder="goal" ng-model="omcc.meeting.goal"
+               ng-blur="omcc.updateDatabase()"><br />
+        Date: <input type="text" placeholder="time" ng-model="omcc.meeting.date"
+               ng-blur="omcc.updateDatabase()"><br />
+        Organizer: <input type="text" placeholder="organizer" ng-model="omcc.meeting.organizer"
+               ng-blur="omcc.updateDatabase()"><br />
+        <h4>Attendees</h4>
+        <table>
+            <tr ng-repeat="attendee in omcc.meeting.attendees track by $index">
+                <td><span ng-show="$index == 0">Attendees: </span></td>
+                <td><input type="text" placeholder="attendee" ng-model="omcc.meeting.attendees[$index]"
+                           ng-blur="omcc.updateDatabase()"></td>
+                <td><a ng-click="omcc.removeAttendee($index)">Remove</a></td>
+            </tr>
+        </table>
+        <a ng-click="omcc.addAttendee()">Add Attendee</a><br />
+
+        <h4>Information</h4>
+        ID: {{omcc.meeting._id.oid}}<br />
+        Created: {{omcc.meeting.created}}<br />
+        Updated: {{omcc.meeting.updated}}<br />
+
+        <h4>Actions</h4>
+        <button type="submit" ng-hide="omcc.meeting.remote">Publish</button>
+        <button type="submit" ng-show="omcc.meeting.remote">Save</button>
+        <a href="/#/offlinecreation/list">Back</a>
+
+    </form>
+    <hr>
+    <h4>Debug:</h4>
+    <pre>{{ omcc.meeting | json }}</pre>
+
+    <a ng-click="omcc.flush()">Flush</a>
+</div>
+
+
+
