@@ -8,7 +8,8 @@ dependencies = [
     'bmApp.directives',
     'bmApp.common',
     'bmApp.routeConfig',
-    'bmApp.localStorage'
+    'bmApp.localStorage',
+    'bmApp.factories'
 ]
 
 app = angular.module('bmApp', dependencies)
@@ -43,10 +44,20 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/offlinecreation/list', {
                 templateUrl: '/assets/partials/offlinecreation/list.html'
             })
+            .when('/login', {
+              templateUrl: '/assets/partials/login/login.html',
+              public: true,
+              login: true
+            })
+            .when('/signup', {
+              templateUrl: '/assets/partials/login/signup.html',
+              public: true
+            })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])
 @controllersModule = angular.module('bmApp.controllers', [])
 @servicesModule = angular.module('bmApp.services', [])
+@factoriesModule = angular.module('bmApp.factories', [])
 @modelsModule = angular.module('bmApp.models', [])
 @directivesModule = angular.module('bmApp.directives', [])
 @filtersModule = angular.module('bmApp.filters', [])

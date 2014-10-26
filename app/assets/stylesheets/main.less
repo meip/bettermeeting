@@ -1,6 +1,5 @@
 @import "lib/bootstrap/less/bootstrap.less";
 
-
 @tourquoise: #1ABC9C;
 @tourquoise-dark: #16A085;
 
@@ -34,7 +33,19 @@
 @white: #FFFFFF;
 @black: #000000;
 
+@dark-background: #323A41;
+@dark-background-navigation: #272D33;
 
+@dark-font-heading: #383F49;
+@dark-font: #555;
+
+/*
+.ng-pristine { border:1px solid Gold; }
+.ng-dirty.ng-valid { border:1px solid Green; }
+.ng-dirty.ng-invalid { border:1px solid Red; }
+.ng-dirty.ng-valid ~ span.ok { color:green; display:inline; }
+.ng-dirty.ng-invalid ~ span.ko { color:red; display:inline; }
+*/
 
 html {
   position: relative;
@@ -43,6 +54,16 @@ html {
 
 body{
   margin-bottom: 60px;
+  color: @dark-font;
+  font: 19px/1.6 'Arimo', 'Helvetica Neue', Helvetica, sans-serif;
+  background-color: @dark-background;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: @dark-font-heading;
 }
 
 .footer {
@@ -51,63 +72,30 @@ body{
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #f5f5f5;
+  background-color: @dark-background-navigation;
 }
 
 .container {
   width: auto;
   max-width: 1200px;
-  padding: 0 15px;
+  padding: 0 150px;
 }
 .container .text-muted {
   margin: 20px 0;
 }
 
-/* Klare Struktur erstellen */
-.form-horizontal .form-group {
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-.row {
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-.col-xs-1, .col-sm-1,
-.col-md-1, .col-lg-1,
-.col-xs-2, .col-sm-2,
-.col-md-2, .col-lg-2,
-.col-xs-3, .col-sm-3,
-.col-md-3, .col-lg-3,
-.col-xs-4, .col-sm-4,
-.col-md-4, .col-lg-4,
-.col-xs-5, .col-sm-5,
-.col-md-5, .col-lg-5,
-.col-xs-6, .col-sm-6,
-.col-md-6, .col-lg-6,
-.col-xs-7, .col-sm-7,
-.col-md-7, .col-lg-7,
-.col-xs-8, .col-sm-8,
-.col-md-8, .col-lg-8,
-.col-xs-9, .col-sm-9,
-.col-md-9, .col-lg-9,
-.col-xs-10, .col-sm-10,
-.col-md-10, .col-lg-10,
-.col-xs-11, .col-sm-11,
-.col-md-11, .col-lg-11,
-.col-xs-12, .col-sm-12,
-.col-md-12, .col-lg-12 {
-  padding-right: 0px;
-  padding-left: 0px;
-}
-
-/* Navigation */
 .navbar-default{
-  background-color: @dark-blue-dark;
+  font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+  background-color: @dark-background-navigation;
   border-color: @dark-blue-dark;
   background-image: none;
   border-radius: 0px;
+  text-transform: uppercase;
+  font-weight: 700;
+  .title {
+    font-weight: 900;
+    font-size: 120%;
+  }
 }
 .navbar-default .navbar-brand,
 .navbar-default .navbar-nav > li > a {
@@ -120,208 +108,189 @@ body{
   }
 }
 
-.meeting-notes{
-  padding: 50px;
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-  margin-bottom: 50px;
+
+.container {
+  padding: 0px 5px;
 }
 
-.meeting-control{
-  height: 42px;
-  padding: 8px 12px;
-  font-size: 15px;
-  line-height: 1.467;
-  color: @dark-blue;
-  border: 2px solid @grey-dark;
-  border-radius: 6px;
-  box-shadow: none;
-  &:focus{
-    border-color: #1abc9c;
-    outline: 0;
+
+.meeting{
+  background-color: @white;
+  padding: 100px 15px;
+  margin-top: 10px;
+  @media (min-width: 768px) {
+    padding: 100px;
+    margin-top: 50px;
+  }
+  // 1
+  .delete {
+    width: 30px;
+    text-align: right;
+
+  }
+  input {
+    border: 1px solid white;
     box-shadow: none;
+    &:hover{
+      background-color: lighten(@blue, 40%);
+    }
+    &:focus {
+      border: 1px solid @dark-blue;
+      box-shadow: none;
+      background-color: lighten(@blue, 20%);
+    }
   }
-}
-
-.meeting-control.ng-invalid.ng-dirty{
-  color: @red;
-  border-color: @red-dark;
-  box-shadow: none;
-}
-
-.meeting-control.ng-valid.ng-dirty{
-  color: @dark-blue;
-  border: 2px solid #FFF;
-  border-radius: 0px;
-  box-shadow: none;
-}
-
-.meeting-control[disabled]{
-  color: #d5dbdb;
-  cursor: default;
-  background-color: #f4f6f6;
-  border-color: #d5dbdb;
-  opacity: .7;
-}
-
-#goal{
-  font-size: 40px;
-  font-weight: 700;
-  line-height: 1.1;
-  height: 70px;
-}
-
-div.meeting-notes hr {
-  border-top: 3px solid @dark-blue;
-}
-
-
-
-.table-meeting-head{
-  width: 100%;
-
-  thead > tr > th {
-    padding-bottom: 30px;
-    border-bottom: 5px solid #34495E;
+  .meeting-header {
+    // 2
     input {
+      margin-bottom: 10px;
+    }
+    p {
+      padding-top: 7px;
+      color: @dark-grey-dark;
+    }
+
+    margin-bottom: 50px;
+    .meeting-header-goal {
+      //3
+      input {
+        font-size: 150%;
+        @media (min-width: 768px) {
+          font-size: 200%;
+        }
+        font-weight: 600;
+        line-height: 1.4;
+        height: 80px;
+        text-align: center;
+        color: @dark-font-heading;
+      }
+    }
+    .meeting-header-information {
+      // 4
+    }
+    .meeting-header-attendees {
+      // 5
+      h2{
+        font-size: 90%;
+      }
+      div.attendee {
+        padding: 0px 5px 0px 0px;
+        input {
+          background-color: @grey;
+          &:hover {
+            background-color: lighten(@blue, 40%);
+          }
+          &:focus {
+            background-color: lighten(@blue, 20%);
+          }
+        }
+        .ng-dirty.ng-valid { background-color: red; }
+        .input-group-btn {
+          vertical-align: top;
+        }
+      }
+    }
+  }
+  .meeting-body {
+    //6
+    margin-bottom: 50px;
+
+    table {
       width: 100%;
     }
-  }
+    thead {
+      // 7
 
-  tbody > tr > td {
-    padding-top: 30px;
-    input {
-      width: 100%;
     }
-  }
-}
+    tbody {
+      td {
+        height: 40px;
+      }
+      // 8
+      input {
+        margin: 2px;
+        background-color: darken(@grey, 10%);
+        &:hover {
+          background-color: lighten(@blue, 40%);
+        }
+        &:focus {
+          background-color: lighten(@blue, 20%);
+        }
+      }
+      select {
+        border: none;
+        box-shadow: none;
+        background-color: darken(@grey, 10%);
+      }
+      .todo{
+        input {
+          color: darken(@blue, 20%);
+        }
 
+        select {
+          color: @blue;
+          &:hover{
+            background-color: @blue;
+            color: @white;
+          }
+          &:focus{
+            background-color: @blue;
+            color: @white;
+          }
+        }
 
-.table-meetingnotes{
+      }
+      .decision{
+        input {
+          color: darken(@green, 20%);
+        }
+        select {
+          color: @green;
+          &:hover{
+            background-color: @green;
+            color: @white;
+          }
+          &:focus{
+            background-color: @green;
+            color: @white;
+          }
+        }
 
-  margin-top:33px;
+      }
+      .info{
+        input {
+          color: darken(@red, 20%);
+        }
+        select {
+          color: @red;
+          &:hover{
+            background-color: @red;
+            color: @white;
+          }
+          &:focus{
+            background-color: @green;
+            color: @white;
+          }
+        }
 
-    tbody > tr:nth-child(odd) > td {
-    background-color: @grey;
-    input{
-      border: 1px solid @grey;
-    }
-    .meeting-control.ng-valid.ng-dirty{
-      border: 1px solid @grey;
-    }
-
-  }
-
-  tbody > tr.todo > td{
-    color: @orange;
-    span.type {
-      background-color: @orange;
-      &:hover {
-        background-color: @orange-dark;
+      }
+      tr:nth-child(odd){
+        input {
+          background-color:@grey;
+          &:hover {
+            background-color: lighten(@blue, 40%);
+          }
+          &:focus {
+            background-color: lighten(@blue, 20%);
+          }
+        }
+        select {
+          background-color: @grey;
+        }
       }
     }
   }
-  tbody > tr.decision > td{
-    color: @blue;
-    span.type {
-      background-color: @blue;
-      &:hover {
-        background-color: @blue-dark;
-      }
-    }
-  }
-  tbody > tr.information > td{
-    color: @tourquoise;
-    span.type {
-      background-color: @tourquoise;
-      &:hover {
-        background-color: @tourquoise-dark;
-      }
-    }
-  }
+  .meeting-footer {
 
-  tbody > tr > td{
-    a{
-      &:link, &:visited {
-        color: @red;
-      }
-      &:hover{
-        color: @black;
-      }
-    }
-    span.type {
-      font-size: 100%;
-      border-radius: .5em;
-      padding: .3em .6em .3em;
-    }
-    input {
-      margin: 0;
-      font-size: 90%;
-      background: none;
-      height: auto !important;
-      border: 1px solid @white;
-      &:focus {
-        border: 1px solid @green;
-      }
-    }
-    select {
-
-    }
-  }
-
-
-}
-
-.testerich{
-  background-color: blue;
-}
-
-
-
-.btn-danger {
-  color: #fff;
-  background-color: @red;
-  border-color: @red-dark;
-  &:hover {
-    background-color: @red-dark;
   }
 }
-
-.btn-primary{
-  background-color: @dark-blue;
-  border-color: @dark-blue-dark;
-  &:hover{
-    background-color: @dark-blue-dark;
-  }
-}
-.btn-info{
-  background-color: @tourquoise;
-  border-color: @tourquoise-dark;
-  &:hover{
-    background-color: @tourquoise-dark;
-  }
-}
-
-/*
-div > .buttonbar {
-  margin-top:33px;
-  margin-bottom:33px;
-}
-
-label[for] {
-  font-size:80%;
-  color:@blue;
-}
-
-
-
-a{
-  color: @blue;
-  &:hover{
-    color: @blue-dark;
-  }
-}
-
-
-*/

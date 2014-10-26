@@ -5,24 +5,24 @@
 # ~~~~
 
 # Single endpoint for serving AngularJS
-GET     /                               @controllers.Application.index
-GET     /api/randomUUID                 @controllers.Application.randomUUID
+GET           /                                  @controllers.Application.index
+GET           /api/randomUUID                    @controllers.Application.randomUUID
 
 # User management API
-GET     /api/users                      controllers.Users.list
-GET     /api/user/email/:email         controllers.Users.findByEmail(email: String)
-POST    /api/user                       controllers.Users.create
+GET           /api/users                         controllers.Users.list
+GET           /api/user/email/:email             controllers.Users.findByEmail(email: String)
+POST          /api/user                          controllers.Users.create
 
 # Meeting management API
-GET         /api/meetings               @controllers.Meetings.list
-POST        /api/meetings               @controllers.Meetings.create
-DELETE      /api/meetings/:id           @controllers.Meetings.delete(id: BSONObjectID)
-GET         /api/meetings/:id           @controllers.Meetings.get(id: BSONObjectID)
-PUT         /api/meetings/:id           @controllers.Meetings.update(id: BSONObjectID)
+GET           /api/meetings                      @controllers.Meetings.list
+POST          /api/meetings                      @controllers.Meetings.create
+DELETE        /api/meetings/:id                  @controllers.Meetings.delete(id: BSONObjectID)
+GET           /api/meetings/:id                  @controllers.Meetings.get(id: BSONObjectID)
+PUT           /api/meetings/:id                  @controllers.Meetings.update(id: BSONObjectID)
 
 
-POST       /api/meetingpoints/push/:id @controllers.MeetingPoints.push(id: BSONObjectID)
+POST          /api/meetingpoints/push/:id        @controllers.MeetingPoints.push(id: BSONObjectID)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET           /assets/*file                      controllers.Assets.at(path="/public", file)
 

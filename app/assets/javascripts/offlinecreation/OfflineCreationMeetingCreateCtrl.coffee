@@ -107,7 +107,6 @@ class OfflineCreationMeetingCreateCtrl
     @localStorageService.remove(meetingId);
 
   updateDatabase: () ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.updateDatabase()"
     @meeting.updated = Date.now()
     @localStorageService.set(@meeting._id.oid, @meeting)
 
