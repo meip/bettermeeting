@@ -16,6 +16,19 @@ class MeetingPoints extends Controller with JsonDsl {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[MeetingPoints])
 
+  /**
+   * Get meetingpoints for a User.
+   *
+   * @param id ID of the user.
+   * @return A Ok [[play.api.mvc.Result]]
+   */
+  def owner(id: BSONObjectID) = Action.async {
+    MeetingDao.findMeetingPointsForOwner(id).map(meeting => Ok(Json.toJson(meeting))).recover {
+      case t: Throwable =>
+        logger.error("Find ERROR", t)
+        InternalServerError("Unknown error (Find).")
+    }
+  }
 
   /**
    * Push a MeetingPoint to a meeting
