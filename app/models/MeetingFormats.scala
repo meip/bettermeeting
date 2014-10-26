@@ -34,6 +34,8 @@ object MeetingFormats {
       (JsPath \ "updated").readNullable[DateTime]
     )((_id, subject, lastEditor, owner, dueDate, pointType, dateCompleted, created, updated) => MeetingPoint(_id = _id, subject = subject, lastEditor = lastEditor, owner = owner, dueDate = dueDate, pointType = pointType, dateCompleted = dateCompleted, created = created, updated = updated))
 
+  implicit def meetingPointListWrites: Writes[List[MeetingPoint]] = Writes.list(meetingPointWrites)
+
   implicit def meetingWrites: Writes[Meeting] = (
     (JsPath \ "_id").writeNullable[BSONObjectID] and
       (JsPath \ "date").writeNullable[DateTime] and
