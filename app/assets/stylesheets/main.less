@@ -55,7 +55,7 @@ html {
 body{
   margin-bottom: 60px;
   color: @dark-font;
-  font: 19px/1.6 'Arimo', 'Helvetica Neue', Helvetica, sans-serif;
+  font: 'Arimo', 'Helvetica Neue', Helvetica, sans-serif;
   background-color: @dark-background;
 }
 
@@ -118,6 +118,22 @@ h1, h2, h3, h4, h5, h6 {
   .home-notes {
     padding: 0px;
   }
+  .actions {
+    margin-bottom: 20px;
+    .btn {
+      font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+      background-color: @dark-background-navigation;
+      color: @white;
+      font-weight: 600;
+      margin-right: 20px;
+      font-size: 140%;
+
+      &:hover {
+        background-color: @dark-blue;
+        color: @tourquoise;
+      }
+    }
+  }
   .meeting-summary {
     width: 100%;
     @media (min-width: @screen-sm-min) {
@@ -135,6 +151,13 @@ h1, h2, h3, h4, h5, h6 {
           margin-top: 0px;
           text-align: center;
           min-height: 132px;
+          a {
+            color: @dark-font-heading;
+            &:hover{
+              color: @dark-font;
+              cursor: pointer;
+            }
+          }
         }
         .user-icon {
           background-color: @violet;
@@ -144,20 +167,28 @@ h1, h2, h3, h4, h5, h6 {
           text-align: center;
           padding-top: 7px;
           color: white;
+          font-size: 19px;
+          line-height: 1.6;
         }
         .organisator {
           height: 40px;
           border-top: 2px solid @violet;
           border-bottom: 2px solid @violet;
-          padding-top: 4px;
-          span {
+          padding-top: 6px;
+          a {
             color: @dark-grey;
-            font-size: 85%;
             padding-left: 10px;
+            &:hover {
+              color: @dark-font-heading;
+              cursor: pointer;
+            }
           }
         }
       }
       .meeting-summary-colorbar {
+        &:hover {
+          cursor: pointer;
+        }
         height: 150px;
         .colorbar-date {
           width: 100px;
@@ -169,7 +200,7 @@ h1, h2, h3, h4, h5, h6 {
           .month{
             color: @white;
             padding-top: 5px;
-            font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+            font: 19px/1.6 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
 
           }
           .day{
@@ -181,14 +212,68 @@ h1, h2, h3, h4, h5, h6 {
           }
           .weekday{
             color: @white;
-            font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+            font: 19px/1.6 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
           }
         }
       }
     }
   }
   .actionpoints-summary{
-    border: 1px solid red;
+    .meeting-summary-colorbar {
+      &:hover {
+        cursor: pointer;
+      }
+      height: 107px;
+      width: 70px;
+      float: left;
+      margin-right: 20px;
+      .colorbar-date {
+        margin: 0 auto;
+        span {
+          display: block;
+          text-align: center;
+        }
+        .month{
+          color: @white;
+          padding-top: 5px;
+          font: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+
+        }
+        .day{
+          color: @dark-font-heading;
+          height: 55px;
+          font-weight: 900;
+          font-size: 40px;
+          background-color: @white;
+        }
+        .weekday{
+          color: @white;
+          font: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+        }
+      }
+    }
+    .actionpoint-content {
+      background-color: @white;
+      margin-left: 20px;
+      margin-right: 20px;
+      height: 107px;
+      padding: 20px;
+      font-size: 19px;
+      line-height: 1.6;
+      a {
+        color: @dark-font;
+        &:hover{
+          cursor: pointer;
+        }
+      }
+      .actionpoint {
+        margin-top: 20px;
+      }
+    }
+
+
+
+
 
   }
 }
@@ -212,6 +297,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content{
+  font-size: 19px;
+  line-height: 1.6;
   background-color: @white;
   padding: 100px 15px;
   @media (min-width: 768px) {

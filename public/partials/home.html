@@ -1,50 +1,165 @@
-<div class="row">
-    <div class="row">
-        <div class="col-md-6">
-                <h3>Create your Meeting Notes right now!</h3>
-            <div class="row">
-                <a href="/#/meetings/create" class="btn btn-primary" id="create-meeting">Create a new Meeting</a><br />
-                <label for="create-meeting">Prepare a new meeting and invite attendees</label>
-            </div>
-            <div class="row">
-                <a href="/#/meetings/create" class="btn btn-primary" id="take-notes">Start taking Notes</a><br />
-                <label for="take-notes">Already in the meeting? Start with taking notes</label>
-            </div>
-            <div class="row">
-                <a href="/#/meetings" class="btn btn-primary" id="open-saved">Open saved Meeting Notes</a><br />
-                <label for="open-saved">Browse to your saved notes</label>
-            </div>
-
-            <hr />
-
-            <p><a href="/#/meetings">Meetings</a></p>
-            <p><a href="/#/users">Users</a></p>
-
+<div class="row home">
+    <div class="col-md-6 home-notes">
+        <div class="actions">
+            <a href="#/offlinecreation/create" class="btn">Create Meeting</a>
+            <a href="#/offlinecreation/create" class="btn">Take Notes</a>
         </div>
-        <div class="col-md-6">
-            <h3>My Action Points</h3>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Note</th>
-                        <th>Meeting</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Create a new Mockup for Ideas</td>
-                        <td>Create Prototype</td>
-                        <td>10.10.2014</td>
-                    </tr>
-                    <tr>
-                        <td>Write Concept down</td>
-                        <td>Create Prototype</td>
-                        <td>11.10.2014</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="meeting-summary">
+            <div class="meeting-summary-frame">
+                <div class="meeting-summary-colorbar" style="background-color: #1ABC9C;">
+                    <div class="colorbar-date">
+                        <span class="month">Oct</span>
+                        <span class="day">27</span>
+                        <span class="weekday">Mon</span>
+                    </div>
+                </div>
+                <div class="meeting-summary-content">
+                    <h2><a>Entscheiden über Vorgehen</a></h2>
+                    <div class="user-icon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="organisator">
+                        <a>r1bader@hsr.ch</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="meeting-summary">
+            <div class="meeting-summary-frame">
+                <div class="meeting-summary-colorbar" style="background-color: #D35400;">
+                    <div class="colorbar-date">
+                        <span class="month">Dec</span>
+                        <span class="day">14</span>
+                        <span class="weekday">Tue</span>
+                    </div>
+                </div>
+                <div class="meeting-summary-content">
+                    <h2><a>Besprechen des Codes</a></h2>
+                    <div class="user-icon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="organisator">
+                        <a>r1bader@hsr.ch</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="meeting-summary">
+            <div class="meeting-summary-frame">
+                <div class="meeting-summary-colorbar" style="background-color: #2980B9;">
+                    <div class="colorbar-date">
+                        <span class="month">Jan</span>
+                        <span class="day">13</span>
+                        <span class="weekday">Fri</span>
+                    </div>
+                </div>
+                <div class="meeting-summary-content">
+                    <h2><a>Besprechen des weiteren vorgehens</a></h2>
+                    <div class="user-icon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="organisator">
+                        <a>r1bader@hsr.ch</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="meeting-summary">
+            <div class="meeting-summary-frame">
+                <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
+                    <div class="colorbar-date">
+                        <span class="month">Oct</span>
+                        <span class="day">27</span>
+                        <span class="weekday">Mon</span>
+                    </div>
+                </div>
+                <div class="meeting-summary-content">
+                    <h2><a>Entscheidung für App Prototyp</a></h2>
+                    <div class="user-icon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="organisator">
+                        <a>r1bader@hsr.ch</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="terminator">&nbsp;</div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="col-md-6 actionpoints-summary">
+        <div class="actionpoint row">
+            <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
+                <div class="colorbar-date">
+                    <span class="month">Oct</span>
+                    <span class="day">27</span>
+                    <span class="weekday">Mon</span>
+                </div>
+
+            </div>
+            <div class="actionpoint-content">
+                <span class="label label-info"><span class="glyphicon glyphicon-flag"></span> To-Do</span>
+                <a>Erstellen eines neuen Mockups für die gesammelten Ideen</a>
+            </div>
+        </div>
+
+        <div class="row actionpoint">
+            <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
+                <div class="colorbar-date">
+                    <span class="month">Oct</span>
+                    <span class="day">27</span>
+                    <span class="weekday">Mon</span>
+                </div>
+
+            </div>
+            <div class="actionpoint-content">
+                <span class="label label-info"><span class="glyphicon glyphicon-flag"></span> To-Do</span>
+                <a>Erstellen eines neuen Mockups für die gesammelten Ideen</a>
+            </div>
+        </div>
+        <div class="row actionpoint">
+            <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
+                <div class="colorbar-date">
+                    <span class="month">Oct</span>
+                    <span class="day">27</span>
+                    <span class="weekday">Mon</span>
+                </div>
+
+            </div>
+            <div class="actionpoint-content">
+                <span class="label label-info"><span class="glyphicon glyphicon-flag"></span> To-Do</span>
+                <a>Erstellen eines neuen Mockups für die gesammelten Ideen</a>
+            </div>
+        </div>
+        <div class="row actionpoint">
+            <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
+                <div class="colorbar-date">
+                    <span class="month">Oct</span>
+                    <span class="day">27</span>
+                    <span class="weekday">Mon</span>
+                </div>
+
+            </div>
+            <div class="actionpoint-content">
+                <span class="label label-info"><span class="glyphicon glyphicon-flag"></span> To-Do</span>
+                <a>Erstellen eines neuen Mockups für die gesammelten Ideen</a>
+            </div>
         </div>
     </div>
-</div>
 
+</div>
