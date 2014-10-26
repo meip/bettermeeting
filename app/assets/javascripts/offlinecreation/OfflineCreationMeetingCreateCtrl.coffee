@@ -33,17 +33,17 @@ class OfflineCreationMeetingCreateCtrl
         oid: actualTime
       }
       date: "16.10.2014 16:30",
-      goal: "Test",
-      organizer: "Test",
+      goal: "",
+      organizer: "r1bader@hsr.ch",
       created: actualTime,
       remote: false,
       attendees: [""],
       meetingPoints: [
-        subject: "Test",
-        lastEditor: "Test",
-        owner: "Test",
+        subject: "",
+        lastEditor: "",
+        owner: "",
         dueDate: "16.10.2014 16:30",
-        pointType: "Test"
+        pointType: "info"
       ]
     }
     @saveLocalMeeting(meeting)
@@ -124,11 +124,11 @@ class OfflineCreationMeetingCreateCtrl
   addMeetingPoint: () ->
     @$log.debug "OfflineCreationMeetingCreateCtrl.addMeetingPoint()"
     @meeting.meetingPoints.push({
-      subject: "Test",
+      subject: "",
       lastEditor: "Test",
-      owner: "Test",
+      owner: "r1bader@hsr.ch",
       dueDate: "16.10.2014 16:30",
-      pointType: "Test"
+      pointType: "info"
     })
     @updateDatabase()
 

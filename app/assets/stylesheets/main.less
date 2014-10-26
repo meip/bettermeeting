@@ -113,15 +113,33 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0px 5px;
 }
 
-
-.meeting{
-  background-color: @white;
-  padding: 100px 15px;
+.frame{
   margin-top: 10px;
   @media (min-width: 768px) {
-    padding: 100px;
     margin-top: 50px;
   }
+}
+
+.content{
+  background-color: @white;
+  padding: 100px 15px;
+  @media (min-width: 768px) {
+    padding: 100px;
+  }
+}
+
+.colorbar{
+  height: 10px;
+}
+
+.meeting{
+  input.ng-dirty.ng-invalid {
+    border-color: @red;
+  }
+  .input-group-btn {
+    vertical-align: top;
+  }
+
   // 1
   .delete {
     width: 30px;
@@ -183,10 +201,6 @@ h1, h2, h3, h4, h5, h6 {
           &:focus {
             background-color: lighten(@blue, 20%);
           }
-        }
-        .ng-dirty.ng-valid { background-color: red; }
-        .input-group-btn {
-          vertical-align: top;
         }
       }
     }
@@ -268,7 +282,7 @@ h1, h2, h3, h4, h5, h6 {
             color: @white;
           }
           &:focus{
-            background-color: @green;
+            background-color: @red;
             color: @white;
           }
         }
@@ -289,8 +303,5 @@ h1, h2, h3, h4, h5, h6 {
         }
       }
     }
-  }
-  .meeting-footer {
-
   }
 }
