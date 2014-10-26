@@ -19,7 +19,7 @@ object MeetingFormats {
       (JsPath \ "pointType").write[String] and
       (JsPath \ "dateCompleted").writeNullable[DateTime] and
       (JsPath \ "created").writeNullable[DateTime] and
-      (JsPath \ "updated").writeNullable[Long]
+      (JsPath \ "updated").writeNullable[DateTime]
     )(meetingPoint => (meetingPoint._id, meetingPoint.subject, meetingPoint.lastEditor, meetingPoint.owner, meetingPoint.dueDate, meetingPoint.pointType, meetingPoint.dateCompleted, meetingPoint.created, meetingPoint.updated))
 
   implicit def meetingPointReads: Reads[MeetingPoint] = (
@@ -31,8 +31,10 @@ object MeetingFormats {
       (JsPath \ "pointType").read[String] and
       (JsPath \ "dateCompleted").readNullable[DateTime] and
       (JsPath \ "created").readNullable[DateTime] and
-      (JsPath \ "updated").readNullable[Long]
+      (JsPath \ "updated").readNullable[DateTime]
     )((_id, subject, lastEditor, owner, dueDate, pointType, dateCompleted, created, updated) => MeetingPoint(_id = _id, subject = subject, lastEditor = lastEditor, owner = owner, dueDate = dueDate, pointType = pointType, dateCompleted = dateCompleted, created = created, updated = updated))
+
+  implicit def meetingPointListWrites: Writes[List[MeetingPoint]] = Writes.list(meetingPointWrites)
 
   implicit def meetingWrites: Writes[Meeting] = (
     (JsPath \ "_id").writeNullable[BSONObjectID] and
@@ -41,7 +43,7 @@ object MeetingFormats {
       (JsPath \ "organizer").write[String] and
       (JsPath \ "attendees").write[List[String]] and
       (JsPath \ "created").writeNullable[DateTime] and
-      (JsPath \ "updated").writeNullable[Long] and
+      (JsPath \ "updated").writeNullable[DateTime] and
       (JsPath \ "meetingPoints").write[List[MeetingPoint]]
     )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.created, meeting.updated, meeting.meetingPoints))
 
@@ -54,7 +56,7 @@ object MeetingFormats {
       (JsPath \ "organizer").read[String] and
       (JsPath \ "attendees").read[List[String]] and
       (JsPath \ "created").readNullable[DateTime] and
-      (JsPath \ "updated").readNullable[Long] and
+      (JsPath \ "updated").readNullable[DateTime] and
       (JsPath \ "meetingPoints").readNullable[List[MeetingPoint]]
     )((_id, date, goal, organizer, attendees, created, updated, meetingPoints) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, attendees = attendees, created = created, updated = updated, meetingPoints = meetingPoints.getOrElse(Nil)))
 
