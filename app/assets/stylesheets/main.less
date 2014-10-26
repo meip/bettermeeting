@@ -113,6 +113,97 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0px 5px;
 }
 
+.home {
+  margin: 0px 5px;
+  .home-notes {
+    padding: 0px;
+  }
+  .meeting-summary {
+    width: 100%;
+    @media (min-width: @screen-sm-min) {
+      width: 50%;
+    }
+    float: left;
+    padding: 0px 20px 20px 0px;
+    .meeting-summary-frame {
+      .meeting-summary-content {
+        background-color: @white;
+        padding-top: 0px;
+        h2 {
+          line-height: 1;
+          padding: 30px 5px;
+          margin-top: 0px;
+          text-align: center;
+          min-height: 132px;
+        }
+        .user-icon {
+          background-color: @violet;
+          float: left;
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          padding-top: 7px;
+          color: white;
+        }
+        .organisator {
+          height: 40px;
+          border-top: 2px solid @violet;
+          border-bottom: 2px solid @violet;
+          padding-top: 4px;
+          span {
+            color: @dark-grey;
+            font-size: 85%;
+            padding-left: 10px;
+          }
+        }
+      }
+      .meeting-summary-colorbar {
+        height: 150px;
+        .colorbar-date {
+          width: 100px;
+          margin: 0 auto;
+          span {
+            display: block;
+            text-align: center;
+          }
+          .month{
+            color: @white;
+            padding-top: 5px;
+            font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+
+          }
+          .day{
+            color: @dark-font-heading;
+            height: 80px;
+            font-weight: 900;
+            font-size: 50px;
+            background-color: @white;
+          }
+          .weekday{
+            color: @white;
+            font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+          }
+        }
+      }
+    }
+  }
+  .actionpoints-summary{
+    border: 1px solid red;
+
+  }
+}
+.terminator{
+  clear: both;
+  height: 0px;
+}
+
+
+
+
+
+
+
+
 .frame{
   margin-top: 10px;
   @media (min-width: 768px) {
