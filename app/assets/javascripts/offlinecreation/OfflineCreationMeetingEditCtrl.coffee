@@ -15,7 +15,6 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
       (data) =>
         @$log.debug "Promise returned #{data.length} Meetings"
         @meeting = data
-        @meeting.remote = true
     ,
     (error) =>
       @$log.error "Unable to get Meetings: #{error}"
@@ -29,6 +28,8 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
       goal: @meeting.goal,
       organizer: @meeting.organizer,
       color: @meeting.color,
+      created: @meeting.created,
+      updated: @meeting.updated,
       attendees: @meeting.attendees,
       meetingPoints: @meeting.meetingPoints
     }

@@ -29,11 +29,12 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       organizer: "r1bader@hsr.ch",
       color: colors[Math.floor(Math.random()*colors.length)],
       created: actualTime,
+      updated: actualTime,
       attendees: [""],
       meetingPoints: [
         subject: "",
         lastEditor: "",
-        owner: "",
+        owner: "r1bader@hsr.ch",
         dueDate: "16.10.2014 16:30",
         pointType: "info"
       ]
@@ -63,6 +64,8 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       goal: @meeting.goal,
       organizer: @meeting.organizer,
       color: @meeting.color,
+      created: @meeting.created,
+      updated: @meeting.updated,
       attendees: @meeting.attendees,
       meetingPoints: @meeting.meetingPoints
     }
