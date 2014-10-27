@@ -41,6 +41,9 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/offlinecreation/create', {
                 templateUrl: '/assets/partials/offlinecreation/create.html'
             })
+            .when('/offlinecreation/edit', {
+              templateUrl: '/assets/partials/offlinecreation/edit.html'
+            })
             .when('/offlinecreation/list', {
                 templateUrl: '/assets/partials/offlinecreation/list.html'
             })

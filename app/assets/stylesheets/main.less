@@ -113,26 +113,26 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0px 5px;
 }
 
+.actions {
+  margin-bottom: 20px;
+  .btn {
+    font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+    background-color: @dark-background-navigation;
+    color: @white;
+    font-weight: 600;
+    margin-right: 20px;
+    font-size: 140%;
+
+    &:hover {
+      background-color: @dark-blue;
+      color: @tourquoise;
+    }
+  }
+}
 .home {
   margin: 0px 5px;
   .home-notes {
     padding: 0px;
-  }
-  .actions {
-    margin-bottom: 20px;
-    .btn {
-      font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
-      background-color: @dark-background-navigation;
-      color: @white;
-      font-weight: 600;
-      margin-right: 20px;
-      font-size: 140%;
-
-      &:hover {
-        background-color: @dark-blue;
-        color: @tourquoise;
-      }
-    }
   }
   .meeting-summary {
     width: 100%;
@@ -146,6 +146,7 @@ h1, h2, h3, h4, h5, h6 {
         background-color: @white;
         padding-top: 0px;
         h2 {
+          word-wrap: break-word;
           line-height: 1;
           padding: 30px 5px;
           margin-top: 0px;
@@ -158,6 +159,10 @@ h1, h2, h3, h4, h5, h6 {
               cursor: pointer;
             }
           }
+        }
+        .local {
+          color: @dark-grey;
+          margin-left: 5px;
         }
         .user-icon {
           background-color: @violet;
@@ -266,9 +271,9 @@ h1, h2, h3, h4, h5, h6 {
           cursor: pointer;
         }
       }
-      .actionpoint {
-        margin-top: 20px;
-      }
+    }
+    .actionpoint {
+      margin: 0 -15px 20px -15px;
     }
 
 

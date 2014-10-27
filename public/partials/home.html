@@ -1,10 +1,35 @@
+<div class="row">
+    <div class="col-xs-12 actions">
+        <a href="#/offlinecreation/create" class="btn">Create Meeting</a>
+        <a href="#/offlinecreation/create" class="btn">Take Notes</a>
+    </div>
+</div>
 <div class="row home">
-    <div class="col-md-6 home-notes">
-        <div class="actions">
-            <a href="#/offlinecreation/create" class="btn">Create Meeting</a>
-            <a href="#/offlinecreation/create" class="btn">Take Notes</a>
+
+    <div class="col-md-6 home-notes" ng-controller="OfflineCreationMeetingListCtrl as omlc">
+        <div class="meeting-summary" ng-repeat="meeting in omlc.meetings.localMeetings">
+            <div class="meeting-summary-frame">
+                <div class="meeting-summary-colorbar" style="background-color: #7F8C8D;">
+                    <div class="colorbar-date">
+                        <span class="month">Oct</span>
+                        <span class="day">27</span>
+                        <span class="weekday">Mon</span>
+                    </div>
+                </div>
+                <div class="meeting-summary-content">
+                    <span class="local">(Local)</span>
+                    <h2><a ng-href="/#/offlinecreation/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
+                    <div class="user-icon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="organisator">
+                        <a>{{meeting.organizer}}</a>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div class="meeting-summary">
+        <div class="meeting-summary" ng-repeat="meeting in omlc.meetings.remoteMeetings">
             <div class="meeting-summary-frame">
                 <div class="meeting-summary-colorbar" style="background-color: #1ABC9C;">
                     <div class="colorbar-date">
@@ -14,96 +39,27 @@
                     </div>
                 </div>
                 <div class="meeting-summary-content">
-                    <h2><a>Entscheiden über Vorgehen</a></h2>
+                    <h2><a ng-href="/#/offlinecreation/edit?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
                     <div class="user-icon">
                         <span class="glyphicon glyphicon-user"></span>
                     </div>
                     <div class="organisator">
-                        <a>r1bader@hsr.ch</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="meeting-summary">
-            <div class="meeting-summary-frame">
-                <div class="meeting-summary-colorbar" style="background-color: #D35400;">
-                    <div class="colorbar-date">
-                        <span class="month">Dec</span>
-                        <span class="day">14</span>
-                        <span class="weekday">Tue</span>
-                    </div>
-                </div>
-                <div class="meeting-summary-content">
-                    <h2><a>Besprechen des Codes</a></h2>
-                    <div class="user-icon">
-                        <span class="glyphicon glyphicon-user"></span>
-                    </div>
-                    <div class="organisator">
-                        <a>r1bader@hsr.ch</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="meeting-summary">
-            <div class="meeting-summary-frame">
-                <div class="meeting-summary-colorbar" style="background-color: #2980B9;">
-                    <div class="colorbar-date">
-                        <span class="month">Jan</span>
-                        <span class="day">13</span>
-                        <span class="weekday">Fri</span>
-                    </div>
-                </div>
-                <div class="meeting-summary-content">
-                    <h2><a>Besprechen des weiteren vorgehens</a></h2>
-                    <div class="user-icon">
-                        <span class="glyphicon glyphicon-user"></span>
-                    </div>
-                    <div class="organisator">
-                        <a>r1bader@hsr.ch</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="meeting-summary">
-            <div class="meeting-summary-frame">
-                <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
-                    <div class="colorbar-date">
-                        <span class="month">Oct</span>
-                        <span class="day">27</span>
-                        <span class="weekday">Mon</span>
-                    </div>
-                </div>
-                <div class="meeting-summary-content">
-                    <h2><a>Entscheidung für App Prototyp</a></h2>
-                    <div class="user-icon">
-                        <span class="glyphicon glyphicon-user"></span>
-                    </div>
-                    <div class="organisator">
-                        <a>r1bader@hsr.ch</a>
+                        <a>{{meeting.organizer}}</a>
                     </div>
 
                 </div>
             </div>
         </div>
         <div class="terminator">&nbsp;</div>
+        <div class="row">
+            <hr>
+            <h4>Debug:</h4>
+            <pre>{{ omlc.meetings | json }}</pre>
+        </div>
     </div>
 
-
-
-
-
-
-
-
-
     <div class="col-md-6 actionpoints-summary">
-        <div class="actionpoint row">
+        <div class="actionpoint">
             <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
                 <div class="colorbar-date">
                     <span class="month">Oct</span>
@@ -118,7 +74,7 @@
             </div>
         </div>
 
-        <div class="row actionpoint">
+        <div class="actionpoint">
             <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
                 <div class="colorbar-date">
                     <span class="month">Oct</span>
@@ -132,34 +88,8 @@
                 <a>Erstellen eines neuen Mockups für die gesammelten Ideen</a>
             </div>
         </div>
-        <div class="row actionpoint">
-            <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
-                <div class="colorbar-date">
-                    <span class="month">Oct</span>
-                    <span class="day">27</span>
-                    <span class="weekday">Mon</span>
-                </div>
 
-            </div>
-            <div class="actionpoint-content">
-                <span class="label label-info"><span class="glyphicon glyphicon-flag"></span> To-Do</span>
-                <a>Erstellen eines neuen Mockups für die gesammelten Ideen</a>
-            </div>
-        </div>
-        <div class="row actionpoint">
-            <div class="meeting-summary-colorbar" style="background-color: #27AE60;">
-                <div class="colorbar-date">
-                    <span class="month">Oct</span>
-                    <span class="day">27</span>
-                    <span class="weekday">Mon</span>
-                </div>
 
-            </div>
-            <div class="actionpoint-content">
-                <span class="label label-info"><span class="glyphicon glyphicon-flag"></span> To-Do</span>
-                <a>Erstellen eines neuen Mockups für die gesammelten Ideen</a>
-            </div>
-        </div>
     </div>
 
 </div>

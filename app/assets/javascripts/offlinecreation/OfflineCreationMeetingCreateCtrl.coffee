@@ -1,7 +1,5 @@
 
-class OfflineCreationMeetingCreateCtrl
-
-  @meeting = {}
+class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
 
   constructor: (@$log, @$location, @$routeParams, @OfflineCreationMeetingService, @localStorageService) ->
     @$log.debug "OfflineCreationMeetingCreateCtrl.constructor()"
@@ -12,16 +10,7 @@ class OfflineCreationMeetingCreateCtrl
       return false
 
     if idParam.length == 24
-      @OfflineCreationMeetingService.getMeeting(idParam)
-      .then(
-        (data) =>
-          @$log.debug "Promise returned #{data.length} Meetings"
-          @meeting = data
-          @meeting.remote = true
-      ,
-      (error) =>
-        @$log.error "Unable to get Meetings: #{error}"
-      )
+      @$location.path("/offlinecreation/edit").replace();
     else
       @meeting = @localStorageService.get(idParam)
 
@@ -73,29 +62,17 @@ class OfflineCreationMeetingCreateCtrl
       attendees: @meeting.attendees,
       meetingPoints: @meeting.meetingPoints
     }
-    if @meeting._id.oid.length ==24
-      toPublish._id = {}
-      toPublish._id.oid = @meeting._id.oid
-      @OfflineCreationMeetingService.putMeeting(toPublish)
-      .then(
-        (data) =>
-          @$log.debug "Promise returned #{data} Meeting"
-          @$location.path("/offlinecreation/list")
-      ,
-      (error) =>
-        @$log.error "Unable to update Meeting: #{error}"
-      )
-    else
-      @OfflineCreationMeetingService.postMeeting(toPublish)
-      .then(
-        (data) =>
-          @$log.debug "Promise returned #{data} Meeting"
-          @removeLocalMeeting(@meeting._id.oid)
-          @$location.path("/offlinecreation/list")
-      ,
-      (error) =>
-        @$log.error "Unable to create Meeting: #{error}"
-      )
+
+    @OfflineCreationMeetingService.postMeeting(toPublish)
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data} Meeting"
+        @removeLocalMeeting(@meeting._id.oid)
+        @$location.path("/")
+    ,
+    (error) =>
+      @$log.error "Unable to create Meeting: #{error}"
+    )
 
   removeLocalMeeting: (meetingId) ->
     @$log.debug "OfflineCreationMeetingCreateCtrl.removeLocalMeeting("  + meetingId + ")"
@@ -106,36 +83,6 @@ class OfflineCreationMeetingCreateCtrl
     @localStorageService.set("localMeetings", localMeetings)
     @localStorageService.remove(meetingId);
 
-  updateDatabase: () ->
-    @meeting.updated = Date.now()
-    @localStorageService.set(@meeting._id.oid, @meeting)
 
-  addAttendee: () ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.addAttendee()"
-    @meeting.attendees.push("")
-    @updateDatabase()
-
-  removeAttendee: (index) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.removeAttendee()"
-    if @meeting.attendees.length > 1
-      @meeting.attendees.splice(index, 1)
-    @updateDatabase()
-
-  addMeetingPoint: () ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.addMeetingPoint()"
-    @meeting.meetingPoints.push({
-      subject: "",
-      lastEditor: "Test",
-      owner: "r1bader@hsr.ch",
-      dueDate: "16.10.2014 16:30",
-      pointType: "info"
-    })
-    @updateDatabase()
-
-  removeMeetingPoint: (index) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.addMeetingPoint()"
-    if @meeting.meetingPoints.length > 1
-      @meeting.meetingPoints.splice(index, 1)
-    @updateDatabase()
 
 controllersModule.controller('OfflineCreationMeetingCreateCtrl', OfflineCreationMeetingCreateCtrl)
