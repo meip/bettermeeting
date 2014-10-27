@@ -41,11 +41,12 @@ object MeetingFormats {
       (JsPath \ "date").writeNullable[DateTime] and
       (JsPath \ "goal").write[String] and
       (JsPath \ "organizer").write[String] and
+      (JsPath \ "color").write[String] and
       (JsPath \ "attendees").write[List[String]] and
       (JsPath \ "created").writeNullable[DateTime] and
       (JsPath \ "updated").writeNullable[DateTime] and
       (JsPath \ "meetingPoints").write[List[MeetingPoint]]
-    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.attendees, meeting.created, meeting.updated, meeting.meetingPoints))
+    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.color, meeting.attendees, meeting.created, meeting.updated, meeting.meetingPoints))
 
   implicit def meetingListWrites: Writes[List[Meeting]] = Writes.list(meetingWrites)
 
@@ -54,11 +55,12 @@ object MeetingFormats {
       (JsPath \ "date").readNullable[DateTime] and
       (JsPath \ "goal").read[String] and
       (JsPath \ "organizer").read[String] and
+      (JsPath \ "color").read[String] and
       (JsPath \ "attendees").read[List[String]] and
       (JsPath \ "created").readNullable[DateTime] and
       (JsPath \ "updated").readNullable[DateTime] and
       (JsPath \ "meetingPoints").readNullable[List[MeetingPoint]]
-    )((_id, date, goal, organizer, attendees, created, updated, meetingPoints) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, attendees = attendees, created = created, updated = updated, meetingPoints = meetingPoints.getOrElse(Nil)))
+    )((_id, date, goal, organizer, color, attendees, created, updated, meetingPoints) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, color = color, attendees = attendees, created = created, updated = updated, meetingPoints = meetingPoints.getOrElse(Nil)))
 
   implicit object MeetingModelLifeCylce extends TemporalModelLifeCycle[Meeting]
   implicit object MeetingPointModelLifeCylce extends TemporalModelLifeCycle[MeetingPoint]

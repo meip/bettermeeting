@@ -8,6 +8,7 @@ case class Meeting(
                     date: Option[DateTime],
                     goal: String,
                     organizer: String,
+                    color: String,
                     attendees: List[String],
                     override var created: Option[DateTime],
                     override var updated: Option[DateTime],

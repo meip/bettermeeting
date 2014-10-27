@@ -1,6 +1,8 @@
 
 class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
 
+
+
   constructor: (@$log, @$location, @$routeParams, @OfflineCreationMeetingService, @localStorageService) ->
     @$log.debug "OfflineCreationMeetingEditCtrl.constructor()"
     idParam = @$routeParams.id
@@ -26,6 +28,7 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
       date: @meeting.date,
       goal: @meeting.goal,
       organizer: @meeting.organizer,
+      color: @meeting.color,
       attendees: @meeting.attendees,
       meetingPoints: @meeting.meetingPoints
     }

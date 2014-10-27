@@ -1,6 +1,8 @@
 
 class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
 
+
+
   constructor: (@$log, @$location, @$routeParams, @OfflineCreationMeetingService, @localStorageService) ->
     @$log.debug "OfflineCreationMeetingCreateCtrl.constructor()"
     idParam = @$routeParams.id
@@ -17,6 +19,7 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
   initializeNewMeeting: () ->
     @$log.debug "OfflineCreationMeetingCreateCtrl.initializeNewMeeting()"
     actualTime = Date.now()
+    colors = ["#1ABC9C", "#2ECC71", "#3498DB", "#9B59B6", "#F39C12", "#E74C3C"]
     meeting = {
       _id: {
         oid: actualTime
@@ -24,8 +27,8 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       date: "16.10.2014 16:30",
       goal: "",
       organizer: "r1bader@hsr.ch",
+      color: colors[Math.floor(Math.random()*colors.length)],
       created: actualTime,
-      remote: false,
       attendees: [""],
       meetingPoints: [
         subject: "",
@@ -59,6 +62,7 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       date: @meeting.date,
       goal: @meeting.goal,
       organizer: @meeting.organizer,
+      color: @meeting.color,
       attendees: @meeting.attendees,
       meetingPoints: @meeting.meetingPoints
     }

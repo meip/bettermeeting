@@ -9,7 +9,7 @@
     <div class="col-md-6 home-notes" ng-controller="OfflineCreationMeetingListCtrl as omlc">
         <div class="meeting-summary" ng-repeat="meeting in omlc.meetings.localMeetings">
             <div class="meeting-summary-frame">
-                <div class="meeting-summary-colorbar" style="background-color: #7F8C8D;">
+                <div class="meeting-summary-colorbar" ng-style="{'background-color':'{{meeting.color}}'}">
                     <div class="colorbar-date">
                         <span class="month">Oct</span>
                         <span class="day">27</span>
@@ -31,7 +31,7 @@
         </div>
         <div class="meeting-summary" ng-repeat="meeting in omlc.meetings.remoteMeetings">
             <div class="meeting-summary-frame">
-                <div class="meeting-summary-colorbar" style="background-color: #1ABC9C;">
+                <div class="meeting-summary-colorbar" ng-style="{'background-color':'{{meeting.color}}'}">
                     <div class="colorbar-date">
                         <span class="month">Oct</span>
                         <span class="day">27</span>

@@ -21,7 +21,7 @@ class @OfflineCreationMeeting
     @$log.debug "OfflineCreationMeetingCreateCtrl.addMeetingPoint()"
     @meeting.meetingPoints.push({
       subject: "",
-      lastEditor: "Test",
+      lastEditor: "r1bader@hsr.ch",
       owner: "r1bader@hsr.ch",
       dueDate: "16.10.2014 16:30",
       pointType: "info"
@@ -33,5 +33,3 @@ class @OfflineCreationMeeting
     if @meeting.meetingPoints.length > 1
       @meeting.meetingPoints.splice(index, 1)
     @updateDatabase()
-
-controllersModule.controller('OfflineCreationMeeting', OfflineCreationMeeting)

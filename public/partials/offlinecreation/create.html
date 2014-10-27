@@ -1,21 +1,21 @@
-<div class="frame">
-    <div class="colorbar" style="background-color: #1ABC9C">
+<div class="frame" ng-controller="OfflineCreationMeetingCreateCtrl as omcc">
+    <div class="colorbar" ng-style="{'background-color':'{{omcc.meeting.color}}'}">
         &nbsp;
     </div>
-    <div class="content meeting" ng-controller="OfflineCreationMeetingCreateCtrl as omcc">
+    <div class="content meeting">
         <form ng-submit="omcc.publishMeeting()" name="meetingForm">
             <div class="meeting-header">
                 <div class="meeting-header-goal" class="row">
-                    <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="omcc.meeting.goal" ng-change="omcc.updateDatabase()"><br />
+                    <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="omcc.meeting.goal" ng-change="omcc.updateDatabase()" required>
                     <hr />
                 </div>
                 <div class="meeting-header-information row">
                     <div class="col-md-6">
-                        <input type="email" placeholder="Organisator" class="form-control" ng-model="omcc.meeting.organizer" ng-change="omcc.updateDatabase()">
+                        <input type="email" placeholder="Organisator" class="form-control" ng-model="omcc.meeting.organizer" ng-change="omcc.updateDatabase()" required>
 
                     </div>
                     <div class="col-md-6">
-                        <input type="text" placeholder="Time" class="form-control" ng-model="omcc.meeting.date" ng-change="omcc.updateDatabase()" style="text-align: right" name="Time">
+                        <input type="text" placeholder="Time" class="form-control" ng-model="omcc.meeting.date" ng-change="omcc.updateDatabase()" style="text-align: right" name="Time" required>
                     </div>
                 </div>
                 <div  class="meeting-header-attendees row">
