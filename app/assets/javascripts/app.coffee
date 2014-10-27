@@ -20,12 +20,6 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/', {
                 templateUrl: '/assets/partials/home.html'
             })
-            .when('/meetings', {
-                templateUrl: '/assets/partials/meetings/list.html'
-            })
-            .when('/meetings/create', {
-                templateUrl: '/assets/partials/meetings/create.html'
-            })
             .when('/users', {
                 templateUrl: '/assets/partials/users/list.html'
             })
@@ -38,14 +32,11 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/offline/list', {
               templateUrl: '/assets/partials/offline/list.html'
             })
-            .when('/offlinecreation/create', {
-                templateUrl: '/assets/partials/offlinecreation/create.html'
+            .when('/meeting/create', {
+                templateUrl: '/assets/partials/meeting/create.html'
             })
-            .when('/offlinecreation/edit', {
-              templateUrl: '/assets/partials/offlinecreation/edit.html'
-            })
-            .when('/offlinecreation/list', {
-                templateUrl: '/assets/partials/offlinecreation/list.html'
+            .when('/meeting/edit', {
+              templateUrl: '/assets/partials/meeting/edit.html'
             })
             .when('/login', {
               templateUrl: '/assets/partials/login/login.html',

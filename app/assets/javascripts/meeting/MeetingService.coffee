@@ -1,14 +1,14 @@
 
-class OfflineCreationMeetingService
+class MeetingService
 
   @headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
   @defaultConfig = { headers: @headers }
 
   constructor: (@$log, @$http, @$q) ->
-    @$log.debug "OfflineCreationMeetingService.constructor()"
+    @$log.debug "MeetingService.constructor()"
 
   getMeeting: (meetingId) ->
-    @$log.debug "OfflineCreationMeetingService.getRemoteMeeting(meetingId)"
+    @$log.debug "MeetingService.getRemoteMeeting(meetingId)"
     deferred = @$q.defer()
 
     @$http.get("/api/meetings/" + meetingId)
@@ -23,7 +23,7 @@ class OfflineCreationMeetingService
     deferred.promise
 
   postMeeting: (meeting) ->
-    @$log.debug "OfflineCreationMeetingService.postMeeting #{angular.toJson(meeting, true)}"
+    @$log.debug "MeetingService.postMeeting #{angular.toJson(meeting, true)}"
     deferred = @$q.defer()
 
     @$http.post('/api/meetings', meeting)
@@ -38,7 +38,7 @@ class OfflineCreationMeetingService
     deferred.promise
 
   putMeeting: (meeting) ->
-    @$log.debug "OfflineCreationMeetingService.putMeeting #{angular.toJson(meeting, true)}"
+    @$log.debug "MeetingService.putMeeting #{angular.toJson(meeting, true)}"
     deferred = @$q.defer()
 
     @$http.put('/api/meetings/' + meeting._id.oid, meeting)
@@ -53,7 +53,7 @@ class OfflineCreationMeetingService
     deferred.promise
 
   removeMeeting: (meetingId) ->
-    @$log.debug "OfflineCreationMeetingService.removeMeeting #{meetingId}"
+    @$log.debug "MeetingService.removeMeeting #{meetingId}"
     deferred = @$q.defer()
 
     @$http.delete('/api/meetings/' + meetingId)
@@ -68,7 +68,7 @@ class OfflineCreationMeetingService
     deferred.promise
 
   getRemoteMeetings: () ->
-    @$log.debug "OfflineCreationMeetingService.getRemoteMeetings()"
+    @$log.debug "MeetingService.getRemoteMeetings()"
     deferred = @$q.defer()
 
     @$http.get("/api/meetings")
@@ -82,4 +82,4 @@ class OfflineCreationMeetingService
     )
     deferred.promise
 
-servicesModule.service('OfflineCreationMeetingService', OfflineCreationMeetingService)
+servicesModule.service('MeetingService', MeetingService)
