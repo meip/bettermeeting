@@ -18,7 +18,8 @@
                 </div>
                 <div class="meeting-summary-content">
                     <span class="local">(Local)</span>
-                    <h2><a ng-href="/#/offlinecreation/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
+                    <h2 ng-hide="meeting.goal == ''"><a ng-href="/#/offlinecreation/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
+                    <h2 ng-show="meeting.goal == ''"><a ng-href="/#/offlinecreation/create?id={{meeting._id.oid}}">(No Name)</a></h2>
                     <div class="user-icon">
                         <span class="glyphicon glyphicon-user"></span>
                     </div>
@@ -33,13 +34,13 @@
             <div class="meeting-summary-frame">
                 <div class="meeting-summary-colorbar" ng-style="{'background-color':'{{meeting.color}}'}">
                     <div class="colorbar-date">
-                        <span class="month">Oct</span>
-                        <span class="day">27</span>
-                        <span class="weekday">Mon</span>
+                        <span class="month">{{meeting.updated | date:'MMM'}}</span>
+                        <span class="day">{{meeting.updated | date:'dd'}}</span>
+                        <span class="weekday">{{meeting.updated | date:'EEE'}}</span>
                     </div>
                 </div>
                 <div class="meeting-summary-content">
-                    {{meeting.updated}}
+
                     <h2><a ng-href="/#/offlinecreation/edit?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
                     <div class="user-icon">
                         <span class="glyphicon glyphicon-user"></span>

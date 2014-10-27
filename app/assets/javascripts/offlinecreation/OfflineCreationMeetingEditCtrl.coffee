@@ -42,5 +42,16 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
       @$log.error "Unable to update Meeting: #{error}"
     )
 
+  removeMeeting: (meetingId, forwardAfter) ->
+    @$log.debug "OfflineCreationMeetingEditCtrl.removeMeeting("  + meetingId + ")"
+    @OfflineCreationMeetingService.removeMeeting(meetingId)
+    .then(
+      (data) =>
+        @$log.debug "Deleted #{data} Meeting"
+        @$location.path("/")
+    ,
+    (error) =>
+      @$log.error "Unable to delete Meeting: #{error}"
+    )
 
 controllersModule.controller('OfflineCreationMeetingEditCtrl', OfflineCreationMeetingEditCtrl)

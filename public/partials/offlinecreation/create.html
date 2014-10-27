@@ -77,9 +77,9 @@
             <div class="meeting-footer">
                 <div class="row">
                     <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary" ng-hide="omcc.meeting.remote"><span class="glyphicon glyphicon-send"></span> Publish</button>
-                        <button type="submit" class="btn btn-primary" ng-show="omcc.meeting.remote"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-
+                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Publish</button>
+                        <a href="/" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span> Back</a>
+                        <button type="button" class="btn btn-danger" ng-click="omcc.removeMeeting(omcc.meeting._id.oid, true)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                     </div>
                 </div>
             </div>

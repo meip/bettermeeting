@@ -74,21 +74,26 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
     .then(
       (data) =>
         @$log.debug "Promise returned #{data} Meeting"
-        @removeLocalMeeting(@meeting._id.oid)
+        @removeMeeting(@meeting._id.oid, false)
         @$location.path("/")
     ,
     (error) =>
       @$log.error "Unable to create Meeting: #{error}"
     )
 
-  removeLocalMeeting: (meetingId) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.removeLocalMeeting("  + meetingId + ")"
+  removeMeeting: (meetingId, forwardAfter) ->
+    @$log.debug "OfflineCreationMeetingCreateCtrl.removeMeeting("  + meetingId + ")"
     localMeetings = @localStorageService.get("localMeetings")
     index = localMeetings.indexOf(meetingId);
     if index > -1
       localMeetings.splice(index, 1)
     @localStorageService.set("localMeetings", localMeetings)
     @localStorageService.remove(meetingId);
+    if forwardAfter
+      @$location.path("/")
+
+
+
 
 
 

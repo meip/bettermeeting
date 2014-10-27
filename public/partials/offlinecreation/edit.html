@@ -1,21 +1,21 @@
-<div class="frame">
-    <div class="colorbar" style="background-color: #1ABC9C">
+<div class="frame" ng-controller="OfflineCreationMeetingEditCtrl as omcc">
+    <div class="colorbar" ng-style="{'background-color':'{{omcc.meeting.color}}'}">
         &nbsp;
     </div>
-    <div class="content meeting" ng-controller="OfflineCreationMeetingEditCtrl as omcc">
-        <form ng-submit="omcc.saveMeeting()" name="meetingForm">
+    <div class="content meeting">
+        <form ng-submit="omcc.publishMeeting()" name="meetingForm">
             <div class="meeting-header">
                 <div class="meeting-header-goal" class="row">
-                    <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="omcc.meeting.goal" ng-change="omcc.updateDatabase()"><br />
+                    <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="omcc.meeting.goal" ng-change="omcc.updateDatabase()" required>
                     <hr />
                 </div>
                 <div class="meeting-header-information row">
                     <div class="col-md-6">
-                        <input type="email" placeholder="Organisator" class="form-control" ng-model="omcc.meeting.organizer" ng-change="omcc.updateDatabase()">
+                        <input type="email" placeholder="Organisator" class="form-control" ng-model="omcc.meeting.organizer" ng-change="omcc.updateDatabase()" required>
 
                     </div>
                     <div class="col-md-6">
-                        <input type="text" placeholder="Time" class="form-control" ng-model="omcc.meeting.date" ng-change="omcc.updateDatabase()" style="text-align: right" name="Time">
+                        <input type="text" placeholder="Time" class="form-control" ng-model="omcc.meeting.date" ng-change="omcc.updateDatabase()" style="text-align: right" name="Time" required>
                     </div>
                 </div>
                 <div  class="meeting-header-attendees row">
@@ -78,6 +78,8 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                        <a href="/" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span> Back</a>
+                        <button type="button" class="btn btn-danger" ng-click="omcc.removeMeeting(omcc.meeting._id.oid, true)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                     </div>
                 </div>
             </div>
