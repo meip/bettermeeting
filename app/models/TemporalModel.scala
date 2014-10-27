@@ -6,14 +6,14 @@ import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.dao.LifeCycle
 
 trait TemporalModel {
-  var created: Option[Long]
-  var updated: Option[Long]
+  var created: Option[DateTime]
+  var updated: Option[DateTime]
 }
 
 class TemporalModelLifeCycle[T <: TemporalModel] extends LifeCycle[T, BSONObjectID] {
   override def prePersist(model: T): T = {
-    /*if (!model.created.isDefined) model.created = Some(DateTime.now)
-    model.updated = Some(DateTime.now)*/
+    if (!model.created.isDefined) model.created = Some(DateTime.now)
+    model.updated = Some(DateTime.now)
     model
   }
 

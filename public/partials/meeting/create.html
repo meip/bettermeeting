@@ -6,16 +6,19 @@
         <form ng-submit="mcc.publishMeeting()" name="meetingForm">
             <div class="meeting-header">
                 <div class="meeting-header-goal" class="row">
-                    <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="mcc.meeting.goal" ng-change="mcc.updateDatabase()" required>
+                    <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="mcc.meeting.goal" ng-change="mcc.updateDatabase()" required
+                           popover="What do you want to achieve with this meeting?"  popover-trigger="focus">
                     <hr />
                 </div>
                 <div class="meeting-header-information row">
                     <div class="col-md-6">
-                        <input type="email" placeholder="Organisator" class="form-control" ng-model="mcc.meeting.organizer" ng-change="mcc.updateDatabase()" required>
+                        <input type="email" placeholder="Organisator" class="form-control" ng-model="mcc.meeting.organizer" ng-change="mcc.updateDatabase()" required
+                           popover="Who is the organizer of the meeting?"  popover-trigger="focus">
 
                     </div>
                     <div class="col-md-6">
-                        <input type="text" placeholder="Time" class="form-control" ng-model="mcc.meeting.date" ng-change="mcc.updateDatabase()" style="text-align: right" name="Time" required>
+                        <input type="text" placeholder="Time" class="form-control" ng-model="mcc.meeting.date" ng-change="mcc.updateDatabase()" style="text-align: right" name="Time" required
+                           popover="When is the meeting going to start?"  popover-trigger="focus">
                     </div>
                 </div>
                 <div  class="meeting-header-attendees row">
@@ -57,7 +60,7 @@
                                     </select>
                                 </td>
                                 <td class="meeting-point-note">
-                                    <input class="form-control" placeholder="Note" ng-model="meetingPoint.subject" ng-change="mcc.updateDatabase()">
+                                    <input class="form-control" placeholder="Note" ng-model="meetingPoint.subject" ng-change="mcc.updateDatabase()" required>
                                 </td>
                                 <td class="meeting-point-owner">
                                     <input class="form-control" placeholder="Owner"ng-model="meetingPoint.owner" ng-change="mcc.updateDatabase()">

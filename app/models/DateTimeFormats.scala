@@ -1,10 +1,13 @@
 package models
 
-import play.api.libs.json.{Reads, Writes}
+import com.github.nscala_time.time.Imports.DateTime
+import play.api.libs.json._
 
 object DateTimeFormats {
-  implicit val datetimeOptionReads = Reads.optionWithNull(Reads.jodaDateReads("dd.MM.yyyy HH:mm"))
-  implicit val datetimeOptionWrites = Writes.optionWithNull(Writes.jodaDateWrites("dd.MM.yyyy HH:mm"))
   implicit val datetimeReads = Reads.jodaDateReads("dd.MM.yyyy HH:mm")
-  implicit val datetimeWrites = Writes.jodaDateWrites("dd.MM.yyyy HH:mm")
+  implicit val dateTimeWrites: Writes[DateTime] = new Writes[DateTime] {
+    override def writes(o: DateTime): JsValue = JsNumber(o.getMillis)
+  }
+  implicit val datetimeOptionReads = Reads.optionWithNull(Reads.jodaDateReads("dd.MM.yyyy HH:mm"))
+  implicit val datetimeOptionWrites = Writes.optionWithNull(dateTimeWrites)
 }
