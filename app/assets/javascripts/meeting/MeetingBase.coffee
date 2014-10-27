@@ -1,4 +1,4 @@
-class @OfflineCreationMeeting
+class @MeetingBase
 
   @meeting = {}
 

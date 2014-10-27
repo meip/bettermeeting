@@ -1,8 +1,8 @@
 
-class OfflineCreationMeetingListCtrl
+class MeetingListCtrl
 
-  constructor: (@$log, @OfflineCreationMeetingService, @localStorageService) ->
-    @$log.debug "OfflineCreationMeetingListCtrl.constructor()"
+  constructor: (@$log, @MeetingService, @localStorageService) ->
+    @$log.debug "MeetingListCtrl.constructor()"
     @meetings = {}
     @meetings.localMeetings = []
     @meetings.remoteMeetings = []
@@ -11,7 +11,7 @@ class OfflineCreationMeetingListCtrl
     @getRemoteMeetings()
 
   getRemoteMeetings: () ->
-    @OfflineCreationMeetingService.getRemoteMeetings()
+    @MeetingService.getRemoteMeetings()
     .then(
       (data) =>
         @$log.debug "Promise returned #{data.length} Meetings"
@@ -34,7 +34,7 @@ class OfflineCreationMeetingListCtrl
   removeMeeting: (meetingId) ->
     @$log.debug meetingId
     if meetingId.length == 24
-      @OfflineCreationMeetingService.removeMeeting(meetingId)
+      @MeetingService.removeMeeting(meetingId)
       .then(
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
@@ -57,4 +57,4 @@ class OfflineCreationMeetingListCtrl
 
 
 
-controllersModule.controller('OfflineCreationMeetingListCtrl', OfflineCreationMeetingListCtrl)
+controllersModule.controller('MeetingListCtrl', MeetingListCtrl)

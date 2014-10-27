@@ -1,10 +1,10 @@
 
-class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
+class MeetingCreateCtrl extends MeetingBase
 
 
 
-  constructor: (@$log, @$location, @$routeParams, @OfflineCreationMeetingService, @localStorageService) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.constructor()"
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @localStorageService) ->
+    @$log.debug "MeetingCreateCtrl.constructor()"
     idParam = @$routeParams.id
 
     if idParam == undefined
@@ -12,12 +12,12 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       return false
 
     if idParam.length == 24
-      @$location.path("/offlinecreation/edit").replace();
+      @$location.path("/meeting/edit").replace();
     else
       @meeting = @localStorageService.get(idParam)
 
   initializeNewMeeting: () ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.initializeNewMeeting()"
+    @$log.debug "MeetingCreateCtrl.initializeNewMeeting()"
     actualTime = Date.now()
     colors = ["#1ABC9C", "#2ECC71", "#3498DB", "#9B59B6", "#F39C12", "#E74C3C"]
     meeting = {
@@ -40,11 +40,11 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       ]
     }
     @saveLocalMeeting(meeting)
-    @$location.path("/offlinecreation/create").search(id: meeting._id.oid).replace();
+    @$location.path("/meeting/create").search(id: meeting._id.oid).replace();
     return false
 
   saveLocalMeeting: (meeting) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.saveLocalMeeting()"
+    @$log.debug "MeetingCreateCtrl.saveLocalMeeting()"
     @localStorageService.set(meeting._id.oid, meeting)
     localMeetings = @localStorageService.get("localMeetings")
     if localMeetings
@@ -54,11 +54,11 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
     @localStorageService.set("localMeetings", localMeetings)
 
   flush: () ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.flush()"
+    @$log.debug "MeetingCreateCtrl.flush()"
     @localStorageService.clearAll()
 
   publishMeeting: () ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.publishMeeting()"
+    @$log.debug "MeetingCreateCtrl.publishMeeting()"
     toPublish = {
       date: @meeting.date,
       goal: @meeting.goal,
@@ -70,7 +70,7 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       meetingPoints: @meeting.meetingPoints
     }
 
-    @OfflineCreationMeetingService.postMeeting(toPublish)
+    @MeetingService.postMeeting(toPublish)
     .then(
       (data) =>
         @$log.debug "Promise returned #{data} Meeting"
@@ -82,7 +82,7 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
     )
 
   removeMeeting: (meetingId, forwardAfter) ->
-    @$log.debug "OfflineCreationMeetingCreateCtrl.removeMeeting("  + meetingId + ")"
+    @$log.debug "MeetingCreateCtrl.removeMeeting("  + meetingId + ")"
     localMeetings = @localStorageService.get("localMeetings")
     index = localMeetings.indexOf(meetingId);
     if index > -1
@@ -93,8 +93,4 @@ class OfflineCreationMeetingCreateCtrl extends OfflineCreationMeeting
       @$location.path("/")
 
 
-
-
-
-
-controllersModule.controller('OfflineCreationMeetingCreateCtrl', OfflineCreationMeetingCreateCtrl)
+controllersModule.controller('MeetingCreateCtrl', MeetingCreateCtrl)

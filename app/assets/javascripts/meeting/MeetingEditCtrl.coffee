@@ -1,16 +1,16 @@
 
-class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
+class MeetingEditCtrl extends MeetingBase
 
 
 
-  constructor: (@$log, @$location, @$routeParams, @OfflineCreationMeetingService, @localStorageService) ->
-    @$log.debug "OfflineCreationMeetingEditCtrl.constructor()"
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @localStorageService) ->
+    @$log.debug "MeetingEditCtrl.constructor()"
     idParam = @$routeParams.id
 
     if idParam.length != 24
-      @$location.path("/offlinecreation/create").replace();
+      @$location.path("/meeting/create").replace();
 
-    @OfflineCreationMeetingService.getMeeting(idParam)
+    @MeetingService.getMeeting(idParam)
     .then(
       (data) =>
         @$log.debug "Promise returned #{data.length} Meetings"
@@ -20,8 +20,8 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
       @$log.error "Unable to get Meetings: #{error}"
     )
 
-  saveMeeting: () ->
-    @$log.debug "OfflineCreationMeetingEditCtrl.publishMeeting()"
+  publishMeeting: () ->
+    @$log.debug "MeetingEditCtrl.publishMeeting()"
     toPublish = {
       _id: @meeting._id,
       date: @meeting.date,
@@ -33,7 +33,7 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
       attendees: @meeting.attendees,
       meetingPoints: @meeting.meetingPoints
     }
-    @OfflineCreationMeetingService.putMeeting(toPublish)
+    @MeetingService.putMeeting(toPublish)
     .then(
       (data) =>
         @$log.debug "Promise returned #{data} Meeting"
@@ -43,8 +43,8 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
     )
 
   removeMeeting: (meetingId, forwardAfter) ->
-    @$log.debug "OfflineCreationMeetingEditCtrl.removeMeeting("  + meetingId + ")"
-    @OfflineCreationMeetingService.removeMeeting(meetingId)
+    @$log.debug "MeetingEditCtrl.removeMeeting("  + meetingId + ")"
+    @MeetingService.removeMeeting(meetingId)
     .then(
       (data) =>
         @$log.debug "Deleted #{data} Meeting"
@@ -54,4 +54,4 @@ class OfflineCreationMeetingEditCtrl extends OfflineCreationMeeting
       @$log.error "Unable to delete Meeting: #{error}"
     )
 
-controllersModule.controller('OfflineCreationMeetingEditCtrl', OfflineCreationMeetingEditCtrl)
+controllersModule.controller('MeetingEditCtrl', MeetingEditCtrl)

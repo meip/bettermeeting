@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-xs-12 actions">
-        <a href="#/offlinecreation/create" class="btn">Create Meeting</a>
-        <a href="#/offlinecreation/create" class="btn">Take Notes</a>
+        <a href="#/meeting/create" class="btn">Create Meeting</a>
+        <a href="#/meeting/create" class="btn">Take Notes</a>
     </div>
 </div>
 <div class="row home">
 
-    <div class="col-md-6 home-notes" ng-controller="OfflineCreationMeetingListCtrl as omlc">
-        <div class="meeting-summary" ng-repeat="meeting in omlc.meetings.localMeetings">
+    <div class="col-md-6 home-notes" ng-controller="MeetingListCtrl as mlc">
+        <div class="meeting-summary" ng-repeat="meeting in mlc.meetings.localMeetings">
             <div class="meeting-summary-frame">
                 <div class="meeting-summary-colorbar" ng-style="{'background-color':'{{meeting.color}}'}">
                     <div class="colorbar-date">
@@ -18,8 +18,8 @@
                 </div>
                 <div class="meeting-summary-content">
                     <span class="local">(Local)</span>
-                    <h2 ng-hide="meeting.goal == ''"><a ng-href="/#/offlinecreation/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
-                    <h2 ng-show="meeting.goal == ''"><a ng-href="/#/offlinecreation/create?id={{meeting._id.oid}}">(No Name)</a></h2>
+                    <h2 ng-hide="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
+                    <h2 ng-show="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">(No Name)</a></h2>
                     <div class="user-icon">
                         <span class="glyphicon glyphicon-user"></span>
                     </div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="meeting-summary" ng-repeat="meeting in omlc.meetings.remoteMeetings">
+        <div class="meeting-summary" ng-repeat="meeting in mlc.meetings.remoteMeetings">
             <div class="meeting-summary-frame">
                 <div class="meeting-summary-colorbar" ng-style="{'background-color':'{{meeting.color}}'}">
                     <div class="colorbar-date">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="meeting-summary-content">
 
-                    <h2><a ng-href="/#/offlinecreation/edit?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
+                    <h2><a ng-href="/#/meeting/edit?id={{meeting._id.oid}}">{{meeting.goal}}</a></h2>
                     <div class="user-icon">
                         <span class="glyphicon glyphicon-user"></span>
                     </div>
@@ -56,7 +56,7 @@
         <div class="row">
             <hr>
             <h4>Debug:</h4>
-            <pre>{{ omlc.meetings | json }}</pre>
+            <pre>{{ mlc.meetings | json }}</pre>
         </div>
     </div>
 
