@@ -21,6 +21,9 @@ libraryDependencies ++= Seq(
   "org.webjars" % "bootstrap" % "3.2.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angularjs" % "1.3.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angular-ui-bootstrap" % "0.11.0-3",
+  "org.webjars" % "bootswatch-paper" % "3.2.0+4",
+  "org.webjars" % "jquery" % "2.1.1",
+  "org.webjars" % "angular-local-storage" % "0.1.3",
   "com.github.nscala-time" %% "nscala-time" % "1.4.0")
 
 // Scala Compiler Options
