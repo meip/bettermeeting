@@ -20,9 +20,6 @@ DELETE      /api/meetings/:id           @controllers.Meetings.delete(id: BSONObj
 GET         /api/meetings/:id           @controllers.Meetings.get(id: BSONObjectID)
 PUT         /api/meetings/:id           @controllers.Meetings.update(id: BSONObjectID)
 
-GET        /api/meetingpoints/owner/:id @controllers.MeetingPoints.owner(id: BSONObjectID)
-POST       /api/meetingpoints/push/:id  @controllers.MeetingPoints.push(id: BSONObjectID)
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 

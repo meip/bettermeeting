@@ -1,5 +1,6 @@
 package models
 
+import play.api.libs.json.Json
 
 import com.github.nscala_time.time.Imports.DateTime
 import extensions.BSONFormatsBM._
@@ -9,32 +10,8 @@ import play.api.libs.json.{JsPath, Reads, Writes}
 import reactivemongo.bson.BSONObjectID
 
 object MeetingFormats {
-
-  implicit def meetingPointWrites: Writes[MeetingPoint] = (
-    (JsPath \ "_id").writeNullable[BSONObjectID] and
-      (JsPath \ "subject").writeNullable[String] and
-      (JsPath \ "lastEditor").writeNullable[String] and
-      (JsPath \ "owner").writeNullable[String] and
-      (JsPath \ "dueDate").writeNullable[DateTime] and
-      (JsPath \ "pointType").write[String] and
-      (JsPath \ "dateCompleted").writeNullable[DateTime] and
-      (JsPath \ "created").writeNullable[DateTime] and
-      (JsPath \ "updated").writeNullable[DateTime]
-    )(meetingPoint => (meetingPoint._id, meetingPoint.subject, meetingPoint.lastEditor, meetingPoint.owner, meetingPoint.dueDate, meetingPoint.pointType, meetingPoint.dateCompleted, meetingPoint.created, meetingPoint.updated))
-
-  implicit def meetingPointReads: Reads[MeetingPoint] = (
-    (JsPath \ "_id").readNullable[BSONObjectID].map(_.getOrElse(BSONObjectID.generate)).map(Some(_)) and
-      (JsPath \ "subject").readNullable[String] and
-      (JsPath \ "lastEditor").readNullable[String] and
-      (JsPath \ "owner").readNullable[String] and
-      (JsPath \ "dueDate").readNullable[DateTime] and
-      (JsPath \ "pointType").read[String] and
-      (JsPath \ "dateCompleted").readNullable[DateTime] and
-      (JsPath \ "created").readNullable[DateTime] and
-      (JsPath \ "updated").readNullable[DateTime]
-    )((_id, subject, lastEditor, owner, dueDate, pointType, dateCompleted, created, updated) => MeetingPoint(_id = _id, subject = subject, lastEditor = lastEditor, owner = owner, dueDate = dueDate, pointType = pointType, dateCompleted = dateCompleted, created = created, updated = updated))
-
-  implicit def meetingPointListWrites: Writes[List[MeetingPoint]] = Writes.list(meetingPointWrites)
+  implicit val actionPointFormat = Json.format[ActionPoint]
+  implicit val decisionFormat = Json.format[Decision]
 
   implicit def meetingWrites: Writes[Meeting] = (
     (JsPath \ "_id").writeNullable[BSONObjectID] and
@@ -43,10 +20,13 @@ object MeetingFormats {
       (JsPath \ "organizer").write[String] and
       (JsPath \ "color").writeNullable[String] and
       (JsPath \ "attendees").write[List[String]] and
+      (JsPath \ "actionPoints").write[List[ActionPoint]] and
+      (JsPath \ "decisions").write[List[Decision]] and
+      (JsPath \ "votesUp").write[List[String]] and
+      (JsPath \ "votesDown").write[List[String]] and
       (JsPath \ "created").writeNullable[DateTime] and
-      (JsPath \ "updated").writeNullable[DateTime] and
-      (JsPath \ "meetingPoints").write[List[MeetingPoint]]
-    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.color, meeting.attendees, meeting.created, meeting.updated, meeting.meetingPoints))
+      (JsPath \ "updated").writeNullable[DateTime]
+    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.color, meeting.attendees, meeting.actionPoints, meeting.decisions, meeting.votesUp, meeting.votesDown, meeting.created, meeting.updated))
 
   implicit def meetingListWrites: Writes[List[Meeting]] = Writes.list(meetingWrites)
 
@@ -57,11 +37,15 @@ object MeetingFormats {
       (JsPath \ "organizer").read[String] and
       (JsPath \ "color").readNullable[String] and
       (JsPath \ "attendees").read[List[String]] and
+      (JsPath \ "actionPoints").readNullable[List[ActionPoint]] and
+      (JsPath \ "decisions").readNullable[List[Decision]] and
+      (JsPath \ "votesUp").readNullable[List[String]] and
+      (JsPath \ "votesDown").readNullable[List[String]] and
       (JsPath \ "created").readNullable[DateTime] and
-      (JsPath \ "updated").readNullable[DateTime] and
-      (JsPath \ "meetingPoints").readNullable[List[MeetingPoint]]
-    )((_id, date, goal, organizer, color, attendees, created, updated, meetingPoints) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, color = color, attendees = attendees, created = created, updated = updated, meetingPoints = meetingPoints.getOrElse(Nil)))
+      (JsPath \ "updated").readNullable[DateTime]
+    )((_id, date, goal, organizer, color, attendees, actionPoints, decisions, votesUp, votesDown, created, updated) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, color = color, attendees = attendees, actionPoints = actionPoints.getOrElse(Nil), decisions = decisions.getOrElse(Nil), votesUp = votesUp.getOrElse(Nil), votesDown = votesDown.getOrElse(Nil), created = created, updated = updated))
 
   implicit object MeetingModelLifeCylce extends TemporalModelLifeCycle[Meeting]
-  implicit object MeetingPointModelLifeCylce extends TemporalModelLifeCycle[MeetingPoint]
+  implicit object DecisionModelLifeCylce extends TemporalModelLifeCycle[Decision]
+  implicit object ActionPointModelLifeCylce extends TemporalModelLifeCycle[ActionPoint]
 }
