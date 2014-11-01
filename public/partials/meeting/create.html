@@ -1,14 +1,11 @@
-<div class="frame" ng-controller="MeetingCreateCtrl as mcc">
-    <div class="colorbar" ng-style="{'background-color':'{{mcc.meeting.color}}'}">
-        &nbsp;
-    </div>
+<div class="container" ng-controller="MeetingCreateCtrl as mcc">
+    <div class="colorbar" ng-style="{'background-color':'{{mcc.meeting.color}}'}">&nbsp;</div>
     <div class="content meeting">
-        <form ng-submit="mcc.publishMeeting()" name="meetingForm">
-            <div class="meeting-header">
-                <div class="meeting-header-goal" class="row">
+         <form ng-submit="mcc.publishMeeting()" name="meetingForm">
+            <div class="page-header">
+                <div class="meeting-header-goal row">
                     <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="mcc.meeting.goal" ng-change="mcc.updateDatabase()" required
                            popover="What do you want to achieve with this meeting?"  popover-trigger="focus">
-                    <hr />
                 </div>
                 <div class="meeting-header-information row">
                     <div class="col-md-6">

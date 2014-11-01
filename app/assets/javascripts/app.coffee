@@ -9,7 +9,7 @@ dependencies = [
     'bmApp.common',
     'bmApp.routeConfig',
     'bmApp.localStorage',
-    'bmApp.factories'
+    'bmApp.animations'
 ]
 
 app = angular.module('bmApp', dependencies)
@@ -56,3 +56,4 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
 @directivesModule = angular.module('bmApp.directives', [])
 @filtersModule = angular.module('bmApp.filters', [])
 @localStorageModule = angular.module('bmApp.localStorage', ['LocalStorageModule'])
+@animationsModule = angular.module('bmApp.animations', ['ngAnimate']);
