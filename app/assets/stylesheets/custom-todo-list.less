@@ -1,0 +1,63 @@
+.todo-item {
+  margin-bottom: 15px;
+  border-left: 7px solid @violet;
+  box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+  min-height: 90px;
+
+
+  .todo-info {
+    margin-right: 123px;
+    padding: 5px 5px 5px 15px;
+    .time-left {
+      width:50%;
+      font-weight: 600;
+      color: @dark-blue;
+    }
+    .due-date {
+      width:50%;
+      float: right;
+      text-align: right;
+      color: @grey-dark;
+      margin-right: 15px;
+    }
+
+  }
+  .todo-actions {
+    padding-top: 25px;
+    float: right;
+    width: 123px;
+    button {
+      height: 40px;
+    }
+    div:nth-child(1) {
+      float: left;
+      margin-right: 15px;
+      width: 46px;
+      color: @green;
+      button {
+        color: @white;
+        background-color: @green;
+        &:hover {
+          color: @white;
+          background-color: darken(@green, 20%);
+        }
+      }
+    }
+    div:nth-child(2) {
+      color: @orange;
+      margin-right: 15px;
+      button {
+        color: @white;
+        background-color: @orange;
+        &:hover {
+          color: @white;
+          background-color: darken(@orange, 20%);
+        }
+      }
+    }
+    span {
+      display: block;
+      text-align: center;
+    }
+  }
+}

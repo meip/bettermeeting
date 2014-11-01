@@ -5,8 +5,16 @@
                 <div class="row">
                     <h3>Meetings</h3>
                 </div>
-                <div id="note-container" ng-controller="MeetingListCtrl as mlc">
-                    <div class="note color-1" ng-repeat="meeting in mlc.meetings.localMeetings">
+                <div id="note-container" ng-controller="HomeMeetingListCtrl as mlc">
+                    <div class="note">
+                        <div class="add-meeting">
+                            <a href="/#/meeting/create">
+                                <span class="glyphicon glyphicon-plus"></span><br />
+                                Add Meeting
+                            </a>
+                        </div>
+                    </div>
+                    <div class="note" ng-repeat="meeting in mlc.meetings" ng-class="meeting.color">
                         <div class="note-frame">
                             <div class="meeting-summary-colorbar">
                                 <div class="colorbar-date">
@@ -19,13 +27,17 @@
                                 <h5 ng-hide="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h5>
                                 <h5 ng-show="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">(No Name)</a></h5>
                                 <div class="meeting-note-goal">
-                                    <p>100% Ziel erreicht</p>
-                                    <img src="/assets/images/emoticons/smiley-6.png" />
+                                    <p>{{meeting.goalReached + '%'}} Ziel erreicht</p>
+                                    <img ng-show="meeting.goalReached <= 20" src="/assets/images/emoticons/smiley-3.png" />
+                                    <img ng-show="meeting.goalReached > 20 && meeting.goalReached <= 60" src="/assets/images/emoticons/smiley-11.png" />
+                                    <img ng-show="meeting.goalReached > 60 && meeting.goalReached <= 80" src="/assets/images/emoticons/smiley-9.png" />
+                                    <img ng-show="meeting.goalReached > 80 && meeting.goalReached <= 90" src="/assets/images/emoticons/smiley-8.png" />
+                                    <img ng-show="meeting.goalReached > 90" src="/assets/images/emoticons/smiley-6.png" />
                                 </div>
                                 <div class="meeting-note-todo">
-                                    <p>30% ToDos erledigt</p>
+                                    <p>{{meeting.todoReached + '%'}} ToDos erledigt</p>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{width : ( meeting.todoReached + '%' ) }">
                                         </div>
                                     </div>
                                 </div>
@@ -36,21 +48,36 @@
 
             </div>
             <div class="col-md-5">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>ToDo</h3>
-                        <div class="row todo-item">
-                            <div style="background-color: yellow">
-
-                                <p>Architekturdoku erstellen</p>
-                                <span class="time-left">-1d left</span>
-                                <span class="due-date">30.10.2014 16:00</span>
+                <div class="row" ng-controller="ToDoListCtrl as tlc">
+                    <h3>ToDo</h3>
+                    <div class="todo-item" ng-repeat="todo in tlc.todos">
+                        <div class="todo-actions">
+                            <div>
+                                <button type="button" class="btn">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                <span>DONE</span>
                             </div>
-                            <div style="background-color: green">
-                                b1 <br />
-                                b2
+                            <div>
+                                <button type="button" class="btn">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </button>
+                                <span>LATER</span>
                             </div>
                         </div>
+                        <div class="todo-info">
+                            <h5><a href="#">{{todo.subject}}</a></h5>
+                            <div>
+                                <div class="due-date">
+                                    <span>{{todo.duedate | date:'dd.MM.yyyy HH:mm'}}</span>
+                                </div>
+                                <div class="time-left">
+                                    <span>-1d left</span>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="row" style="background-color: cadetblue">

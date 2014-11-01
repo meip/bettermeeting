@@ -15,8 +15,19 @@
   transition: all .2s ease;
   background: #FFF;
 
+  .add-meeting {
+    margin: 0px 15px 15px 15px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+    background-color: darkgrey;
+    padding: 15px;
+    text-align: center;
+    font-size: 140%;
+    a {
+      color: white;
+    }
+  }
   .note-frame {
-    margin: 15px;
+    margin: 0px 15px 15px 15px;
     box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
     padding-bottom: 15px;
   }
@@ -74,72 +85,74 @@
     opacity: 0.4;
   }
 }
+#note-container {
 
-.color-1 {
-   .meeting-summary-colorbar {
-     background-color: @color-1;
-   }
-   h5 a{
-     color: darken(@color-1, 10%);
-     &:hover {
-       color: darken(@color-1, 20%);
-     }
-   }
-   .progress-bar {
-     background-color: @color-1;
-   }
-   .progress-bar:last-child.progress-bar:before {
-     background-color: lighten(@color-1, 30%);
-   }
- }
-.color-2 {
-  .meeting-summary-colorbar {
-    background-color: @color-2;
-  }
-  h5 a{
-    color: darken(@color-2, 10%);
-    &:hover {
-      color: darken(@color-2, 20%);
+  .color-1 {
+    .meeting-summary-colorbar {
+      background-color: @color-1;
+    }
+    h5 a{
+      color: darken(@color-1, 10%);
+      &:hover {
+        color: darken(@color-1, 20%);
+      }
+    }
+    .progress-bar {
+      background-color: @color-1;
+    }
+    .progress-bar:last-child.progress-bar:before {
+      background-color: lighten(@color-1, 30%);
     }
   }
-  .progress-bar {
-    background-color: @color-2;
-  }
-  .progress-bar:last-child.progress-bar:before {
-    background-color: lighten(@color-2, 30%);
-  }
-}
-.color-3 {
-  .meeting-summary-colorbar {
-    background-color: @color-3;
-  }
-  h5 a{
-    color: darken(@color-3, 10%);
-    &:hover {
-      color: darken(@color-3, 20%);
+  .color-2 {
+    .meeting-summary-colorbar {
+      background-color: @color-2;
+    }
+    h5 a{
+      color: darken(@color-2, 10%);
+      &:hover {
+        color: darken(@color-2, 20%);
+      }
+    }
+    .progress-bar {
+      background-color: @color-2;
+    }
+    .progress-bar:last-child.progress-bar:before {
+      background-color: lighten(@color-2, 30%);
     }
   }
-  .progress-bar {
-    background-color: @color-3;
-  }
-  .progress-bar:last-child.progress-bar:before {
-    background-color: lighten(@color-3, 30%);
-  }
-}
-.color-4 {
-  .meeting-summary-colorbar {
-    background-color: @color-4;
-  }
-  h5 a{
-    color: darken(@color-4, 10%);
-    &:hover {
-      color: darken(@color-4, 20%);
+  .color-3 {
+    .meeting-summary-colorbar {
+      background-color: @color-3;
+    }
+    h5 a{
+      color: darken(@color-3, 10%);
+      &:hover {
+        color: darken(@color-3, 20%);
+      }
+    }
+    .progress-bar {
+      background-color: @color-3;
+    }
+    .progress-bar:last-child.progress-bar:before {
+      background-color: lighten(@color-3, 30%);
     }
   }
-  .progress-bar {
-    background-color: @color-4;
-  }
-  .progress-bar:last-child.progress-bar:before {
-    background-color: lighten(@color-4, 30%);
+  .color-4 {
+    .meeting-summary-colorbar {
+      background-color: @color-4;
+    }
+    h5 a{
+      color: darken(@color-4, 10%);
+      &:hover {
+        color: darken(@color-4, 20%);
+      }
+    }
+    .progress-bar {
+      background-color: @color-4;
+    }
+    .progress-bar:last-child.progress-bar:before {
+      background-color: lighten(@color-4, 30%);
+    }
   }
 }
