@@ -1,93 +1,73 @@
-<div class="container" ng-controller="MeetingCreateCtrl as mcc">
-    <div class="colorbar" ng-style="{'background-color':'{{mcc.meeting.color}}'}">&nbsp;</div>
-    <div class="content">
-
-        <form ng-submit="mcc.publishMeeting()" name="meetingForm">
-            <div class="page-header">
-                <div class="meeting-header-goal row">
-                    <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="mcc.meeting.goal" ng-change="mcc.updateDatabase()" required
-                           popover="What do you want to achieve with this meeting?"  popover-trigger="focus">
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="row">
+                    <h3>Meetings</h3>
                 </div>
-                <div class="meeting-header-information row">
-                    <div class="col-md-6">
-                        <input type="email" placeholder="Organisator" class="form-control" ng-model="mcc.meeting.organizer" ng-change="mcc.updateDatabase()" required
-                               popover="Who is the organizer of the meeting?"  popover-trigger="focus">
-
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" placeholder="Time" class="form-control" ng-model="mcc.meeting.date" ng-change="mcc.updateDatabase()" style="text-align: right" name="Time" required
-                               popover="When is the meeting going to start?"  popover-trigger="focus">
-                    </div>
-                </div>
-                <div  class="meeting-header-attendees row">
-                    <div class="col-xs-12">
-                        <h2>Attendees:</h2>
-                        <div class="col-md-4 col-sm-12 attendee" ng-repeat="attendee in mcc.meeting.attendees track by $index">
-                            <div class="input-group">
-                                <input type="email" class="form-control" placeholder="Attendee"  ng-model="mcc.meeting.attendees[$index]" ng-change="mcc.updateDatabase()">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-danger" type="button" ng-click="mcc.removeAttendee($index)"><span class="glyphicon glyphicon-remove"></span></button>
-                                </span>
+                <div id="note-container" ng-controller="MeetingListCtrl as mlc">
+                    <div class="note color-1" ng-repeat="meeting in mlc.meetings.localMeetings">
+                        <div class="note-frame">
+                            <div class="meeting-summary-colorbar">
+                                <div class="colorbar-date">
+                                    <span class="month">{{meeting.updated | date:'MMM'}}</span>
+                                    <span class="day">{{meeting.updated | date:'dd'}}</span>
+                                    <span class="weekday">{{meeting.updated | date:'EEE'}}</span>
+                                </div>
+                            </div>
+                            <div class="meeting-content">
+                                <h5 ng-hide="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h5>
+                                <h5 ng-show="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">(No Name)</a></h5>
+                                <div class="meeting-note-goal">
+                                    <p>100% Ziel erreicht</p>
+                                    <img src="/assets/images/emoticons/smiley-6.png" />
+                                </div>
+                                <div class="meeting-note-todo">
+                                    <p>30% ToDos erledigt</p>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-1" style="padding: 0px;">
-                            <button type="button" class="btn btn-primary" ng-click="mcc.addAttendee()"><span class="glyphicon glyphicon-plus"></span></button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>ToDo</h3>
+                        <div class="row todo-item">
+                            <div style="background-color: yellow">
+
+                                <p>Architekturdoku erstellen</p>
+                                <span class="time-left">-1d left</span>
+                                <span class="due-date">30.10.2014 16:00</span>
+                            </div>
+                            <div style="background-color: green">
+                                b1 <br />
+                                b2
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="meeting-body">
-                <div class="row">
+                <div class="row" style="background-color: cadetblue">
                     <div class="col-xs-12">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th class="meeting-point-type">Type</th>
-                                <th class="meeting-point-note">Note</th>
-                                <th class="meeting-point-owner">Owner</th>
-                                <th class="meeting-point-due">Due</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-class="meetingPoint.pointType" ng-repeat="meetingPoint in mcc.meeting.meetingPoints track by $index">
-                                <td class="meeting-point-type">
-                                    <select class="form-control" ng-model="meetingPoint.pointType">
-                                        <option value="todo">To-Do</option>
-                                        <option value="decision">Decision</option>
-                                        <option value="info">Info</option>
-                                    </select>
-                                </td>
-                                <td class="meeting-point-note">
-                                    <input class="form-control" placeholder="Note" ng-model="meetingPoint.subject" ng-change="mcc.updateDatabase()" required>
-                                </td>
-                                <td class="meeting-point-owner">
-                                    <input class="form-control" placeholder="Owner"ng-model="meetingPoint.owner" ng-change="mcc.updateDatabase()">
-                                </td>
-                                <td class="meeting-point-due">
-                                    <input class="form-control" placeholder="Due Date" ng-model="meetingPoint.dueDate" ng-change="mcc.updateDatabase()">
-                                </td>
-                                <td><td class="delete" ng-click="mcc.removeMeetingPoint($index)"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></td></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <button type="button" class="btn btn-primary" ng-click="mcc.addMeetingPoint()"><span class="glyphicon glyphicon-plus"></span> Add Meetingnote</button>
-                    </div>
-
-                </div>
-            </div>
-            <div class="meeting-footer">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Publish</button>
-                        <a href="/" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span> Back</a>
-                        <button type="button" class="btn btn-danger" ng-click="mcc.removeMeeting(mcc.meeting._id.oid, true)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                        <h3>Rangliste</h3>
                     </div>
                 </div>
             </div>
-        </form>
-        <hr />
-        <h4>Debug:</h4>
-        <pre>{{ mcc.meeting | json }}</pre>
-        <a ng-click="mcc.flush()">Flush local database</a>
+        </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#note-container').freetile({
+            selector: '.note',
+            animate: true,
+            elementDelay: 30
+        });
+    });
+</script>

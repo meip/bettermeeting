@@ -1,0 +1,145 @@
+
+@color-1: #1CAF9A;
+@color-2: #EE6456;
+@color-3: #D1DC48;
+@color-4: #1D2939;
+@background-grey: #f4f4f4;
+.note {
+  width: 50%;
+  min-width: 320px;
+  display: block;
+  opacity: 1;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  background: #FFF;
+
+  .note-frame {
+    margin: 15px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+    padding-bottom: 15px;
+  }
+  .meeting-content {
+    padding: 15px;
+  }
+  img {
+    display: block;
+    width: 50px;
+    margin: 0px auto;
+    border: none;
+  }
+
+  .meeting-summary-colorbar {
+    height: 135px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+    .colorbar-date {
+      width: 80px;
+      margin: 0 auto;
+      span {
+        display: block;
+        text-align: center;
+      }
+      .month{
+        color: @white;
+        padding-top: 5px;
+      }
+      .day{
+        color: @dark-font-heading;
+        height: 80px;
+        font-weight: 900;
+        font-size: 50px;
+        background-color: @white;
+        line-height: 1;
+        padding-top: 15px;
+      }
+      .weekday{
+        color: @white;
+      }
+    }
+  }
+
+  p {
+    line-height: 18px;
+    font-size: 120%;
+    font-weight: 600;
+    color: #333;
+    margin: 10px 0px 15px 0px;
+    text-align: center;
+  }
+}
+
+#note-container:hover {
+  .note:not(:hover) {
+    opacity: 0.4;
+  }
+}
+
+.color-1 {
+   .meeting-summary-colorbar {
+     background-color: @color-1;
+   }
+   h5 a{
+     color: darken(@color-1, 10%);
+     &:hover {
+       color: darken(@color-1, 20%);
+     }
+   }
+   .progress-bar {
+     background-color: @color-1;
+   }
+   .progress-bar:last-child.progress-bar:before {
+     background-color: lighten(@color-1, 30%);
+   }
+ }
+.color-2 {
+  .meeting-summary-colorbar {
+    background-color: @color-2;
+  }
+  h5 a{
+    color: darken(@color-2, 10%);
+    &:hover {
+      color: darken(@color-2, 20%);
+    }
+  }
+  .progress-bar {
+    background-color: @color-2;
+  }
+  .progress-bar:last-child.progress-bar:before {
+    background-color: lighten(@color-2, 30%);
+  }
+}
+.color-3 {
+  .meeting-summary-colorbar {
+    background-color: @color-3;
+  }
+  h5 a{
+    color: darken(@color-3, 10%);
+    &:hover {
+      color: darken(@color-3, 20%);
+    }
+  }
+  .progress-bar {
+    background-color: @color-3;
+  }
+  .progress-bar:last-child.progress-bar:before {
+    background-color: lighten(@color-3, 30%);
+  }
+}
+.color-4 {
+  .meeting-summary-colorbar {
+    background-color: @color-4;
+  }
+  h5 a{
+    color: darken(@color-4, 10%);
+    &:hover {
+      color: darken(@color-4, 20%);
+    }
+  }
+  .progress-bar {
+    background-color: @color-4;
+  }
+  .progress-bar:last-child.progress-bar:before {
+    background-color: lighten(@color-4, 30%);
+  }
+}
