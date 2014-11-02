@@ -1,13 +1,56 @@
+@color-1: #1CAF9A;
+@color-2: #EE6456;
+@color-3: #D1DC48;
+@color-4: #1D2939;
+.todo-item.color-1 {
+  border-left: 7px solid @color-1;
+  a {
+    color: darken(@color-1, 10%);
+  }
+}
+.todo-item.color-2 {
+  border-left: 7px solid @color-2;
+  a {
+    color: darken(@color-2, 10%);
+  }
+}
+.todo-item.color-3 {
+  border-left: 7px solid @color-3;
+  a {
+    color: darken(@color-3, 10%);
+  }
+}
+.todo-item.color-4 {
+  border-left: 7px solid @color-4;
+  a {
+    color: darken(@color-4, 10%);
+  }
+}
+
+#todo-container:hover {
+  .todo-item:not(:hover) {
+    opacity: 0.4;
+  }
+}
+
 .todo-item {
   margin-bottom: 15px;
-  border-left: 7px solid @violet;
   box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
   min-height: 90px;
+  opacity: 1;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  background: #FFF;
 
 
   .todo-info {
     margin-right: 123px;
     padding: 5px 5px 5px 15px;
+
+    height: 100%;
+
     .time-left {
       width:50%;
       font-weight: 600;
@@ -33,25 +76,25 @@
       float: left;
       margin-right: 15px;
       width: 46px;
-      color: @green;
+      color: @color-1;
       button {
         color: @white;
-        background-color: @green;
+        background-color: @color-1;
         &:hover {
           color: @white;
-          background-color: darken(@green, 20%);
+          background-color: darken(@color-1, 20%);
         }
       }
     }
     div:nth-child(2) {
-      color: @orange;
+      color: @color-2;
       margin-right: 15px;
       button {
         color: @white;
-        background-color: @orange;
+        background-color: @color-2;
         &:hover {
           color: @white;
-          background-color: darken(@orange, 20%);
+          background-color: darken(@color-2, 20%);
         }
       }
     }

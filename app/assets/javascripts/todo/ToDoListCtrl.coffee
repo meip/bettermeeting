@@ -55,5 +55,10 @@ class ToDoListCtrl
         color: "color-4"
       },
     ]
+  doneClicked: (todoId) ->
+    @$log.debug "ToDoListCtrl.doneClicked(" + todoId + ")"
+
+  laterClicked: (todoId) ->
+    @$log.debug "ToDoListCtrl.laterClicked(" + todoId + ")"
 
 controllersModule.controller('ToDoListCtrl', ToDoListCtrl)

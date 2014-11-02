@@ -1,0 +1,57 @@
+#leaderboard-container {
+  .leaderboard-score {
+    .score-frame {
+      width: 33%;
+      float: left;
+    }
+    .score-frame:last-child {
+      clear: right;
+    }
+    .score-case {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
+      margin: 0px auto 30px auto;
+      width: 130px;
+      height: 130px;
+      text-align: center;
+
+      div:first-child {
+        color: @white;
+        padding: 5px;
+      }
+      div:last-child {
+        font-size: 300%;
+        height: 100%;
+        vertical-align: middle;
+        padding-top: 15px;
+      }
+    }
+    .score-case.leader {
+      div:first-child {
+        background-color: @color-1;
+      }
+    }
+    .score-case.attendee {
+      div:first-child {
+        background-color: @color-2;
+      }
+    }
+    .score-case.todo {
+      div:first-child {
+        background-color: @color-4;
+      }
+    }
+  }
+  .active {
+    td {
+      background-color: @color-3;
+      font-weight: 600;
+    }
+  }
+}
+
+#leaderboard-container > table > thead > tr > th:nth-child(1) {
+  width: 30px;
+}
+#leaderboard-container > table > thead > tr > th:nth-child(3) {
+  width: 30px;
+}

@@ -18,9 +18,9 @@
                         <div class="note-frame">
                             <div class="meeting-summary-colorbar">
                                 <div class="colorbar-date">
-                                    <span class="month">{{meeting.updated | date:'MMM'}}</span>
-                                    <span class="day">{{meeting.updated | date:'dd'}}</span>
-                                    <span class="weekday">{{meeting.updated | date:'EEE'}}</span>
+                                    <span class="month">{{meeting.date | date:'MMM'}}</span>
+                                    <span class="day">{{meeting.date | date:'dd'}}</span>
+                                    <span class="weekday">{{meeting.date | date:'EEE'}}</span>
                                 </div>
                             </div>
                             <div class="meeting-content">
@@ -48,18 +48,18 @@
 
             </div>
             <div class="col-md-5">
-                <div class="row" ng-controller="ToDoListCtrl as tlc">
+                <div class="row" ng-controller="ToDoListCtrl as tlc" id="todo-container">
                     <h3>ToDo</h3>
-                    <div class="todo-item" ng-repeat="todo in tlc.todos">
+                    <div class="todo-item" ng-repeat="todo in tlc.todos"  ng-class="todo.color">
                         <div class="todo-actions">
                             <div>
-                                <button type="button" class="btn">
+                                <button type="button" class="btn" ng-click="tlc.doneClicked(todo.id)">
                                     <span class="glyphicon glyphicon-ok"></span>
                                 </button>
                                 <span>DONE</span>
                             </div>
                             <div>
-                                <button type="button" class="btn">
+                                <button type="button" class="btn" ng-click="tlc.laterClicked(todo.id)">
                                     <span class="glyphicon glyphicon-time"></span>
                                 </button>
                                 <span>LATER</span>
@@ -80,10 +80,44 @@
 
                     </div>
                 </div>
-                <div class="row" style="background-color: cadetblue">
-                    <div class="col-xs-12">
-                        <h3>Rangliste</h3>
+                <div class="row" ng-controller="LeaderboardCtrl as lbc" id="leaderboard-container">
+                    <h3>Leaderboard</h3>
+                    <div class="leaderboard-score">
+                        <div class="score-frame">
+                            <div class="score-case leader">
+                                <div>Meeting Leader</div>
+                                <div>{{lbc.ownPoints.meetingLeader}}</div>
+                            </div>
+                        </div>
+                        <div class="score-frame">
+                            <div class="score-case attendee">
+                                <div>Meeting Attendee</div>
+                                <div>{{lbc.ownPoints.meetingAttendee}}</div>
+                            </div>
+                        </div>
+                        <div class="score-frame">
+                            <div class="score-case todo">
+                                <div>Meeting Todo</div>
+                                <div>{{lbc.ownPoints.meetingTodos}}</div>
+                            </div>
+                        </div>
                     </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="rank in lbc.leaderboard" ng-class="lbc.getSelfClass(rank.id)">
+                                <td>{{rank.rank}}</td>
+                                <td>{{rank.name}}</td>
+                                <td>{{rank.points}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
