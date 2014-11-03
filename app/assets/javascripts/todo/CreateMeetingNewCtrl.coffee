@@ -1,13 +1,13 @@
 
 class CreateMeetingNewCtrl
-  constructor: (@$log, @$scope ,@$resource) ->
+  constructor: (@$log, @$scope ,@$resource, @$element) ->
     @$log.debug "CreateMeetingNewCtrl.constructor()"
 
     @meeting = {
       id: 1,
       goal: "Erstellen eines Prototyps",
       organizer: "r1bader@hsr.ch",
-      date: "03.11.2014 09:26",
+      date: @getFormattedDate(0),
       attendees: [
         "p1meier@hsr.ch",
         "lblaeser@hsr.ch"
@@ -30,22 +30,19 @@ class CreateMeetingNewCtrl
         }
       ],
       reachedTodos: 1,
-
       color: "color-1"
     }
 
   getFormattedDate: (additionalHours) ->
-    calculatedTime = new Date(Date.now() + (additionalHours * 1000 * 60 * 60))
-    return calculatedTime.toString("dd.MM.yyyy HH:MM")
-
-
-
+    return moment().add(additionalHours, "hours").format("DD.MM.YYYY HH:mm")
 
   publishMeeting: () ->
     @$log.debug "CreateMeetingNewCtrl.publishMeeting()"
 
+
   showAttendees: () ->
     @$log.debug "CreateMeetingNewCtrl.showAttendees()"
+    @$log.debug $(@$element).val()
 
   addTodo: () ->
     @$log.debug "CreateMeetingNewCtrl.addTodo()"
