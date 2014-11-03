@@ -1,6 +1,7 @@
 
 dependencies = [
     'ngRoute',
+    'ngResource',
     'ui.bootstrap',
     'bmApp.filters',
     'bmApp.services',
@@ -49,7 +50,7 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])
-@controllersModule = angular.module('bmApp.controllers', [])
+@controllersModule = angular.module('bmApp.controllers', ['ngResource'])
 @servicesModule = angular.module('bmApp.services', [])
 @factoriesModule = angular.module('bmApp.factories', [])
 @modelsModule = angular.module('bmApp.models', [])

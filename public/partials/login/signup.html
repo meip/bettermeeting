@@ -40,7 +40,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Decision"  ng-model="cmc.meeting.decisions[$index]">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" ng-click="cmc.removeAttendee($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                                <button class="btn btn-danger" type="button" ng-click="cmc.removeDecision($index)"><span class="glyphicon glyphicon-remove"></span></button>
                             </span>
                         </div>
                     </div>
@@ -65,7 +65,10 @@
                                 <input type="text" class="form-control" placeholder="Note" ng-model="todo.note" required>
                             </td>
                             <td class="todo-owner">
-                                <input type="email" class="form-control" placeholder="Owner"ng-model="todo.owner">
+                                <input type="email" class="form-control" placeholder="Owner"ng-model="todo.owner" ng-focus="cmc.showAttendees()">
+                                <div class="popup-test">
+                                    Robin
+                                </div>
                             </td>
                             <td class="todo-due">
                                 <input type="text" class="form-control" placeholder="Due Date" ng-model="todo.date">
@@ -74,7 +77,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-primary" ng-click="cmc.addMeetingPoint()"><span class="glyphicon glyphicon-plus"></span> Add Todo</button>
+                    <button type="button" class="btn btn-primary" ng-click="cmc.addTodo()"><span class="glyphicon glyphicon-plus"></span> Add Todo</button>
                 </div>
                 <div class="meeting-footer">
                     <div class="row">
@@ -89,7 +92,7 @@
             <hr />
             <h4>Debug:</h4>
             <pre>{{ cmc.meeting | json }}</pre>
-            <a ng-click="cmc.flush()">Flush local database</a>
+
         </div>
     </div>
 </div>
