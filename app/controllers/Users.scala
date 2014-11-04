@@ -50,7 +50,7 @@ object Users extends Controller with JsonDsl with Security {
    *
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def create = Authenticated.async(BodyParsers.parse.json) { implicit request =>
+  def create = Action.async(BodyParsers.parse.json) { implicit request =>
     val userResult = request.body.validate[User]
     userResult.fold(
       errors => {
