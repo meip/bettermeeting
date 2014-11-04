@@ -8,33 +8,49 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import play.api.mvc._
 import reactivemongo.extensions.json.dsl.JsonDsl
+import services.Security
 
-import scala.concurrent.Future
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
-object Users extends Controller with JsonDsl with Authentication {
+object Users extends Controller with JsonDsl with Security {
 
-  def login = AuthenticateMe {
-    user => Ok(s"hello ${user.email}")
+  def list = Authenticated.async {
+    implicit request => {
+      UserDao.listUsers.map {
+        case Nil => Ok(Json.toJson(""))
+        case users => Ok(Json.toJson(users))
+      }
+    }
   }
 
-  def logout = Action { implicit  request =>
+  def login = Action {
+    implicit request => {
+      val query = request.queryString.map { case (k, v) => k -> v.mkString}
+      val username = query get ("username")
+      val password = query get ("password")
+      (username, password) match {
+        case (Some(u), Some(p)) => {
+          Await.result(UserDao.findByEMail(u), Duration.fromNanos(5000000000l)).filter(user => user.checkPassword(p)).map(user => {
+            // Login logic
+            Ok("Login success").withSession("username" -> user.email)
+          }).getOrElse(Unauthorized("Login failed"))
+        }
+        case _ => Unauthorized("Login parameter missing")
+      }
+    }
+  }
+
+  def logout = Action { implicit request =>
     Ok("Logged out").withNewSession
   }
-
-  def list = AuthenticateMeAsync(user => {
-    UserDao.listUsers.map {
-      case Nil => Ok(Json.toJson(""))
-      case users => Ok(Json.toJson(users))
-    }
-  })
-
 
   /**
    * Creates and persists meetings with coming HTTP request data.
    *
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def create = Action.async(BodyParsers.parse.json) { implicit request =>
+  def create = Authenticated.async(BodyParsers.parse.json) { implicit request =>
     val userResult = request.body.validate[User]
     userResult.fold(
       errors => {
@@ -57,7 +73,7 @@ object Users extends Controller with JsonDsl with Authentication {
    * @param email E-Mail attribute of users.
    * @return A Ok [[play.api.mvc.Result]]
    */
-  def findByEmail(email: String) = Action.async {
+  def findByEmail(email: String) = Authenticated.async {
     UserDao.findByEMail(email).map {
       case None => Ok(Json.toJson(""))
       case user => Ok(Json.toJson(user))

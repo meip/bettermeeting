@@ -9,6 +9,6 @@ case class User(
                  firstName: String,
                  lastName: String,
                  active: Boolean = true) {
-
   def checkPassword(password: String): Boolean = this.password == password
+
 }
