@@ -16,6 +16,11 @@ GET     /api/user/login                 controllers.Users.login
 POST    /api/user/login                 controllers.Users.login
 GET     /api/user/logout                controllers.Users.logout
 
+# User Login / Logut
+GET     /api/user/login                 controllers.Users.login
+POST    /api/user/login                 controllers.Users.login
+GET     /api/user/logout                controllers.Users.logout
+
 # Meeting management API
 GET         /api/meetings               @controllers.Meetings.list
 POST        /api/meetings               @controllers.Meetings.create
