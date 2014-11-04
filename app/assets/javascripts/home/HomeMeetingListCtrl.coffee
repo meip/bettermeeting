@@ -1,6 +1,6 @@
 
 class HomeMeetingListCtrl
-  constructor: (@$log, @$scope, @Meetings, @MeetingService) ->
+  constructor: (@$log, @$scope, @MeetingService) ->
     @$log.debug "HomeMeetingListCtrl.constructor()"
     @meetings = []
 
@@ -12,6 +12,8 @@ class HomeMeetingListCtrl
         for meeting in @meetings
           meeting.goalStatus = @calculateGoalStatus(meeting)
           meeting.todoStatus = @calculateTodoStatus(meeting)
+
+        @freeTile()
     ,
     (error) =>
       @$log.error "Unable to get Meetings: #{error}"
@@ -35,5 +37,12 @@ class HomeMeetingListCtrl
         todoDone++
 
     return Math.floor((todoDone / todoLength) * 100)
+
+  freeTile: () ->
+    $('#note-container').freetile({
+      selector: '.note',
+      animate: true,
+      elementDelay: 30
+    })
 
 controllersModule.controller('HomeMeetingListCtrl', HomeMeetingListCtrl)

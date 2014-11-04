@@ -74,7 +74,7 @@ class MeetingService
     @$http.get("/api/meetings")
     .success((data, status, headers) =>
       @$log.info("Successfully listed Meetings - status #{status}")
-      deferred.resolve(data)
+      deferred.resolve(data, status, headers)
     )
     .error((data, status, headers) =>
       @$log.info("Failed to list Meetings - status #{status}")

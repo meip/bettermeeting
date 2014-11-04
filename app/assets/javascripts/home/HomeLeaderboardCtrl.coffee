@@ -1,7 +1,7 @@
 
-class LeaderboardCtrl
+class HomeLeaderboardCtrl
   constructor: (@$log, @$scope) ->
-    @$log.debug "LeaderoardCtrl.constructor()"
+    @$log.debug "HomeLeaderboardCtrl.constructor()"
     @ownPoints = {
       meetingLeader: 12,
       meetingAttendee: 27,
@@ -51,4 +51,4 @@ class LeaderboardCtrl
     else
       return ""
 
-controllersModule.controller('LeaderboardCtrl', LeaderboardCtrl)
+controllersModule.controller('HomeLeaderboardCtrl', HomeLeaderboardCtrl)
