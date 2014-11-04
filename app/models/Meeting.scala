@@ -4,7 +4,7 @@ import reactivemongo.bson.BSONObjectID
 import com.github.nscala_time.time.Imports.DateTime
 
 case class Meeting(
-                    _id: Option[BSONObjectID],
+                    var _id: Option[BSONObjectID],
                     date: Option[DateTime],
                     goal: String,
                     organizer: String,

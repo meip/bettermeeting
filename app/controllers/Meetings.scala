@@ -51,7 +51,8 @@ class Meetings extends Controller with JsonDsl {
         Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
       },
       meeting => {
-        MeetingDao.updateById(id, meeting).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Mail updated"))).recover {
+        meeting._id = Some(id)
+        MeetingDao.updateById(id, meeting).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Meeting updated"))).recover {
           case t: Throwable =>
             logger.error("UPDATE ERROR", t)
             InternalServerError("Unknown error (UPDATE).")
