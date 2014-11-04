@@ -1,7 +1,6 @@
 
 dependencies = [
     'ngRoute',
-    'ngResource',
     'ui.bootstrap',
     'bmApp.filters',
     'bmApp.services',
@@ -21,22 +20,19 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/', {
                 templateUrl: '/assets/partials/home.html'
             })
+            .when('/meeting/note', {
+                templateUrl: '/assets/partials/meeting/note.html'
+            })
             .when('/users', {
                 templateUrl: '/assets/partials/users/list.html'
             })
             .when('/users/create', {
                 templateUrl: '/assets/partials/users/create.html'
             })
-            .when('/offline/create', {
-              templateUrl: '/assets/partials/offline/create.html'
+            .when('/meeting-offline/create', {
+                templateUrl: '/assets/partials/meeting/edit.html'
             })
-            .when('/offline/list', {
-              templateUrl: '/assets/partials/offline/list.html'
-            })
-            .when('/meeting/create', {
-                templateUrl: '/assets/partials/meeting/create.html'
-            })
-            .when('/meeting/edit', {
+            .when('/meeting-offline/edit', {
               templateUrl: '/assets/partials/meeting/edit.html'
             })
             .when('/login', {
@@ -50,7 +46,7 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])
-@controllersModule = angular.module('bmApp.controllers', ['ngResource'])
+@controllersModule = angular.module('bmApp.controllers', [])
 @servicesModule = angular.module('bmApp.services', [])
 @factoriesModule = angular.module('bmApp.factories', [])
 @modelsModule = angular.module('bmApp.models', [])

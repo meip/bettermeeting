@@ -9,10 +9,11 @@ import play.api.libs.json._
 import play.api.mvc._
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dsl.JsonDsl
+import services.Security
 
 import scala.concurrent.Future
 
-class Meetings extends Controller with JsonDsl {
+class Meetings extends Controller with JsonDsl with Security {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Meetings])
 
@@ -21,7 +22,7 @@ class Meetings extends Controller with JsonDsl {
    *
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def create = Action.async(BodyParsers.parse.json) { implicit request =>
+  def create = Authenticated.async(BodyParsers.parse.json) { implicit request =>
     val meetingResult = request.body.validate[Meeting]
     meetingResult.fold(
       errors => {
@@ -29,7 +30,7 @@ class Meetings extends Controller with JsonDsl {
       },
       meeting => {
         MeetingDao.createMeeting(meeting).map(
-          _ => Created(Json.obj("status" -> "OK", "message" -> JsString(meeting._id.get.stringify)))).recover {
+            _ => Created(Json.obj("status" -> "OK", "message" -> JsString(meeting._id.get.stringify)))).recover {
           case t: Throwable =>
             logger.error("CREATE ERROR", t)
             InternalServerError("Unknown error (CREATE).")
@@ -44,14 +45,15 @@ class Meetings extends Controller with JsonDsl {
    * @param id BSONObject will be updated.
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def update(id: BSONObjectID) = Action.async(BodyParsers.parse.json) { implicit request =>
+  def update(id: BSONObjectID) = Authenticated.async(BodyParsers.parse.json) { implicit request =>
     val meetingResult = request.body.validate[Meeting]
     meetingResult.fold(
       errors => {
         Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
       },
       meeting => {
-        MeetingDao.updateById(id, meeting).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Mail updated"))).recover {
+        meeting._id = Some(id)
+        MeetingDao.updateById(id, meeting).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Meeting updated"))).recover {
           case t: Throwable =>
             logger.error("UPDATE ERROR", t)
             InternalServerError("Unknown error (UPDATE).")
@@ -66,9 +68,9 @@ class Meetings extends Controller with JsonDsl {
    * @param id ID of the meeting.
    * @return A Ok [[play.api.mvc.Result]]
    */
-  def get(id: BSONObjectID) = Action.async {
+  def get(id: BSONObjectID) = Authenticated.async {
     MeetingDao.get(id).map {
-      case None => Ok(Json.toJson(Nil))
+      case None => Ok(Json.toJson(""))
       case meeting => Ok(Json.toJson(meeting))
     }
   }
@@ -79,10 +81,20 @@ class Meetings extends Controller with JsonDsl {
    *
    * @return A Ok [[play.api.mvc.Result]]
    */
-  def list = Action.async {
+  def list = Authenticated.async {
     MeetingDao.listMeetings.map {
-      case Nil => Ok(Json.toJson(Nil))
+      case Nil => Ok(Json.toJson(""))
       case meetings => Ok(Json.toJson(meetings))
+    }
+  }
+
+  def findMyActionPoints = Authenticated.async {
+    implicit request => {
+      val actionPoints = MeetingDao.findActionPointsForOwner(request.user.email).map {
+        case Nil => Ok(Json.toJson(""))
+        case meetings => Ok(Json.toJson(meetings.flatMap(_.actionPoints)))
+      }
+      actionPoints
     }
   }
 
@@ -92,7 +104,7 @@ class Meetings extends Controller with JsonDsl {
    * @param id BSONObject will deleted.
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def delete(id: BSONObjectID) = Action.async {
+  def delete(id: BSONObjectID) = Authenticated.async {
     MeetingDao.deleteMeeting(id).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Meeting deleted"))).recover {
       case t: Throwable =>
         logger.error("DELETE ERROR", t)

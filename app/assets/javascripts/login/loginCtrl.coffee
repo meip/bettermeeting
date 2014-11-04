@@ -1,19 +1,22 @@
 
 class LoginCtrl
 
-  constructor: (@$log, @$scope, @$rootScope, @$location, @AuthenticationService) ->
+  constructor: (@$log, @UserService) ->
     @$log.debug "LoginCtrl.constructor()"
-    @AuthenticationSerice.ClearCredentials()
+    @user = {
+      email: "rob@in.ch",
+      password: "passwd"
+    }
 
   login: () ->
-    @dataLoading = true
-    @AuthenticationService.Login(@username, @password)
-    .success((data) =>
-      @AuthenticationService.SetCredentials(@username, @password)
-    )
-    .error((data) =>
-      @$log.error data.Message
-      @dataLoading = false
+    @$log.debug "LoginCtrl.login()"
+    @UserService.loginUser(@user.email, @user.password)
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data} Meetings"
+    ,
+    (error) =>
+      @$log.error "Unable to get Meetings: #{error}"
     )
 
 controllersModule.controller('LoginCtrl', LoginCtrl)
