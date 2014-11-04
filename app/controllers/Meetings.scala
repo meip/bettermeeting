@@ -88,6 +88,16 @@ class Meetings extends Controller with JsonDsl with Security {
     }
   }
 
+  def findMyActionPoints = Authenticated.async {
+    implicit request => {
+      val actionPoints = MeetingDao.findActionPointsForOwner(request.user.email).map {
+        case Nil => Ok(Json.toJson(""))
+        case meetings => Ok(Json.toJson(meetings.flatMap(_.actionPoints)))
+      }
+      actionPoints
+    }
+  }
+
   /**
    * Deletes a meeting from database.
    *

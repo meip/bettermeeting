@@ -57,8 +57,8 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    *
    * @return [[scala.concurrent.Future]] as a [[List]]
    */
-  def findActionPointsForOwner(id: BSONObjectID) = {
-    MeetingDao.findAll(selector = "actionPoints.owner.oid" $eq id.stringify)
+  def findActionPointsForOwner(id: String) = {
+    MeetingDao.findAll(selector = "actionPoints.owner" $eq id)
   }
 
   /**

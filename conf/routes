@@ -20,6 +20,7 @@ GET     /api/user/logout                controllers.Users.logout
 GET     /api/user/login                 controllers.Users.login
 POST    /api/user/login                 controllers.Users.login
 GET     /api/user/logout                controllers.Users.logout
+GET     /api/user/actionpoints          @controllers.Meetings.findMyActionPoints
 
 # Meeting management API
 GET         /api/meetings               @controllers.Meetings.list

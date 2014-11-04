@@ -13,7 +13,7 @@ object UserFormats {
       (JsPath \ "firstName").write[String] and
       (JsPath \ "lastName").write[String] and
       (JsPath \ "active").write[Boolean]
-    )(user => (user._id, user.email, "", user.firstName, user.lastName, user.active))
+    )(user => (user._id, user.email, user.password, user.firstName, user.lastName, user.active))
 
   implicit def userListWrites: Writes[List[User]] = Writes.list(userWrites)
 

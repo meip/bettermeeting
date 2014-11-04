@@ -10,8 +10,12 @@ import play.api.libs.json.{JsPath, Reads, Writes}
 import reactivemongo.bson.BSONObjectID
 
 object MeetingFormats {
-  implicit val actionPointFormat = Json.format[ActionPoint]
-  implicit val decisionFormat = Json.format[Decision]
+  implicit val actionPointWrites = Json.writes[ActionPoint]
+  implicit val actionPointReads = Json.reads[ActionPoint]
+  implicit def actionPointListFormats: Writes[List[ActionPoint]] = Writes.list(actionPointWrites)
+  implicit val decisionWrites = Json.writes[Decision]
+  implicit val decisionReads = Json.reads[Decision]
+  implicit val decisionListFormats = Writes[List[Decision]] = Writes.list(decisionWrites)
 
   implicit def meetingWrites: Writes[Meeting] = (
     (JsPath \ "_id").writeNullable[BSONObjectID] and
