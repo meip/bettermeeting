@@ -1,22 +1,24 @@
-
 class LoginCtrl
 
-  constructor: (@$log, @UserService) ->
+  constructor: (@$log, @UserControlService, @$location) ->
     @$log.debug "LoginCtrl.constructor()"
     @user = {
-      email: "rob@in.ch",
+      email: "rob@bader.ch",
       password: "passwd"
     }
 
+
   login: () ->
     @$log.debug "LoginCtrl.login()"
-    @UserService.loginUser(@user.email, @user.password)
+
+    @UserControlService.loginUser(@user.email, @user.password)
     .then(
       (data) =>
         @$log.debug "Promise returned #{data} Meetings"
+        @$location.path("/");
     ,
     (error) =>
-      @$log.error "Unable to get Meetings: #{error}"
+      @$log.error "Unable to Login: #{error}"
     )
 
 controllersModule.controller('LoginCtrl', LoginCtrl)

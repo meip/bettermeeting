@@ -4,8 +4,13 @@ class MeetingService
   @headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
   @defaultConfig = { headers: @headers }
 
-  constructor: (@$log, @$http, @$q) ->
+  constructor: (@$log, @$http, @$q, @$location) ->
     @$log.debug "MeetingService.constructor()"
+
+  checkLogin: (status) ->
+    if(status == 401)
+      @$log.info "Not logged in"
+      @$location.path("/login");
 
   getMeeting: (meetingId) ->
     @$log.debug "MeetingService.getRemoteMeeting(meetingId)"
@@ -17,6 +22,7 @@ class MeetingService
       deferred.resolve(data)
     )
     .error((data, status, headers) =>
+      @checkLogin(status)
       @$log.info("Failed to list Meeting - status #{status}")
       deferred.reject(data);
     )
@@ -32,6 +38,7 @@ class MeetingService
       deferred.resolve(data)
     )
     .error((data, status, headers) =>
+      @checkLogin(status)
       @$log.error("Failed to create Meeting - status #{status}")
       deferred.reject(data);
     )
@@ -47,6 +54,7 @@ class MeetingService
       deferred.resolve(data)
     )
     .error((data, status, headers) =>
+      @checkLogin(status)
       @$log.error("Failed to update Meeting - status #{status}")
       deferred.reject(data);
     )
@@ -62,6 +70,7 @@ class MeetingService
       deferred.resolve(data)
     )
     .error((data, status, headers) =>
+      @checkLogin(status)
       @$log.error("Failed to delete Meeting - status #{status}")
       deferred.reject(data);
     )
@@ -77,6 +86,7 @@ class MeetingService
       deferred.resolve(data, status, headers)
     )
     .error((data, status, headers) =>
+      @checkLogin(status)
       @$log.info("Failed to list Meetings - status #{status}")
       deferred.resolve(data);
     )

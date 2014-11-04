@@ -36,13 +36,13 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
               templateUrl: '/assets/partials/meeting/edit.html'
             })
             .when('/login', {
-              templateUrl: '/assets/partials/login/login.html',
-              public: true,
-              login: true
+              templateUrl: '/assets/partials/login/login.html'
+            })
+            .when('/logout', {
+              templateUrl: '/assets/partials/login/logout.html'
             })
             .when('/signup', {
-              templateUrl: '/assets/partials/login/signup.html',
-              public: true
+              templateUrl: '/assets/partials/login/signup.html'
             })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])
