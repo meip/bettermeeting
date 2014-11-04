@@ -30,6 +30,7 @@ case class ActionPoint(
                      subject: Option[String],
                      editor: Option[String],
                      owner: Option[String],
+                     status: Option[String],
                      dueDate: Option[DateTime],
                      reminderDate: Option[DateTime],
                      reminderType: Option[String],

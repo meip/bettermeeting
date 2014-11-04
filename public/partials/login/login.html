@@ -27,17 +27,17 @@
                                 <h5 ng-hide="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">{{meeting.goal}}</a></h5>
                                 <h5 ng-show="meeting.goal == ''"><a ng-href="/#/meeting/create?id={{meeting._id.oid}}">(No Name)</a></h5>
                                 <div class="meeting-note-goal">
-                                    <p>{{meeting.goalReached + '%'}} Ziel erreicht</p>
-                                    <img ng-show="meeting.goalReached <= 20" src="/assets/images/emoticons/smiley-3.png" />
-                                    <img ng-show="meeting.goalReached > 20 && meeting.goalReached <= 60" src="/assets/images/emoticons/smiley-11.png" />
-                                    <img ng-show="meeting.goalReached > 60 && meeting.goalReached <= 80" src="/assets/images/emoticons/smiley-9.png" />
-                                    <img ng-show="meeting.goalReached > 80 && meeting.goalReached <= 90" src="/assets/images/emoticons/smiley-8.png" />
-                                    <img ng-show="meeting.goalReached > 90" src="/assets/images/emoticons/smiley-6.png" />
+                                    <p>{{meeting.goalStatus}}% Ziel erreicht</p>
+                                    <img ng-show="meeting.goalStatus <= 20" src="/assets/images/emoticons/smiley-3.png" />
+                                    <img ng-show="meeting.goalStatus > 20 && meeting.goalStatus <= 60" src="/assets/images/emoticons/smiley-11.png" />
+                                    <img ng-show="meeting.goalStatus > 60 && meeting.goalStatus <= 80" src="/assets/images/emoticons/smiley-9.png" />
+                                    <img ng-show="meeting.goalStatus > 80 && meeting.goalStatus <= 90" src="/assets/images/emoticons/smiley-8.png" />
+                                    <img ng-show="meeting.goalStatus > 90" src="/assets/images/emoticons/smiley-6.png" />
                                 </div>
                                 <div class="meeting-note-todo">
-                                    <p>{{meeting.todoReached + '%'}} ToDos erledigt</p>
+                                    <p>{{meeting.todoStatus}}% ToDos erledigt</p>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" ng-style="{width : ( meeting.todoReached + '%' ) }">
+                                        <div class="progress-bar" role="progressbar" ng-style="{width : ( meeting.todoStatus + '%' ) }">
                                         </div>
                                     </div>
                                 </div>

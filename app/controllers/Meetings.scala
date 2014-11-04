@@ -29,7 +29,7 @@ class Meetings extends Controller with JsonDsl {
       },
       meeting => {
         MeetingDao.createMeeting(meeting).map(
-          _ => Created(Json.obj("status" -> "OK", "message" -> s"Meeting ${meeting.goal} sent."))).recover {
+            _ => Created(Json.obj("status" -> "OK", "message" -> JsString(meeting._id.get.stringify)))).recover {
           case t: Throwable =>
             logger.error("CREATE ERROR", t)
             InternalServerError("Unknown error (CREATE).")
