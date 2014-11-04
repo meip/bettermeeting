@@ -29,7 +29,7 @@ class Meetings extends Controller with JsonDsl {
       },
       meeting => {
         MeetingDao.createMeeting(meeting).map(
-          _ => Created(Json.obj("status" -> "OK", "message" -> s"Meeting ${meeting.goal} sent."))).recover {
+          _ => Created(Json.obj("status" -> "OK", "message" -> JsString(meeting._id.get.stringify)))).recover {
           case t: Throwable =>
             logger.error("CREATE ERROR", t)
             InternalServerError("Unknown error (CREATE).")
@@ -68,7 +68,7 @@ class Meetings extends Controller with JsonDsl {
    */
   def get(id: BSONObjectID) = Action.async {
     MeetingDao.get(id).map {
-      case None => Ok(Json.toJson(""))
+      case None => Ok(Json.toJson(Nil))
       case meeting => Ok(Json.toJson(meeting))
     }
   }
@@ -81,7 +81,7 @@ class Meetings extends Controller with JsonDsl {
    */
   def list = Action.async {
     MeetingDao.listMeetings.map {
-      case Nil => Ok(Json.toJson(""))
+      case Nil => Ok(Json.toJson(Nil))
       case meetings => Ok(Json.toJson(meetings))
     }
   }
