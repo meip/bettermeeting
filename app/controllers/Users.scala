@@ -11,14 +11,22 @@ import reactivemongo.extensions.json.dsl.JsonDsl
 
 import scala.concurrent.Future
 
-object Users extends Controller with JsonDsl {
+object Users extends Controller with JsonDsl with Authentication {
 
-  def list = Action.async {
+  def login = AuthenticateMe {
+    user => Ok(s"hello ${user.email}")
+  }
+
+  def logout = Action { implicit  request =>
+    Ok("Logged out").withNewSession
+  }
+
+  def list = AuthenticateMeAsync(user => {
     UserDao.listUsers.map {
       case Nil => Ok(Json.toJson(""))
       case users => Ok(Json.toJson(users))
     }
-  }
+  })
 
 
   /**
