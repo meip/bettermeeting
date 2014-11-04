@@ -1,10 +1,10 @@
 
-class ToDoListCtrl
+class HomeToDoListCtrl
 
 
 
   constructor: (@$log, @$scope) ->
-    @$log.debug "ToDoListCtrl.constructor()"
+    @$log.debug "HomeToDoListCtrl.constructor()"
     @todos = [
       {
         id: 1,
@@ -56,9 +56,9 @@ class ToDoListCtrl
       },
     ]
   doneClicked: (todoId) ->
-    @$log.debug "ToDoListCtrl.doneClicked(" + todoId + ")"
+    @$log.debug "HomeToDoListCtrl.doneClicked(" + todoId + ")"
 
   laterClicked: (todoId) ->
-    @$log.debug "ToDoListCtrl.laterClicked(" + todoId + ")"
+    @$log.debug "HomeToDoListCtrl.laterClicked(" + todoId + ")"
 
-controllersModule.controller('ToDoListCtrl', ToDoListCtrl)
+controllersModule.controller('HomeToDoListCtrl', HomeToDoListCtrl)
