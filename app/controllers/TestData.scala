@@ -10,6 +10,9 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import reactivemongo.extensions.json.dsl.JsonDsl
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
 object TestData extends Controller with JsonDsl {
 
   val testUserList = List(
@@ -85,15 +88,37 @@ object TestData extends Controller with JsonDsl {
   )
 
   def createUsers() = Action {
-    testUserList.map(user => UserDao.createUser(user))
+    testUserList.map(user => UserDao.createUser(user)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
     Ok(Json.toJson("test users created"))
   }
 
   def createMeetings() = Action {
-    testMeetingList.map(meeting => MeetingDao.createMeeting(meeting))
+    testMeetingList.map(meeting => MeetingDao.createMeeting(meeting)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
     Ok(Json.toJson("test meetings created"))
   }
 
-  private def makeDate(s: String): Option[DateTime] = scala.util.control.Exception.allCatch[DateTime] opt (DateTime.parse("22.12.2014 15:00", DateTimeFormat.forPattern("dd.MM.yyyy HH:mm")))
+  def init = Action {
+    testUserList.map(user => UserDao.createUser(user)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
+    testMeetingList.map(meeting => MeetingDao.createMeeting(meeting)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
+    Ok(Json.toJson("test users meetings created"))
+  }
+
+  def clean = Action {
+    MeetingDao.clean
+    UserDao.clean
+    Ok(Json.toJson("database cleaned up"))
+  }
+
+  def cleanInit = Action {
+    Await.result(UserDao.clean, Duration.fromNanos(500000000000l))
+    Await.result(MeetingDao.clean, Duration.fromNanos(500000000000l))
+
+    testUserList.map(user => UserDao.createUser(user)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
+    testMeetingList.map(meeting => MeetingDao.createMeeting(meeting)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
+
+    Ok(Json.toJson("database cleaned up and initialized again"))
+  }
+
+  private def makeDate(s: String): Option[DateTime] = scala.util.control.Exception.allCatch[DateTime] opt (DateTime.parse(s, DateTimeFormat.forPattern("dd.MM.yyyy HH:mm")))
 
 }

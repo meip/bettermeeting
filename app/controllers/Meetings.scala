@@ -11,9 +11,8 @@ import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dsl.JsonDsl
 import services.Security
 
-import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
-import scala.util.{Success, Failure}
+import scala.concurrent.{Await, Future}
 
 class Meetings extends Controller with JsonDsl with Security {
 
@@ -34,7 +33,7 @@ class Meetings extends Controller with JsonDsl with Security {
         MeetingDao.createMeeting(meeting).map(
             _ => {
               val lastId = for {
-                lastHead <- Await.result(MeetingDao.findAll(sort = Json.obj("_id" -> -1)), Duration.fromNanos(500000000l)).headOption
+                lastHead <- Await.result(MeetingDao.findAll(sort = $id(-1)), Duration.fromNanos(500000000l)).headOption
                 id <- lastHead._id
               } yield id
               meeting._id = lastId

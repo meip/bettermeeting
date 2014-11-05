@@ -52,6 +52,14 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
     UserDao.removeById(id)
   }
 
+  /**
+   * Drops the collection!
+   * @return
+   */
+  def clean = {
+    drop()
+  }
+
   override def autoIndexes = Seq(
     Index(Seq("_id" -> Ascending, "email" -> Ascending)),
     Index(Seq("email" -> IndexType.Ascending), unique = true))

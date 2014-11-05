@@ -70,4 +70,12 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
     MeetingDao.removeById(id)
   }
 
+  /**
+   * Drops the collection!
+   * @return
+   */
+  def clean = {
+    drop()
+  }
+
 }

@@ -12,9 +12,6 @@ GET     /api/randomUUID                 @controllers.Application.randomUUID
 GET     /api/users                      controllers.Users.list
 GET     /api/user/email/:email          controllers.Users.findByEmail(email: String)
 POST    /api/user                       controllers.Users.create
-GET     /api/user/login                 controllers.Users.login
-POST    /api/user/login                 controllers.Users.login
-GET     /api/user/logout                controllers.Users.logout
 
 # User Login / Logut
 GET     /api/user/login                 controllers.Users.login
@@ -23,15 +20,18 @@ GET     /api/user/logout                controllers.Users.logout
 GET     /api/user/actionpoints          @controllers.Meetings.findMyActionPoints
 
 # Meeting management API
-GET         /api/meetings               @controllers.Meetings.list
-POST        /api/meetings               @controllers.Meetings.create
-DELETE      /api/meetings/:id           @controllers.Meetings.delete(id: BSONObjectID)
-GET         /api/meetings/:id           @controllers.Meetings.get(id: BSONObjectID)
-PUT         /api/meetings/:id           @controllers.Meetings.update(id: BSONObjectID)
+GET     /api/meetings                   @controllers.Meetings.list
+POST    /api/meetings                   @controllers.Meetings.create
+DELETE  /api/meetings/:id               @controllers.Meetings.delete(id: BSONObjectID)
+GET     /api/meetings/:id               @controllers.Meetings.get(id: BSONObjectID)
+PUT     /api/meetings/:id               @controllers.Meetings.update(id: BSONObjectID)
 
 # Testdata
 GET    /api/testdata/meetings           controllers.TestData.createMeetings
 GET    /api/testdata/users              controllers.TestData.createUsers
+GET    /api/testdata/init               controllers.TestData.init
+GET    /api/testdata/clean              controllers.TestData.clean
+GET    /api/testdata/cleaninit          controllers.TestData.cleanInit
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
