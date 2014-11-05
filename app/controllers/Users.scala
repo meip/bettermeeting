@@ -27,8 +27,8 @@ object Users extends Controller with JsonDsl with Security {
   def login = Action {
     implicit request => {
       val query = request.queryString.map { case (k, v) => k -> v.mkString}
-      val username = query get ("username")
-      val password = query get ("password")
+      val username = query get ("username") orElse (request.body.asJson.flatMap(json => (json \ "username").asOpt[String]))
+      val password = query get ("password") orElse (request.body.asJson.flatMap(json => (json \ "password").asOpt[String]))
       (username, password) match {
         case (Some(u), Some(p)) => {
           Await.result(UserDao.findByEMail(u), Duration.fromNanos(5000000000l)).filter(user => user.checkPassword(p)).map(user => {
