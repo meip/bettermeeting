@@ -35,7 +35,7 @@ object MeetingFormats {
   implicit def meetingListWrites: Writes[List[Meeting]] = Writes.list(meetingWrites)
 
   implicit def meetingReads: Reads[Meeting] = (
-    (JsPath \ "_id").readNullable[BSONObjectID].map(_.getOrElse(BSONObjectID.generate)).map(Some(_)) and
+    (JsPath \ "_id").readNullable[BSONObjectID] and
       (JsPath \ "date").readNullable[DateTime] and
       (JsPath \ "goal").read[String] and
       (JsPath \ "organizer").read[String] and

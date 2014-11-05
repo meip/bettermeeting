@@ -10,7 +10,7 @@ object BSONFormatsBM {
 
   implicit object BSONObjectIDFormat extends PartialFormat[BSONObjectID] {
     def partialReads: PartialFunction[JsValue, JsResult[BSONObjectID]] = {
-      case JsObject(("oid", JsString(v)) +: Nil) =>
+      case JsObject(("$oid", JsString(v)) +: Nil) =>
         val maybeOID: Try[BSONObjectID] = BSONObjectID.parse(v)
         if(maybeOID.isSuccess) JsSuccess(maybeOID.get) else {
           JsError("Expected BSONObjectID as JsString in field oid")
