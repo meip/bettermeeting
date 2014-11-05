@@ -41,8 +41,8 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
   }
 
   /**
-   * Push a MeetingPoint to  meeting.
-   * Insert a [[Meeting]] object.
+   * Push a ActionPoint to  meeting.
+   * Insert a [[ActionPoint]] object.
    *
    * @param meetingId meetingId to Push MeetingPoint to
    * @param actionPoint Inserted [[ActionPoint]] object.

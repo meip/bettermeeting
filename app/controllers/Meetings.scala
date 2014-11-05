@@ -1,7 +1,7 @@
 package controllers
 
 import dao.dao.MeetingDao
-import models.Meeting
+import models.{ActionPoint, Meeting}
 import models.MeetingFormats._
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -107,6 +107,30 @@ class Meetings extends Controller with JsonDsl with Security {
   }
 
   /**
+   * Push a ActionPoint to a meeting
+   *
+   * @param id BSONObject will be updated.
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
+  def pushActionPoint(id: BSONObjectID) = Action.async(BodyParsers.parse.json) { implicit request =>
+    val actionPointResult = request.body.validate[ActionPoint]
+    actionPointResult.fold(
+      errors => {
+        Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
+      },
+      actionPoint => {
+        val meeting = Await.result(MeetingDao.findById(id), Duration.fromNanos(500000000000l))
+        MeetingDao.pushActionPoint(id, actionPoint).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "ActionPoint pushed"))).recover {
+          case t: Throwable =>
+            logger.error("Push ActionPoint ERROR", t)
+            InternalServerError("Unknown error (Push ActionPoint).")
+        }
+      }
+    )
+  }
+
+
+    /**
    * Deletes a meeting from database.
    *
    * @param id BSONObject will deleted.

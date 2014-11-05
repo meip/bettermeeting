@@ -25,6 +25,8 @@ POST    /api/meetings                   @controllers.Meetings.create
 DELETE  /api/meetings/:id               @controllers.Meetings.delete(id: BSONObjectID)
 GET     /api/meetings/:id               @controllers.Meetings.get(id: BSONObjectID)
 PUT     /api/meetings/:id               @controllers.Meetings.update(id: BSONObjectID)
+POST    /api/meetings/:id/actionpoint   @controllers.Meetings.pushActionPoint(id: BSONObjectID)
+
 
 # Testdata
 GET    /api/testdata/meetings           controllers.TestData.createMeetings
