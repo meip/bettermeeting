@@ -1,5 +1,7 @@
 package utils
 
+import controllers.TestData
+import dao.UserDao
 import play.api._
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.test.Helpers._
@@ -33,6 +35,16 @@ object MongoDBTestUtils {
         () // Explicitly return unit
       }
     }
+  }
+  
+  /**
+   * Run the given block with MongoDB
+   */
+  def withUserInDb[T](block: Application => T): T = {
+    withMongoDb({implicit app =>
+      Await.ready(Future.sequence(Seq(UserDao.createUser(TestData.testUserList.head))), 2 seconds )
+      block(app)
+    })
   }
 
   def dropAll(db: DefaultDB) = {

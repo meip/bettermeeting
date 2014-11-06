@@ -29,6 +29,7 @@ class UsersIT extends ApiTest {
         "firstName" -> "Jack",
         "lastName" -> "London",
         "email" -> "jack.london@testmail.com",
+        "password" -> "jack.london",
         "active" -> true))
       val response = route(request)
       response.isDefined mustEqual true
@@ -40,7 +41,8 @@ class UsersIT extends ApiTest {
       val request = FakeRequest.apply(POST, apiUrl).withJsonBody(Json.obj(
         "firstName" -> 98,
         "lastName" -> "London",
-        "email" -> "jack.london@testmail.com"))
+        "email" -> "jack.london@testmail.com",
+        "password" -> "jack.london"))
       val response = route(request)
       response.isDefined mustEqual true
       val result = Await.result(response.get, timeout)
