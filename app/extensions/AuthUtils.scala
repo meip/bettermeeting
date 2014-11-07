@@ -1,33 +1,12 @@
-package controllers
+package extensions
 
 import dao.UserDao
 import models.User
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import play.api.mvc.RequestHeader
 
-import scala.concurrent.{Future, Await}
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
-
-trait Authentication {
-  self:Controller =>
-
-  def AuthenticateMe(f: User => Result) = Action { implicit request =>
-    val user = AuthUtils.parseUserFromRequest
-    if(user.isEmpty)
-      Forbidden("Invalid username or password")
-    else {
-      f(user.get).withSession(request.session + ("username" -> user.get.email))
-    }
-  }
-  def AuthenticateMeAsync(f: User => Future[Result]) = Action {implicit request =>
-    val user = AuthUtils.parseUserFromRequest
-    if(user.isEmpty)
-      Forbidden("Invalid username or password")
-    else {
-      Await.result(f(user.get), Duration.fromNanos(5000000000d)).withSession(request.session + ("username" -> user.get.email))
-    }
-  }
-}
 
 
 object AuthUtils {
