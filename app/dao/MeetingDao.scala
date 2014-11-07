@@ -7,6 +7,7 @@ import models.MeetingFormats._
 import models.{ActionPoint, Meeting}
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dao.JsonDao
@@ -50,6 +51,18 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    */
   def pushActionPoint(meetingId: BSONObjectID, actionPoint: ActionPoint) = {
     MeetingDao.updateById(meetingId, $push("actionPoints" -> actionPoint))
+  }
+
+  /**
+   * Update an ActionPoint
+   * Insert a [[ActionPoint]] object.
+   *
+   * @param actionPointId actionPointId to update
+   * @param actionPoint Updated [[ActionPoint]] object.
+   * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
+   */
+  def updateActionPointById(actionPointId: BSONObjectID, actionPoint: ActionPoint) = {
+    MeetingDao.update(Json.obj("actionPoints._id" -> actionPointId) , $set("actionPoints.$" -> actionPoint))
   }
 
   /**

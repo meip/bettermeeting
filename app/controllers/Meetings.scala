@@ -78,30 +78,6 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
   }
 
   /**
-   * Gets all Meeting for user.
-   *
-   * @return A Ok [[play.api.mvc.Result]]
-   */
-  def findMyActionPoints = Authenticated.async { implicit request =>
-    MeetingDao.findActionPointsForOwner(request.user.email).map {
-      case meetings => Ok(Json.toJson(meetings.flatMap(_.actionPoints)))
-    }
-  }
-
-  /**
-   * Push a ActionPoint to a meeting
-   *
-   * @param id BSONObject will be updated.
-   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
-   */
-  def pushActionPoint(id: BSONObjectID) = authenticatedActionWithRecover[ActionPoint](
-    actionPoint => {
-      val meeting = Await.result(MeetingDao.findById(id), Duration.fromNanos(500000000000l))
-      MeetingDao.pushActionPoint(id, actionPoint)
-    }, "ActionPoint pushed", "Unknown Error(push ActionPoint)"
-  )
-
-  /**
    * Deletes a meeting from database.
    *
    * @param id BSONObject will deleted.

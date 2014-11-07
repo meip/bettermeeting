@@ -17,7 +17,7 @@ POST    /api/user                       controllers.Users.create
 GET     /api/user/login                 controllers.Users.login
 POST    /api/user/login                 controllers.Users.login
 GET     /api/user/logout                controllers.Users.logout
-GET     /api/user/actionpoints          @controllers.Meetings.findMyActionPoints
+GET     /api/user/actionpoints          @controllers.ActionPoints.findMyActionPoints
 
 # Meeting management API
 GET     /api/meetings                   @controllers.Meetings.list
@@ -25,8 +25,10 @@ POST    /api/meetings                   @controllers.Meetings.create
 DELETE  /api/meetings/:id               @controllers.Meetings.delete(id: BSONObjectID)
 GET     /api/meetings/:id               @controllers.Meetings.get(id: BSONObjectID)
 PUT     /api/meetings/:id               @controllers.Meetings.update(id: BSONObjectID)
-POST    /api/meetings/:id/actionpoint   @controllers.Meetings.pushActionPoint(id: BSONObjectID)
+POST    /api/meetings/:id/actionpoint   @controllers.ActionPoints.pushActionPoint(id: BSONObjectID)
 
+DELETE  /api/actionpoint/:id            @controllers.ActionPoints.delete(id: BSONObjectID)
+PUT     /api/actionpoint/:id            @controllers.ActionPoints.update(id: BSONObjectID)
 
 # Testdata
 GET    /api/testdata/meetings           controllers.TestData.createMeetings

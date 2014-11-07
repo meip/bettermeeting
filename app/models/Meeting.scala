@@ -19,14 +19,14 @@ case class Meeting(
                     ) extends TemporalModel
 
 case class Decision(
-                     _id: Option[BSONObjectID],
+                     var _id: Option[BSONObjectID],
                      subject: Option[String],
                      editor: Option[String],
                      override var created: Option[DateTime],
                      override var updated: Option[DateTime]
                      ) extends TemporalModel
 case class ActionPoint(
-                     _id: Option[BSONObjectID],
+                     var _id: Option[BSONObjectID],
                      subject: Option[String],
                      editor: Option[String],
                      owner: Option[String],
