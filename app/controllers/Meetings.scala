@@ -1,8 +1,8 @@
 package controllers
 
 import dao.dao.MeetingDao
-import models.{ActionPoint, Meeting}
 import models.MeetingFormats._
+import models.{ActionPoint, Meeting}
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
@@ -11,10 +11,10 @@ import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dsl.JsonDsl
 import services.Security
 
+import scala.concurrent.Await
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
 
-class Meetings extends Controller with JsonDsl with Security {
+class Meetings extends Controller with JsonDsl with Security with AuthenticatedAction {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Meetings])
 
@@ -23,29 +23,21 @@ class Meetings extends Controller with JsonDsl with Security {
    *
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def create = Authenticated.async(BodyParsers.parse.json) { implicit request =>
-    val meetingResult = request.body.validate[Meeting]
-    meetingResult.fold(
-      errors => {
-        Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
-      },
-      meeting => {
-        MeetingDao.createMeeting(meeting).map(
-            _ => {
-              val lastId = for {
-                lastHead <- Await.result(MeetingDao.findAll(sort = $id(-1)), Duration.fromNanos(500000000l)).headOption
-                id <- lastHead._id
-              } yield id
-              meeting._id = lastId
-              Created(Json.obj("status" -> "OK", "message" -> JsString(meeting._id.get.stringify)))
-            }).recover {
-          case t: Throwable =>
-            logger.error("CREATE ERROR", t)
-            InternalServerError("Unknown error (CREATE).")
-        }
-      }
-    )
-  }
+  def create = authenticatedAction[Meeting](meeting => {
+    MeetingDao.createMeeting(meeting).map(
+      _ => {
+        val lastId = for {
+          lastHead <- Await.result(MeetingDao.findAll(sort = $id(-1)), Duration.fromNanos(500000000l)).headOption
+          id <- lastHead._id
+        } yield id
+        meeting._id = lastId
+        Created(Json.obj("status" -> "OK", "message" -> JsString(meeting._id.get.stringify)))
+      }).recover {
+      case t: Throwable =>
+        logger.error("CREATE ERROR", t)
+        InternalServerError("Unknown error (CREATE).")
+    }
+  })
 
   /**
    * Updates meeting
@@ -53,22 +45,13 @@ class Meetings extends Controller with JsonDsl with Security {
    * @param id BSONObject will be updated.
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def update(id: BSONObjectID) = Authenticated.async(BodyParsers.parse.json) { implicit request =>
-    val meetingResult = request.body.validate[Meeting]
-    meetingResult.fold(
-      errors => {
-        Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
-      },
-      meeting => {
-        meeting._id = Some(id)
-        MeetingDao.updateById(id, meeting).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Meeting updated"))).recover {
-          case t: Throwable =>
-            logger.error("UPDATE ERROR", t)
-            InternalServerError("Unknown error (UPDATE).")
-        }
-      }
-    )
-  }
+  def update(id: BSONObjectID) = authenticatedActionWithRecover[Meeting](
+    meeting => {
+      meeting._id = Some(id)
+      MeetingDao.updateById(id, meeting)
+    }, "Meeting updated", "Unknown error (UPDATE) meeting"
+  )
+
 
   /**
    * Get Meeting.
@@ -78,7 +61,6 @@ class Meetings extends Controller with JsonDsl with Security {
    */
   def get(id: BSONObjectID) = Authenticated.async {
     MeetingDao.get(id).map {
-      case None => Ok(Json.toJson(""))
       case meeting => Ok(Json.toJson(meeting))
     }
   }
@@ -91,18 +73,18 @@ class Meetings extends Controller with JsonDsl with Security {
    */
   def list = Authenticated.async {
     MeetingDao.listMeetings.map {
-      case Nil => Ok(Json.toJson(""))
       case meetings => Ok(Json.toJson(meetings))
     }
   }
 
-  def findMyActionPoints = Authenticated.async {
-    implicit request => {
-      val actionPoints = MeetingDao.findActionPointsForOwner(request.user.email).map {
-        case Nil => Ok(Json.toJson(""))
-        case meetings => Ok(Json.toJson(meetings.flatMap(_.actionPoints)))
-      }
-      actionPoints
+  /**
+   * Gets all Meeting for user.
+   *
+   * @return A Ok [[play.api.mvc.Result]]
+   */
+  def findMyActionPoints = Authenticated.async { implicit request =>
+    MeetingDao.findActionPointsForOwner(request.user.email).map {
+      case meetings => Ok(Json.toJson(meetings.flatMap(_.actionPoints)))
     }
   }
 
@@ -112,25 +94,14 @@ class Meetings extends Controller with JsonDsl with Security {
    * @param id BSONObject will be updated.
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def pushActionPoint(id: BSONObjectID) = Authenticated.async(BodyParsers.parse.json) { implicit request =>
-    val actionPointResult = request.body.validate[ActionPoint]
-    actionPointResult.fold(
-      errors => {
-        Future.successful(BadRequest(Json.obj("status" -> "NOT OK", "message" -> JsError.toFlatJson(errors))))
-      },
-      actionPoint => {
-        val meeting = Await.result(MeetingDao.findById(id), Duration.fromNanos(500000000000l))
-        MeetingDao.pushActionPoint(id, actionPoint).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "ActionPoint pushed"))).recover {
-          case t: Throwable =>
-            logger.error("Push ActionPoint ERROR", t)
-            InternalServerError("Unknown error (Push ActionPoint).")
-        }
-      }
-    )
-  }
+  def pushActionPoint(id: BSONObjectID) = authenticatedActionWithRecover[ActionPoint](
+    actionPoint => {
+      val meeting = Await.result(MeetingDao.findById(id), Duration.fromNanos(500000000000l))
+      MeetingDao.pushActionPoint(id, actionPoint)
+    }, "ActionPoint pushed", "Unknown Error(push ActionPoint)"
+  )
 
-
-    /**
+  /**
    * Deletes a meeting from database.
    *
    * @param id BSONObject will deleted.
