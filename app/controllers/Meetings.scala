@@ -19,6 +19,28 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Meetings])
 
   /**
+   * Gets all Meeting.
+   *
+   * @return A Ok [[play.api.mvc.Result]]
+   */
+  def list = Authenticated.async {
+    MeetingDao.listMeetings.map {
+      case meetings => Ok(Json.toJson(meetings))
+    }
+  }
+
+  /**
+   * Gets all Meeting for user.
+   *
+   * @return A Ok [[play.api.mvc.Result]]
+   */
+  def findMyMeetings = Authenticated.async { implicit request =>
+    MeetingDao.findMeetingsForUser(request.user.email).map {
+      case meetings => Ok(Json.toJson(meetings))
+    }
+  }
+
+  /**
    * Creates and persists meetings with coming HTTP request data.
    *
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
@@ -52,7 +74,6 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
     }, "Meeting updated", "Unknown error (UPDATE) meeting"
   )
 
-
   /**
    * Get Meeting.
    *
@@ -62,18 +83,6 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
   def get(id: BSONObjectID) = Authenticated.async {
     MeetingDao.get(id).map {
       case meeting => Ok(Json.toJson(meeting))
-    }
-  }
-
-
-  /**
-   * Gets all Meeting.
-   *
-   * @return A Ok [[play.api.mvc.Result]]
-   */
-  def list = Authenticated.async {
-    MeetingDao.listMeetings.map {
-      case meetings => Ok(Json.toJson(meetings))
     }
   }
 
