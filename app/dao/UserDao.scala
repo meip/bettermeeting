@@ -57,7 +57,7 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
    * @return
    */
   def clean = {
-    drop()
+    dropSync()
   }
 
   override def autoIndexes = Seq(

@@ -104,14 +104,13 @@ object TestData extends Controller with JsonDsl {
   }
 
   def clean = Action {
-    MeetingDao.clean
-    UserDao.clean
+    UserDao.clean //Sync
+    MeetingDao.clean //Sync
     Ok(Json.toJson("database cleaned up"))
   }
 
   def cleanInit = Action {
-    Await.result(UserDao.clean, Duration.fromNanos(500000000000l))
-    Await.result(MeetingDao.clean, Duration.fromNanos(500000000000l))
+    clean
 
     testUserList.map(user => UserDao.createUser(user)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
     testMeetingList.map(meeting => MeetingDao.createMeeting(meeting)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))

@@ -71,11 +71,20 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
   }
 
   /**
+   * Delete the [[ActionPoint]] object from the database according to id.
+   * @param id [[reactivemongo.bson.BSONObjectID]] for the [[ActionPoint]] object.
+   * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
+   */
+  def deleteActionPoint(id: BSONObjectID) = {
+    MeetingDao.update(Json.obj(), $pull("actionPoints" -> Json.obj("_id" -> id)), multi = true)
+  }
+
+  /**
    * Drops the collection!
    * @return
    */
   def clean = {
-    drop()
+    dropSync()
   }
 
 }
