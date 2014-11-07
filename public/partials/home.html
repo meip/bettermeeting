@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                             <div class="meeting-content">
-                                <h5><a ng-href="/#/meeting/note?id={{meeting._id.oid}}">{{meeting.goal}}</a></h5>
+                                <h5><a ng-href="/#/meeting/note?id={{meeting._id.$oid}}">{{meeting.goal}}</a></h5>
                                 <div class="meeting-note-goal">
                                     <p>{{meeting.goalStatus}}% Ziel erreicht</p>
                                     <img ng-show="meeting.goalStatus <= 20" src="/assets/images/emoticons/smiley-3.png" />
