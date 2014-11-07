@@ -38,6 +38,8 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
   def createMeeting(meeting: Meeting) = {
+    meeting.actionPoints.foreach(actionPoint => if(actionPoint._id.isEmpty) actionPoint._id = Some(BSONObjectID.generate))
+    meeting.decisions.foreach(decision => if(decision._id.isEmpty) decision._id = Some(BSONObjectID.generate))
     MeetingDao.insert(meeting)
   }
 

@@ -19,7 +19,7 @@ object TestData extends Controller with JsonDsl {
     User(None, "p1meier@hsr.ch", "p1meier", "Philipp", "Meier", true),
     User(None, "r1bader@hsr.ch", "r1bader", "Robin", "Bader", true),
     User(None, "nle@hsr.ch", "nle", "Nhat-Nam", "Le", true),
-    User(None, "fegli@zuehlke.ch", "fegli","Felix", "Egli", true)
+    User(None, "fegli@zuehlke.ch", "fegli", "Felix", "Egli", true)
   )
 
   val testMeetingList = List(
@@ -31,7 +31,7 @@ object TestData extends Controller with JsonDsl {
       color = Some("color-3"),
       attendees = List("r1bader@hsr.ch", "nle@hsr.ch", "fegli@zuehlke.ch"),
       decisions = List(
-        Decision (
+        Decision(
           _id = None,
           subject = Some("Benutzerübersicht soll bis nächste Woche erstellt werden"),
           editor = Some("r1bader@hsr.ch"),
@@ -180,13 +180,12 @@ object TestData extends Controller with JsonDsl {
   }
 
   def clean = Action {
-    UserDao.clean //Sync
-    MeetingDao.clean //Sync
+    cleanJob
     Ok(Json.toJson("database cleaned up"))
   }
 
   def cleanInit = Action {
-    clean
+    val foo = cleanJob
 
     testUserList.map(user => UserDao.createUser(user)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
     testMeetingList.map(meeting => MeetingDao.createMeeting(meeting)).map(f => Await.result(f, Duration.fromNanos(500000000000l)))
@@ -196,4 +195,8 @@ object TestData extends Controller with JsonDsl {
 
   private def makeDate(s: String): Option[DateTime] = scala.util.control.Exception.allCatch[DateTime] opt (DateTime.parse(s, DateTimeFormat.forPattern("dd.MM.yyyy HH:mm")))
 
+  private def cleanJob = {
+    UserDao.clean //Sync
+    MeetingDao.clean //Sync
+  }
 }
