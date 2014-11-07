@@ -73,7 +73,7 @@ class MeetingNoteCtrl
 
   removeMeeting: () ->
     @$log.debug "MeetingNoteCtrl.removeMeeting()"
-    @MeetingService.removeMeeting(@meeting._id.oid)
+    @MeetingService.removeMeeting(@meeting._id.$oid)
     .then(
       (data) =>
         @$log.debug "Deleted #{data} Meeting"

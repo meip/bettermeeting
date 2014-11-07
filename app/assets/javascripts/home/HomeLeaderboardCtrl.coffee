@@ -1,4 +1,4 @@
-
+o
 class HomeLeaderboardCtrl
   constructor: (@$log, @$scope) ->
     @$log.debug "HomeLeaderboardCtrl.constructor()"

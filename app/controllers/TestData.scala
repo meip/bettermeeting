@@ -17,13 +17,89 @@ object TestData extends Controller with JsonDsl {
 
   val testUserList = List(
     User(None, "p1meier@hsr.ch", "p1meier", "Philipp", "Meier", true),
-    User(None, "r1bader@hsr.ch", "r1bader", "Robin", "Bader", true)
+    User(None, "r1bader@hsr.ch", "r1bader", "Robin", "Bader", true),
+    User(None, "nle@hsr.ch", "nle", "Nhat-Nam", "Le", true),
+    User(None, "fegli@zuehlke.ch", "fegli","Felix", "Egli", true)
   )
 
   val testMeetingList = List(
     Meeting(
       _id = None,
-      date = makeDate("22.12.2014 15:00"),
+      date = makeDate("07.11.2014 12:00"),
+      goal = "Erstellen einer neuen Benutzerübersicht",
+      organizer = "r1bader@hsr.ch",
+      color = Some("color-3"),
+      attendees = List("r1bader@hsr.ch", "nle@hsr.ch", "fegli@zuehlke.ch"),
+      decisions = List(
+        Decision (
+          _id = None,
+          subject = Some("Benutzerübersicht soll bis nächste Woche erstellt werden"),
+          editor = Some("r1bader@hsr.ch"),
+          created = makeDate("07.11.2014 13:00"),
+          updated = makeDate("07.11.2014 13:00")
+        )
+      ),
+      actionPoints = List(
+        ActionPoint(
+          _id = None,
+          subject = Some("Erstellen der Benutzerübersicht"),
+          editor = Some("r1bader@hsr.ch"),
+          owner = Some("p1meier@hsr.ch"),
+          status = Some("open"),
+          dueDate = makeDate("14.11.2014 07:40"),
+          reminderDate = makeDate("14.11.2014 06:40"),
+          reminderType = Some("mail"),
+          created = makeDate("10.11.2014 13:29"),
+          updated = makeDate("14.11.2014 13:29")
+        ),
+        ActionPoint(
+          _id = None,
+          subject = Some("Ein ActionPoint wurde erstellt"),
+          editor = Some("r1bader@hsr.ch"),
+          owner = Some("p1meier@hsr.ch"),
+          status = Some("open"),
+          dueDate = makeDate("14.11.2014 07:40"),
+          reminderDate = makeDate("14.11.2014 06:40"),
+          reminderType = Some("mail"),
+          created = makeDate("10.11.2014 13:29"),
+          updated = makeDate("14.11.2014 13:29")
+        ),
+        ActionPoint(
+          _id = None,
+          subject = Some("Ein weiterer ActionPoint wurde erstellt"),
+          editor = Some("r1bader@hsr.ch"),
+          owner = Some("p1meier@hsr.ch"),
+          status = Some("open"),
+          dueDate = makeDate("14.11.2014 07:40"),
+          reminderDate = makeDate("14.11.2014 06:40"),
+          reminderType = Some("mail"),
+          created = makeDate("10.11.2014 13:29"),
+          updated = makeDate("14.11.2014 13:29")
+        ),
+        ActionPoint(
+          _id = None,
+          subject = Some("Ein noch einer ActionPoint wurde erstellt"),
+          editor = Some("r1bader@hsr.ch"),
+          owner = Some("p1meier@hsr.ch"),
+          status = Some("open"),
+          dueDate = makeDate("14.11.2014 07:40"),
+          reminderDate = makeDate("14.11.2014 06:40"),
+          reminderType = Some("mail"),
+          created = makeDate("10.11.2014 13:29"),
+          updated = makeDate("14.11.2014 13:29")
+        )
+      ),
+      votesUp = List(
+        "p1meier@hsr.ch",
+        "r1bader@hsr.ch"
+      ),
+      votesDown = Nil,
+      created = makeDate("08.11.2014 09:10"),
+      updated = makeDate("08.11.2014 09:10")
+    ),
+    Meeting(
+      _id = None,
+      date = makeDate("22.09.2014 15:00"),
       goal = "Decision about Prototype #1",
       organizer = "p1meier@hsr.ch",
       color = Some("color-2"),
@@ -57,7 +133,7 @@ object TestData extends Controller with JsonDsl {
           subject = Some("Close all project reports"),
           editor = Some("p1meier@hsr.ch"),
           owner = Some("p1meier@hsr.ch"),
-          status = Some("closed"),
+          status = Some("done"),
           dueDate = makeDate("14.11.2014 16:00"),
           reminderDate = makeDate("14.11.2014 15:00"),
           reminderType = Some("push"),

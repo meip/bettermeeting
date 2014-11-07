@@ -112,7 +112,7 @@ class Meetings extends Controller with JsonDsl with Security {
    * @param id BSONObject will be updated.
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def pushActionPoint(id: BSONObjectID) = Action.async(BodyParsers.parse.json) { implicit request =>
+  def pushActionPoint(id: BSONObjectID) = Authenticated.async(BodyParsers.parse.json) { implicit request =>
     val actionPointResult = request.body.validate[ActionPoint]
     actionPointResult.fold(
       errors => {
