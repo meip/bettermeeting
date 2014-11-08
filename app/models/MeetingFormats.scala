@@ -16,6 +16,10 @@ object MeetingFormats {
   implicit val decisionReads = Json.reads[Decision]
   implicit val decisionListFormats: Writes[List[Decision]] = Writes.list(decisionWrites)
 
+  implicit val voteWrites = Json.writes[Vote]
+  implicit val voteReads = Json.reads[Vote]
+  implicit val voteListFormats: Writes[List[Vote]] = Writes.list(voteWrites)
+
   implicit def meetingWrites: Writes[Meeting] = (
     (JsPath \ "_id").writeNullable[BSONObjectID] and
       (JsPath \ "date").writeNullable[DateTime] and
@@ -25,8 +29,8 @@ object MeetingFormats {
       (JsPath \ "attendees").write[List[String]] and
       (JsPath \ "actionPoints").write[List[ActionPoint]] and
       (JsPath \ "decisions").write[List[Decision]] and
-      (JsPath \ "votesUp").write[List[String]] and
-      (JsPath \ "votesDown").write[List[String]] and
+      (JsPath \ "votesUp").write[List[Vote]] and
+      (JsPath \ "votesDown").write[List[Vote]] and
       (JsPath \ "created").writeNullable[DateTime] and
       (JsPath \ "updated").writeNullable[DateTime]
     )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.color, meeting.attendees, meeting.actionPoints, meeting.decisions, meeting.votesUp, meeting.votesDown, meeting.created, meeting.updated))
@@ -42,8 +46,8 @@ object MeetingFormats {
       (JsPath \ "attendees").read[List[String]] and
       (JsPath \ "actionPoints").readNullable[List[ActionPoint]] and
       (JsPath \ "decisions").readNullable[List[Decision]] and
-      (JsPath \ "votesUp").readNullable[List[String]] and
-      (JsPath \ "votesDown").readNullable[List[String]] and
+      (JsPath \ "votesUp").readNullable[List[Vote]] and
+      (JsPath \ "votesDown").readNullable[List[Vote]] and
       (JsPath \ "created").readNullable[DateTime] and
       (JsPath \ "updated").readNullable[DateTime]
     )((_id, date, goal, organizer, color, attendees, actionPoints, decisions, votesUp, votesDown, created, updated) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, color = color, attendees = attendees, actionPoints = actionPoints.getOrElse(Nil), decisions = decisions.getOrElse(Nil), votesUp = votesUp.getOrElse(Nil), votesDown = votesDown.getOrElse(Nil), created = created, updated = updated))
@@ -53,5 +57,7 @@ object MeetingFormats {
   implicit object DecisionModelLifeCylce extends TemporalModelLifeCycle[Decision]
 
   implicit object ActionPointModelLifeCylce extends TemporalModelLifeCycle[ActionPoint]
+
+  implicit object MeetingVoteLifeCylce extends TemporalModelLifeCycle[Vote]
 
 }

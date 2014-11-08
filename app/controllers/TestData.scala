@@ -2,7 +2,7 @@ package controllers
 
 import dao.UserDao
 import dao.dao.MeetingDao
-import models.{ActionPoint, Decision, Meeting, User}
+import models._
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.Logger
@@ -90,8 +90,8 @@ object TestData extends Controller with JsonDsl {
         )
       ),
       votesUp = List(
-        "p1meier@hsr.ch",
-        "r1bader@hsr.ch"
+        Vote("p1meier@hsr.ch", None, None),
+        Vote("r1bader@hsr.ch", None, None)
       ),
       votesDown = Nil,
       created = makeDate("08.11.2014 09:10"),
@@ -154,8 +154,8 @@ object TestData extends Controller with JsonDsl {
         )
       ),
       votesUp = List(
-        "p1meier@hsr.ch",
-        "r1bader@hsr.ch"
+        Vote("p1meier@hsr.ch", None, None),
+        Vote("r1bader@hsr.ch", None, None)
       ),
       votesDown = Nil,
       created = makeDate("08.11.2014 09:10"),

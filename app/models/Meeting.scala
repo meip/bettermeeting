@@ -12,8 +12,8 @@ case class Meeting(
                     attendees: List[String],
                     decisions: List[Decision],
                     actionPoints: List[ActionPoint],
-                    votesUp: List[String],
-                    votesDown: List[String],
+                    votesUp: List[Vote],
+                    votesDown: List[Vote],
                     override var created: Option[DateTime],
                     override var updated: Option[DateTime]
                     ) extends TemporalModel
@@ -25,15 +25,22 @@ case class Decision(
                      override var created: Option[DateTime],
                      override var updated: Option[DateTime]
                      ) extends TemporalModel
+
 case class ActionPoint(
-                     var _id: Option[BSONObjectID],
-                     subject: Option[String],
-                     editor: Option[String],
-                     owner: Option[String],
-                     status: Option[String],
-                     dueDate: Option[DateTime],
-                     reminderDate: Option[DateTime],
-                     reminderType: Option[String],
-                     override var created: Option[DateTime],
-                     override var updated: Option[DateTime]
-                     ) extends TemporalModel
+                        var _id: Option[BSONObjectID],
+                        subject: Option[String],
+                        editor: Option[String],
+                        owner: Option[String],
+                        status: Option[String],
+                        dueDate: Option[DateTime],
+                        reminderDate: Option[DateTime],
+                        reminderType: Option[String],
+                        override var created: Option[DateTime],
+                        override var updated: Option[DateTime]
+                        ) extends TemporalModel
+
+case class Vote(
+                 email: String,
+                 override var created: Option[DateTime],
+                 override var updated: Option[DateTime]
+                 ) extends TemporalModel

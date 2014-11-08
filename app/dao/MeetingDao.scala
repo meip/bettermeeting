@@ -4,7 +4,7 @@ package dao
 
 import extensions.BSONFormatsBM._
 import models.MeetingFormats._
-import models.{ActionPoint, Meeting}
+import models.{Vote, User, ActionPoint, Meeting}
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json.Json
@@ -53,6 +53,30 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    */
   def pushActionPoint(meetingId: BSONObjectID, actionPoint: ActionPoint) = {
     MeetingDao.updateById(meetingId, $push("actionPoints" -> actionPoint))
+  }
+
+  /**
+   * Push a up vote to  meeting.
+   *
+   * @param meetingId meetingId to Push Vote to
+   * @param vote [[Vote]] object.
+   * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
+   */
+  def voteUpMeeting(meetingId: BSONObjectID, vote: Vote) = {
+    MeetingDao.update(Json.obj(), $pull("votesDown" -> Json.obj("email" -> vote.email)), multi = true)
+    MeetingDao.updateById(meetingId, $push("votesUp" -> vote))
+  }
+
+  /**
+   * Push a down vote to  meeting.
+   *
+   * @param meetingId meetingId to Push Vote to
+   * @param vote [[Vote]] object.
+   * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
+   */
+  def voteDownMeeting(meetingId: BSONObjectID, vote: Vote) = {
+    MeetingDao.update(Json.obj(), $pull("votesUp" -> Json.obj("email" -> vote.email)), multi = true)
+    MeetingDao.updateById(meetingId, $push("votesDown" -> vote))
   }
 
   /**

@@ -2,7 +2,7 @@ package controllers
 
 import dao.dao.MeetingDao
 import models.MeetingFormats._
-import models.{ActionPoint, Meeting}
+import models.{Vote, ActionPoint, Meeting}
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
@@ -17,6 +17,18 @@ import scala.concurrent.duration.Duration
 class Meetings extends Controller with JsonDsl with Security with AuthenticatedAction {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Meetings])
+
+  /**
+   * Get Meeting.
+   *
+   * @param id ID of the meeting.
+   * @return A Ok [[play.api.mvc.Result]]
+   */
+  def get(id: BSONObjectID) = Authenticated.async {
+    MeetingDao.get(id).map {
+      case meeting => Ok(Json.toJson(meeting))
+    }
+  }
 
   /**
    * Gets all Meeting.
@@ -75,15 +87,31 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
   )
 
   /**
-   * Get Meeting.
+   * Votes a meeting
    *
-   * @param id ID of the meeting.
-   * @return A Ok [[play.api.mvc.Result]]
+   * @param id BSONObject will be updated.
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def get(id: BSONObjectID) = Authenticated.async {
-    MeetingDao.get(id).map {
-      case meeting => Ok(Json.toJson(meeting))
-    }
+  def voteUpMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
+      MeetingDao.voteUpMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Up succeed"))).recover {
+        case t: Throwable =>
+          logger.error("VoteUp error ERROR", t)
+          InternalServerError("Unknown error (voteUpMeeting).")
+      }
+  }
+
+  /**
+   * Votes a meeting
+   *
+   * @param id BSONObject will be updated.
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
+  def voteDownMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
+      MeetingDao.voteDownMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Down succeed"))).recover {
+        case t: Throwable =>
+          logger.error("VoteDown error ERROR", t)
+          InternalServerError("Unknown error (voteDownMeeting).")
+      }
   }
 
   /**
