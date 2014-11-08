@@ -1,5 +1,7 @@
 package controllers
 
+import actors.{PushNotification, APNSActor}
+import akka.actor.Props
 import dao.dao.MeetingDao
 import models.MeetingFormats._
 import models.{Vote, ActionPoint, Meeting}
@@ -7,11 +9,12 @@ import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import play.api.mvc._
+import play.libs.Akka
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dsl.JsonDsl
 import services.Security
 
-import scala.concurrent.Await
+import scala.concurrent.{Future, Await}
 import scala.concurrent.duration.Duration
 
 class Meetings extends Controller with JsonDsl with Security with AuthenticatedAction {
@@ -128,4 +131,9 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
     }
   }
 
+  def closeMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
+    val apnsActor = Akka.system.actorOf(Props[APNSActor])
+    request.user.pushToken.map(token => apnsActor ! PushNotification(List(token)))
+    Future(Ok("first push implementation"))
+  }
 }

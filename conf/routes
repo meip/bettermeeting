@@ -30,6 +30,7 @@ GET     /api/meetings/:id               @controllers.Meetings.get(id: BSONObject
 PUT     /api/meetings/:id               @controllers.Meetings.update(id: BSONObjectID)
 PUT     /api/meetings/:id/voteUp        @controllers.Meetings.voteUpMeeting(id: BSONObjectID)
 PUT     /api/meetings/:id/voteDown      @controllers.Meetings.voteDownMeeting(id: BSONObjectID)
+PUT     /api/meetings/:id/close         @controllers.Meetings.closeMeeting(id: BSONObjectID)
 POST    /api/meetings/:id/actionpoint   @controllers.ActionPoints.pushActionPoint(id: BSONObjectID)
 
 DELETE  /api/actionpoint/:id            @controllers.ActionPoints.delete(id: BSONObjectID)
