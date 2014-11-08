@@ -38,8 +38,8 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
   def createMeeting(meeting: Meeting) = {
-    meeting.actionPoints.foreach(actionPoint => if(actionPoint._id.isEmpty) actionPoint._id = Some(BSONObjectID.generate))
-    meeting.decisions.foreach(decision => if(decision._id.isEmpty) decision._id = Some(BSONObjectID.generate))
+    meeting.actionPoints.foreach(actionPoint => if (actionPoint._id.isEmpty) actionPoint._id = Some(BSONObjectID.generate))
+    meeting.decisions.foreach(decision => if (decision._id.isEmpty) decision._id = Some(BSONObjectID.generate))
     MeetingDao.insert(meeting)
   }
 
@@ -64,7 +64,7 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
   def updateActionPointById(actionPointId: BSONObjectID, actionPoint: ActionPoint) = {
-    MeetingDao.update(Json.obj("actionPoints._id" -> actionPointId) , $set("actionPoints.$" -> actionPoint))
+    MeetingDao.update(Json.obj("actionPoints._id" -> actionPointId), $set("actionPoints.$" -> actionPoint))
   }
 
   /**
@@ -73,7 +73,9 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @return [[scala.concurrent.Future]] as a [[List]]
    */
   def findActionPointsForOwner(id: String) = {
-    MeetingDao.findAll(selector = "actionPoints.owner" $eq id)
+    MeetingDao.findAll(selector = "actionPoints.owner" $eq id).map {
+      case meeting => meeting.flatMap(meeting => meeting.actionPoints).filter(_.owner.equals(Some(id)))
+    }
   }
 
   /**
