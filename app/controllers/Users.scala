@@ -14,6 +14,7 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
 object Users extends Controller with JsonDsl with Security {
+object Users extends Controller with JsonDsl with Security with AuthenticatedAction {
 
   def list = Authenticated.async {
     implicit request => {
@@ -68,6 +69,15 @@ object Users extends Controller with JsonDsl with Security {
   }
 
   /**
+   * Updates user
+   *
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
+  def update = authenticatedActionWithRecover[User](
+    user => {
+      UserDao.updateById(user._id.get, user)
+    }, "User updated", "Unknown error (UPDATE) user"
+  )
    * Lists all user for E-Mail.
    *
    * @param email E-Mail attribute of users.
