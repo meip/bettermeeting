@@ -16,10 +16,10 @@ import scala.concurrent.duration.Duration
 object TestData extends Controller with JsonDsl {
 
   val testUserList = List(
-    User(None, "p1meier@hsr.ch", "p1meier", "Philipp", "Meier", true),
-    User(None, "r1bader@hsr.ch", "r1bader", "Robin", "Bader", true),
-    User(None, "nle@hsr.ch", "nle", "Nhat-Nam", "Le", true),
-    User(None, "fegli@zuehlke.ch", "fegli", "Felix", "Egli", true)
+    User(None, "p1meier@hsr.ch", "p1meier", "Philipp", "Meier", None, true),
+    User(None, "r1bader@hsr.ch", "r1bader", "Robin", "Bader", None, true),
+    User(None, "nle@hsr.ch", "nle", "Nhat-Nam", "Le", None, true),
+    User(None, "fegli@zuehlke.ch", "fegli", "Felix", "Egli", None, true)
   )
 
   val testMeetingList = List(

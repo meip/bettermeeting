@@ -7,19 +7,18 @@ import play.Logger
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import play.api.mvc._
+import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dsl.JsonDsl
 import services.Security
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
-object Users extends Controller with JsonDsl with Security {
 object Users extends Controller with JsonDsl with Security with AuthenticatedAction {
 
   def list = Authenticated.async {
     implicit request => {
       UserDao.listUsers.map {
-        case Nil => Ok(Json.toJson(""))
         case users => Ok(Json.toJson(users))
       }
     }
@@ -34,7 +33,7 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
         case (Some(u), Some(p)) => {
           Await.result(UserDao.findByEMail(u), Duration.fromNanos(5000000000l)).filter(user => user.checkPassword(p)).map(user => {
             // Login logic
-            Ok("Login success").withSession("username" -> user.email)
+            Ok(Json.obj(("status" -> "Login erfolgreich"), ("user" -> user))).withSession("username" -> user.email)
           }).getOrElse(Unauthorized("Login failed"))
         }
         case _ => Unauthorized("Login parameter missing")
@@ -78,6 +77,28 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
       UserDao.updateById(user._id.get, user)
     }, "User updated", "Unknown error (UPDATE) user"
   )
+
+  /**
+   * Updates user's pushToken
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
+  def pushToken = Authenticated.async { implicit request =>
+    val pushTokenOpt = for {
+      json <- request.body.asJson
+      pushToken <- (json \ "pushToken").asOpt[String]
+    } yield pushToken
+    pushTokenOpt.map {
+      token => UserDao.updateById(request.user._id.get, request.user.copy(pushToken = Some(token))).map(
+        _ => Created(Json.obj("status" -> "OK", "message" -> s"Token pushed $token"))).recover {
+        case t: Throwable =>
+          Logger.error("CREATE ERROR", t)
+          InternalServerError("Unknown error (PushToken).")
+      }
+    }.getOrElse(Future(InternalServerError("Unknown error (PushToken).")))
+  }
+
+
+  /**
    * Lists all user for E-Mail.
    *
    * @param email E-Mail attribute of users.

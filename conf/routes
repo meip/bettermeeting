@@ -18,6 +18,7 @@ PUT     /api/user                       controllers.Users.update
 GET     /api/user/login                 controllers.Users.login
 POST    /api/user/login                 controllers.Users.login
 GET     /api/user/logout                controllers.Users.logout
+PUT     /api/user/pushtoken            controllers.Users.pushToken
 GET     /api/user/actionpoints          @controllers.ActionPoints.findMyActionPoints
 GET     /api/user/meetings              @controllers.Meetings.findMyMeetings
 
