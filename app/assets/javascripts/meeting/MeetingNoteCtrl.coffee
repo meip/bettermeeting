@@ -1,6 +1,6 @@
 
 class MeetingNoteCtrl
-  constructor: (@$log, @$location, @$routeParams, @MeetingService) ->
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @selectize) ->
     @$log.debug "MeetingNoteCtrl.constructor()"
     idParam = @$routeParams.id
 
@@ -19,6 +19,16 @@ class MeetingNoteCtrl
       (error) =>
         @$log.error "Unable to get Meetings: #{error}"
       )
+
+    @UserControlService.getAllUsers()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length} Users"
+        @users = data
+    ,
+    (error) =>
+      @$log.error "Unable to get Users: #{error}"
+    )
 
   initializeNewMeeting: () ->
     @meeting = {

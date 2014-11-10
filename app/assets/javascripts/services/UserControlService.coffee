@@ -52,5 +52,21 @@ class UserControlService
     )
     deferred.promise
 
+  getAllUsers: () ->
+    @$log.debug "UserService.getAllUsers()"
+    deferred = @$q.defer()
+
+    @$http.get("/api/users")
+    .success((data, status, headers) =>
+      @$log.info("Successfully listed Users - status #{status}")
+      deferred.resolve(data, status, headers)
+    )
+    .error((data, status, headers) =>
+      @checkLogin(status)
+      @$log.info("Failed to list Users - status #{status}")
+      deferred.resolve(data);
+    )
+    deferred.promise
+
 
 servicesModule.service('UserControlService', UserControlService)
