@@ -52,13 +52,13 @@
                     <div class="todo-item" ng-repeat="todo in tlc.todos"  ng-class="todo.color">
                         <div class="todo-actions">
                             <div>
-                                <button type="button" class="btn" ng-click="tlc.doneClicked(todo.id)">
+                                <button type="button" class="btn" ng-click="tlc.doneClicked(todo._id.$oid)">
                                     <span class="glyphicon glyphicon-ok"></span>
                                 </button>
                                 <span>DONE</span>
                             </div>
                             <div>
-                                <button type="button" class="btn" ng-click="tlc.laterClicked(todo.id)">
+                                <button type="button" class="btn" ng-click="tlc.laterClicked(todo._id.$oid)">
                                     <span class="glyphicon glyphicon-time"></span>
                                 </button>
                                 <span>LATER</span>
@@ -68,10 +68,10 @@
                             <h5><a href="#">{{todo.subject}}</a></h5>
                             <div>
                                 <div class="due-date">
-                                    <span>{{todo.duedate | date:'dd.MM.yyyy HH:mm'}}</span>
+                                    <span>{{todo.dueDate | date:'dd.MM.yyyy HH:mm'}}</span>
                                 </div>
                                 <div class="time-left">
-                                    <span>-1d left</span>
+                                    <span>{{tlc.daysLeft($index)}}</span>
                                 </div>
                             </div>
                         </div>
