@@ -1,7 +1,8 @@
-o
+
 class HomeLeaderboardCtrl
   constructor: (@$log, @$scope) ->
     @$log.debug "HomeLeaderboardCtrl.constructor()"
+
     @ownPoints = {
       meetingLeader: 12,
       meetingAttendee: 27,
