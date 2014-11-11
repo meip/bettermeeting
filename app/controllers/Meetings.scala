@@ -1,10 +1,11 @@
 package controllers
 
-import actors.{PushNotification, APNSActor}
+import actors.{PushNotificationWithMeeting, APNSActor, PushNotification}
 import akka.actor.Props
+import dao.UserDao
 import dao.dao.MeetingDao
 import models.MeetingFormats._
-import models.{Vote, ActionPoint, Meeting}
+import models.{Meeting, User, Vote}
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
@@ -14,8 +15,8 @@ import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dsl.JsonDsl
 import services.Security
 
-import scala.concurrent.{Future, Await}
 import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 class Meetings extends Controller with JsonDsl with Security with AuthenticatedAction {
 
@@ -96,11 +97,11 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
   def voteUpMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
-      MeetingDao.voteUpMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Up succeed"))).recover {
-        case t: Throwable =>
-          logger.error("VoteUp error ERROR", t)
-          InternalServerError("Unknown error (voteUpMeeting).")
-      }
+    MeetingDao.voteUpMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Up succeed"))).recover {
+      case t: Throwable =>
+        logger.error("VoteUp error ERROR", t)
+        InternalServerError("Unknown error (voteUpMeeting).")
+    }
   }
 
   /**
@@ -110,11 +111,11 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
   def voteDownMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
-      MeetingDao.voteDownMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Down succeed"))).recover {
-        case t: Throwable =>
-          logger.error("VoteDown error ERROR", t)
-          InternalServerError("Unknown error (voteDownMeeting).")
-      }
+    MeetingDao.voteDownMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Down succeed"))).recover {
+      case t: Throwable =>
+        logger.error("VoteDown error ERROR", t)
+        InternalServerError("Unknown error (voteDownMeeting).")
+    }
   }
 
   /**
@@ -132,8 +133,22 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
   }
 
   def closeMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
-    val apnsActor = Akka.system.actorOf(Props[APNSActor])
-    request.user.pushToken.map(token => apnsActor ! PushNotification(List(token)))
-    Future(Ok("first push implementation"))
+    MeetingDao.findById(id).map {
+      case Some(meeting: Meeting) => {
+        val apnsActor = Akka.system.actorOf(Props[APNSActor])
+        val goal = meeting.goal
+        (meeting.attendees :+ meeting.organizer).map(attendeeEmail => {
+          UserDao.findByEMail(attendeeEmail).map {
+            case Some(user: User) => user.pushToken.map(pushToken => {
+              val token = pushToken
+              apnsActor ! PushNotificationWithMeeting(pushToken, meeting)
+              user
+            })
+          }
+        })
+      }
+    }
+    //TODO Add more detailed error handling to user
+    Future(Ok("Pushes sent"))
   }
 }
