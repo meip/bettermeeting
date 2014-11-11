@@ -1,6 +1,6 @@
 
 class MeetingNoteCtrl
-  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @selectize) ->
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope) ->
     @$log.debug "MeetingNoteCtrl.constructor()"
     idParam = @$routeParams.id
 

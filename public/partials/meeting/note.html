@@ -21,13 +21,6 @@
                     </div>
                     <div  class="meeting-header-attendees row">
                         <h5>Attendees:</h5>
-                        <div class="row" style="background-color: green;">
-                            <div selectize="config" options='myOptions' ng-model="myModel"></div>
-                            <select
-                                    ng-model="mmc.selectedAttendees"
-                                    ng-options="user.email for user in mmc.users">
-                            </select>
-                        </div>
 
                         <div class="col-md-4 col-sm-12 attendee" ng-repeat="attendee in mnc.meeting.attendees track by $index">
                             <div class="input-group">
@@ -74,9 +67,6 @@
                             </td>
                             <td class="todo-owner">
                                 <input type="email" class="form-control" placeholder="Owner"ng-model="actionPoint.owner" ng-focus="mnc.showAttendees()">
-                                <div class="popup-test">
-                                    Robin
-                                </div>
                             </td>
                             <td class="todo-due">
                                 <input type="text" class="form-control" placeholder="Due Date" ng-model="actionPoint.dueDate">
