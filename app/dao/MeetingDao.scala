@@ -4,7 +4,7 @@ package dao
 
 import extensions.BSONFormatsBM._
 import models.MeetingFormats._
-import models.{Vote, User, ActionPoint, Meeting}
+import models.{ActionPoint, Meeting, Vote}
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json.Json
@@ -109,6 +109,24 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    */
   def findMeetingsForUser(id: String) = {
     MeetingDao.findAll(selector = $or(("organizer" $eq id), ("attendees" $in id)))
+  }
+
+  /**
+   * Find actionPoints for user where he is an organizer
+   *
+   * @return [[scala.concurrent.Future]] as a [[List]]
+   */
+  def findMeetingsForOrganizer(id: String) = {
+    MeetingDao.findAll(selector = ("organizer" $eq id))
+  }
+
+  /**
+   * Find meetings for for user where he is an attendee
+   *
+   * @return [[scala.concurrent.Future]] as a [[List]]
+   */
+  def findMeetingsForAttendee(id: String) = {
+    MeetingDao.findAll(selector = Json.obj("attendees" -> id))
   }
 
   /**

@@ -33,8 +33,15 @@ PUT     /api/meetings/:id/voteDown      @controllers.Meetings.voteDownMeeting(id
 PUT     /api/meetings/:id/close         @controllers.Meetings.closeMeeting(id: BSONObjectID)
 POST    /api/meetings/:id/actionpoint   @controllers.ActionPoints.pushActionPoint(id: BSONObjectID)
 
+# ActionPoint API
 DELETE  /api/actionpoint/:id            @controllers.ActionPoints.delete(id: BSONObjectID)
 PUT     /api/actionpoint/:id            @controllers.ActionPoints.update(id: BSONObjectID)
+
+# Leaderboard read API
+GET     /api/leaderboard/countOrganizer @controllers.LeaderBoards.countMeetingOrganizer
+GET     /api/leaderboard/countAttendees @controllers.LeaderBoards.countMeetingAttendee
+GET     /api/leaderboard/countActionpoints @controllers.LeaderBoards.countActionPoints
+GET     /api/leaderboard/leaderBoard    @controllers.LeaderBoards.getLeadingList
 
 # Testdata
 GET    /api/testdata/meetings           controllers.TestData.createMeetings
