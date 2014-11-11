@@ -48,7 +48,7 @@ class MeetingService
     @$log.debug "MeetingService.putMeeting #{angular.toJson(meeting, true)}"
     deferred = @$q.defer()
 
-    @$http.put('/api/meetings/' + meeting._id.oid, meeting)
+    @$http.put('/api/meetings/' + meeting._id.$oid, meeting)
     .success((data, status, headers) =>
       @$log.info("Successfully updated Meeting - status #{status}")
       deferred.resolve(data)
