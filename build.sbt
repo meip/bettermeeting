@@ -20,6 +20,8 @@ libraryDependencies ++= Seq(
   "org.reactivemongo" %% "reactivemongo-extensions-json" % "0.10.5.0.0.akka23",
   "com.typesafe.akka" %% "akka-actor" % "2.3.6",
   "com.notnoop.apns" % "apns" % "0.1.6",
+  "com.sun.mail" % "javax.mail" % "1.5.1",
+  "com.google.api-client" % "google-api-client-jackson2" % "1.18.0-rc",
   "org.webjars" % "bootstrap" % "3.2.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angularjs" % "1.3.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angular-ui-bootstrap" % "0.11.0-3",
