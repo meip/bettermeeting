@@ -9,11 +9,12 @@ case class Meeting(
                     goal: String,
                     organizer: String,
                     color: Option[String],
+                    icsUuid: Option[String],
                     attendees: List[String],
                     decisions: List[Decision],
                     actionPoints: List[ActionPoint],
                     votesUp: List[Vote],
-                    votesDown: List[Vote],
+                    votesDown: List[Vote] ,
                     override var created: Option[DateTime],
                     override var updated: Option[DateTime]
                     ) extends TemporalModel

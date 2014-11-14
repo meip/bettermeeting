@@ -1,9 +1,8 @@
 package controllers
 
-import actors.{PushNotificationWithMeeting, APNSActor, PushNotification}
+import actors.{APNSActor, PushNotificationWithMeeting}
 import akka.actor.Props
-import dao.UserDao
-import dao.dao.MeetingDao
+import dao.{MeetingDao, UserDao}
 import models.MeetingFormats._
 import models.{Meeting, User, Vote}
 import org.slf4j.{Logger, LoggerFactory}

@@ -1,7 +1,5 @@
 package dao
 
-package dao
-
 import extensions.BSONFormatsBM._
 import models.MeetingFormats._
 import models.{ActionPoint, Meeting, Vote}
@@ -127,6 +125,15 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    */
   def findMeetingsForAttendee(id: String) = {
     MeetingDao.findAll(selector = Json.obj("attendees" -> id))
+  }
+
+  /**
+   * Find meeting for IcsUuid
+   *
+   * @return [[scala.concurrent.Future]] as a [[List]]
+   */
+  def findMeetingsForIcsUuid(icsUuid: String) = {
+    MeetingDao.findAll(selector = ("icsUuid" $eq icsUuid))
   }
 
   /**

@@ -1,11 +1,9 @@
 package controllers
 
-import dao.UserDao
-import dao.dao.MeetingDao
+import dao.{MeetingDao, UserDao}
 import models._
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import play.Logger
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import reactivemongo.extensions.json.dsl.JsonDsl
@@ -29,6 +27,7 @@ object TestData extends Controller with JsonDsl {
       goal = "Erstellen einer neuen Benutzerübersicht",
       organizer = "r1bader@hsr.ch",
       color = Some("color-3"),
+      icsUuid = None,
       attendees = List("r1bader@hsr.ch", "nle@hsr.ch", "fegli@zuehlke.ch"),
       decisions = List(
         Decision(
@@ -103,6 +102,7 @@ object TestData extends Controller with JsonDsl {
       goal = "Decision about Prototype #1",
       organizer = "p1meier@hsr.ch",
       color = Some("color-2"),
+      icsUuid = None,
       attendees = List("r1bader@hsr.ch"),
       decisions = Nil,
       actionPoints = Nil,
@@ -117,6 +117,7 @@ object TestData extends Controller with JsonDsl {
       goal = "Build Summary for Project XY",
       organizer = "p1meier@hsr.ch",
       color = Some("color-2"),
+      icsUuid = None,
       attendees = List("r1bader@hsr.ch"),
       decisions = List(
         Decision(

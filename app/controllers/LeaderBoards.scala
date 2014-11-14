@@ -1,7 +1,6 @@
 package controllers
 
-import dao.dao.MeetingDao
-import dao.{LeaderBaordDao, UserDao}
+import dao.{LeaderBaordDao, MeetingDao, UserDao}
 import models.LeaderBoardFormattedFormats._
 import models.{LeaderBoard, LeaderBoardFormatted}
 import org.slf4j.{Logger, LoggerFactory}

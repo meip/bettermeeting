@@ -1,7 +1,7 @@
 package controllers
 
-import dao.dao.MeetingDao
-import models.{ActionPoint, Meeting}
+import dao.MeetingDao
+import models.ActionPoint
 import models.MeetingFormats._
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext

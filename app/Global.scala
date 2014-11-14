@@ -35,7 +35,7 @@ object Global extends GlobalSettings {
       app.configuration.getInt("gmail.port").getOrElse(993),
       app.configuration.getString("gmail.useremail").getOrElse("ibettermeeting@gmail.com"),
       app.configuration.getString("gmail.accountid").getOrElse("426063849992-nvaj5tjtimgs39kt1q5mipbg07546tnt@developer.gserviceaccount.com"),
-      app.configuration.getString("gmail.certpath").getOrElse("certs/bettermeeting-webapp-0d8567b2a8ac.p12"),
+      app.configuration.getString("gmail.certpath").getOrElse("certs/gmail_ibettermeeting.p12"),
       app.configuration.getBoolean("gmail.debug").getOrElse(true))
     ), name = "mailActor")
     mailActor ! PollEmail
