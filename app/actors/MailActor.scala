@@ -1,9 +1,9 @@
 package actors
 
 import java.io.File
+import javax.mail._
 import javax.mail.internet.MimeMultipart
 import javax.mail.search.FlagTerm
-import javax.mail._
 
 import akka.actor.Actor
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
@@ -20,7 +20,8 @@ import net.fortuna.ical4j.data.CalendarBuilder
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.{Date, Property, PropertyList}
 import org.joda.time.DateTime
-import play.api.Logger
+import play.api.Play.current
+import play.api.{Logger, Play}
 
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
@@ -60,15 +61,15 @@ class MailActor(host: String, port: Int, userEmail: String, accountId: String, c
                 // Outlook Inventation
                 createMeetingFromAttachement(attachement)
               }
-                if (attachement.getDisposition != null) {
-                  attachement.getDisposition.toLowerCase match {
-                    case Part.ATTACHMENT => {
-                      //Gmail
-                      createMeetingFromAttachement(attachement)
-                    }
-                    case _ => Unit
+              if (attachement.getDisposition != null) {
+                attachement.getDisposition.toLowerCase match {
+                  case Part.ATTACHMENT => {
+                    //Gmail
+                    createMeetingFromAttachement(attachement)
                   }
+                  case _ => Unit
                 }
+              }
 
             }
           }
@@ -106,8 +107,8 @@ class MailActor(host: String, port: Int, userEmail: String, accountId: String, c
             date = Some(new DateTime(startDate.getTime)),
             goal = summary,
             organizer = stripMailto(organizer),
-            attendees = attendeeList)
-          )
+            attendees = attendeeListFiler(attendeeList, stripMailto(organizer))
+          ))
         }
         case None => {
           Logger.info("insert new meeting!")
@@ -117,7 +118,7 @@ class MailActor(host: String, port: Int, userEmail: String, accountId: String, c
             organizer = stripMailto(organizer),
             color = None,
             icsUuid = Some(icsUuid),
-            attendees = attendeeList,
+            attendees = attendeeListFiler(attendeeList, stripMailto(organizer)),
             decisions = List.empty[Decision],
             actionPoints = List.empty[ActionPoint],
             votesUp = List.empty[Vote],
@@ -129,6 +130,10 @@ class MailActor(host: String, port: Int, userEmail: String, accountId: String, c
         }
       }
     })
+  }
+
+  private def attendeeListFiler(attendeeList: List[String], organizer: String) = {
+    attendeeList.filterNot(attendee => (attendee.equals(organizer) || attendee.equals(Play.configuration.getString("gmail.useremail").getOrElse("ibettermeeting@gmail.com"))))
   }
 
   private def stripMailto(string: String) = string.substring(7, string.length)
