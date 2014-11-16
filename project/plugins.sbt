@@ -11,3 +11,11 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.4")
 
+addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "0.99.11")
+
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-unchecked",
+  "-feature",
+  "-language:postfixOps"
+)

@@ -50,3 +50,7 @@ scalacOptions in ThisBuild ++= Seq(
 // https://github.com/sbt/sbt-web
 //
 routesImport ++= Seq("extensions.Binders._", "reactivemongo.bson.BSONObjectID")
+
+// scoverage/sbt-scoverage
+// https://github.com/scoverage/sbt-scoverage
+instrumentSettings
