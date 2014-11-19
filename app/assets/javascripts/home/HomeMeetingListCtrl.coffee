@@ -1,6 +1,6 @@
 
 class HomeMeetingListCtrl
-  constructor: (@$log, @$scope, @MeetingService) ->
+  constructor: (@$log, @$scope, @MeetingService, @$location) ->
     @$log.debug "HomeMeetingListCtrl.constructor()"
     @meetings = []
 
@@ -44,5 +44,8 @@ class HomeMeetingListCtrl
       animate: true,
       elementDelay: 30
     })
+
+  openNewMeeting: () ->
+    @$location.path("/meeting/note");
 
 controllersModule.controller('HomeMeetingListCtrl', HomeMeetingListCtrl)

@@ -3,9 +3,14 @@ class LoginCtrl
   constructor: (@$log, @UserControlService, @$location) ->
     @$log.debug "LoginCtrl.constructor()"
     @user = {
-      email: "rob@bader.ch",
-      password: "passwd"
+      email: "",
+      password: ""
     }
+    @warningMessage = {
+      warning: false,
+      message: ""
+    }
+
 
 
   login: () ->
@@ -19,6 +24,22 @@ class LoginCtrl
     ,
     (error) =>
       @$log.error "Unable to Login: #{error}"
+      @showWarning("Unable to Login: #{error}")
     )
+
+  showWarning: (warningMessage) ->
+    @warningMessage = {
+      warning: true,
+      message: warningMessage
+    }
+
+  removeWarning: () ->
+    @warningMessage = {
+      warning: false,
+      message: ""
+    }
+
+
+
 
 controllersModule.controller('LoginCtrl', LoginCtrl)

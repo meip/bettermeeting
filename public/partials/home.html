@@ -6,7 +6,7 @@
                     <h3>Meetings</h3>
                 </div>
                 <div id="note-container" ng-controller="HomeMeetingListCtrl as mlc">
-                        <div class="note">
+                        <div class="note" ng-click="mlc.openNewMeeting()">
                             <div class="add-meeting">
                                 <a href="/#/meeting/note">
                                     <span class="glyphicon glyphicon-plus"></span><br />

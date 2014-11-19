@@ -5,7 +5,8 @@
             <form ng-submit="mnc.publishMeeting()" name="meetingForm">
                 <div class="page-header">
                     <div class="meeting-header-goal row">
-                        <input type="text" placeholder="Meetinggoal" class="form-control" ng-model="mnc.meeting.goal" required
+                        <span>Please specify what you want to achieve with this meeting:</span>
+                        <input type="text" placeholder="Meetinggoal *" class="form-control" ng-model="mnc.meeting.goal" required
                                popover="What do you want to achieve with this meeting?"  popover-trigger="focus">
                     </div>
                     <div class="meeting-header-information row">
@@ -63,7 +64,7 @@
                         <tbody>
                         <tr ng-repeat="actionPoint in mnc.meeting.actionPoints track by $index">
                             <td class="todo-note">
-                                <input type="text" class="form-control" placeholder="Note" ng-model="actionPoint.subject" required>
+                                <input type="text" class="form-control" placeholder="Note" ng-model="actionPoint.subject">
                             </td>
                             <td class="todo-owner">
                                 <input type="email" class="form-control" placeholder="Owner"ng-model="actionPoint.owner" ng-focus="mnc.showAttendees()">
