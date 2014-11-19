@@ -1,0 +1,21 @@
+<div class="popover ng-scope right am-flip-x" tabindex="-1" ng-show="content" style="top: -40.5px; left: 655.8125px; display: block; visibility: visible;">
+    <div class="arrow"></div>
+    <h3 class="popover-title ng-binding" ng-bind-html="title" ng-show="title">Title</h3>
+
+    <div class="popover-content">
+        <form name="popoverForm" class="ng-pristine ng-valid">
+            <p ng-bind-html="content" style="min-width:300px" class="ng-binding">Hello Popover<br>This is a multiline message!</p>
+            <pre>2 + 3 = <span class="ng-binding">5</span></pre>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">@</div>
+                    <input class="form-control" type="email" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-danger" ng-click="$hide()">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="popover.saved=true;$hide()">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>

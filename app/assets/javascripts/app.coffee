@@ -9,7 +9,8 @@ dependencies = [
     'bmApp.common',
     'bmApp.routeConfig',
     'bmApp.localStorage',
-    'bmApp.animations'
+    'bmApp.animations',
+    'bmApp.ngStrap'
 ]
 
 app = angular.module('bmApp', dependencies)
@@ -44,6 +45,9 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             .when('/signup', {
               templateUrl: '/assets/partials/login/signup.html'
             })
+            .when('/test', {
+              templateUrl: '/assets/partials/test.html'
+            })
             .otherwise({redirectTo: '/'})
 @commonModule = angular.module('bmApp.common', [])
 @controllersModule = angular.module('bmApp.controllers', [])
@@ -54,3 +58,4 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
 @filtersModule = angular.module('bmApp.filters', [])
 @localStorageModule = angular.module('bmApp.localStorage', ['LocalStorageModule'])
 @animationsModule = angular.module('bmApp.animations', ['ngAnimate']);
+@ngStrapModule = angular.module('bmApp.ngStrap', ['mgcrea.ngStrap']);
