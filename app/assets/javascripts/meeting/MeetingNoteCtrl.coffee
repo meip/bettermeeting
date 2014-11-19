@@ -1,11 +1,14 @@
 
 class MeetingNoteCtrl
-  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope) ->
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert) ->
     @$log.debug "MeetingNoteCtrl.constructor()"
     idParam = @$routeParams.id
 
+    @saveButtonText = "Save"
+
     if idParam == undefined
       @initializeNewMeeting()
+      @saveButtonText = "Publish"
     else
       @MeetingService.getMeeting(idParam)
       .then(
@@ -66,18 +69,22 @@ class MeetingNoteCtrl
         (data, status, headers) =>
           @$log.debug "Promise returned #{data} Meeting"
           @$location.path("/meeting/note").search(id: data.message).replace();
+          myAlert = @$alert({title: 'Meeting created!', content: 'The meeting has been successfully created', placement: 'top', type: 'success', show: true, duration: 5})
       ,
       (error) =>
         @$log.error "Unable to create Meeting: #{error}"
+        myAlert = @$alert({title: 'Unable to create Meeting', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 5})
       )
     else
       @MeetingService.putMeeting(@meeting)
       .then(
         (data) =>
           @$log.debug "Promise returned #{data} Meeting"
+          myAlert = @$alert({title: 'Meeting saved!', content: 'The meeting has been successfully saved', placement: 'top', type: 'success', show: true, duration: 5})
       ,
       (error) =>
         @$log.error "Unable to update Meeting: #{error}"
+        myAlert = @$alert({title: 'Unable to update Meeting', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 5})
       )
 
 
@@ -88,13 +95,17 @@ class MeetingNoteCtrl
       (data) =>
         @$log.debug "Deleted #{data} Meeting"
         @$location.path("/")
+        myAlert = @$alert({title: 'Meeting deleted!', content: 'The meeting has been successfully deleted', placement: 'top', type: 'success', show: true, duration: 5})
+
     ,
     (error) =>
       @$log.error "Unable to delete Meeting: #{error}"
+      myAlert = @$alert({title: 'Unable to delete Meeting', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 5})
     )
 
   getFormattedDate: (additionalHours) ->
-    return moment().add(additionalHours, "hours").format("DD.MM.YYYY HH:mm")
+    ##return moment().add(additionalHours, "hours").format("DD.MM.YYYY HH:mm")
+    return Date.now()
 
   showAttendees: () ->
     @$log.debug "MeetingNoteCtrl.showAttendees()"

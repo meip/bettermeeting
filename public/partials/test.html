@@ -18,19 +18,16 @@
                 </button>
 
 
-                <form name="datepickerForm" class="form-inline" role="form">
-                    <!-- Custom example -->
+                <div class="form-inline">
+
                     <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
-                        <!--<label class="control-label"><i class="fa fa-calendar"></i> Date <small>(as number)</small></label>-->
                         <input type="text" class="form-control" ng-model="selectedDateAsNumber" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
                     </div>
-                    <!-- Custom example -->
                     <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                        <!--<label class="control-label"><i class="fa fa-clock-o"></i> Time <small>(as number)</small></label>-->
                         <input type="text" class="form-control" size="5" ng-model="selectedDateAsNumber" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
                     </div>
-                </form>
-                
+                </div>
+
                 <h4>Debug:</h4>
                 <pre>{{ selectedDateAsNumber | date:'dd.MM.yyyy HH:mm' }}</pre>
             </div>
