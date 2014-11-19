@@ -1,55 +1,67 @@
 
 class HomeLeaderboardCtrl
-  constructor: (@$log, @$scope) ->
+  constructor: (@$log, @$scope, @LeaderboardService) ->
     @$log.debug "HomeLeaderboardCtrl.constructor()"
 
     @ownPoints = {
-      meetingLeader: 12,
-      meetingAttendee: 27,
-      meetingTodos: 34
+      meetingLeader: 0,
+      meetingAttendee: 0,
+      meetingTodos: 0
     }
-    @leaderboard = [
-      {
-        id: 1,
-        name: "Marco",
-        points: 70,
-        rank: 1,
-        selft: false
-      },
-      {
-        id: 2,
-        name: "Philipp",
-        points: 54,
-        rank: 2,
-        selft: false
-      },
-      {
-        id: 3,
-        name: "Robin",
-        points: 37,
-        rank: 3,
-        selft: true
-      },
-      {
-        id: 4,
-        name: "Joel",
-        points: 20,
-        rank: 4,
-        selft: false
-      },
-      {
-        id: 5,
-        name: "Dominik",
-        points: 7,
-        rank: 5,
-        selft: false
-      }
-    ]
+
+    @leaderboard = []
+    @LeaderboardService.getLeaderboard()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length}"
+        @leaderboard = data
+    ,
+    (error) =>
+      @$log.error "Unable to get Leaderboard: #{error}"
+    )
+
+    @LeaderboardService.getCountOrganizer()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length}"
+        @ownPoints.meetingLeader = data
+    ,
+    (error) =>
+      @$log.error "Unable to get Count Organizer: #{error}"
+    )
+
+    @LeaderboardService.getCountAttendees()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length}"
+        @ownPoints.meetingAttendee = data
+    ,
+    (error) =>
+      @$log.error "Unable to get Count Attendees: #{error}"
+    )
+
+    @LeaderboardService.getCountActionpoints()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length}"
+        @ownPoints.meetingTodos = data
+    ,
+    (error) =>
+      @$log.error "Unable to get Count Todos: #{error}"
+    )
+
+
+
+
+
   getSelfClass: (rankId) ->
+    ###
     actual = @leaderboard[rankId - 1]
     if actual.selft
       return "active"
     else
       return ""
+
+    ###
 
 controllersModule.controller('HomeLeaderboardCtrl', HomeLeaderboardCtrl)

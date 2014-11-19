@@ -29,7 +29,7 @@ class HomeToDoListCtrl
 
   daysLeft: (todoIndex) ->
     @$log.debug @todos[todoIndex].dueDate
-
+    ###
     ONE_DAY = 1000 * 60 * 60 * 24
     dueDate = new Date(@todos[todoIndex].dueDate)
     today = new Date()
@@ -41,5 +41,7 @@ class HomeToDoListCtrl
       return differenceNumber + " days left"
     else
       return difference + " overdue"
+
+    ###
 
 controllersModule.controller('HomeToDoListCtrl', HomeToDoListCtrl)

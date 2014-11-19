@@ -30,6 +30,7 @@ libraryDependencies ++= Seq(
   "org.webjars" % "jquery" % "2.1.1",
   "org.webjars" % "angular-local-storage" % "0.1.3",
   "org.webjars" % "momentjs" % "2.8.3",
+  "org.webjars" % "angular-ui-select" % "0.8.3",
   "com.github.nscala-time" %% "nscala-time" % "1.4.0")
 
 // Scala Compiler Options
