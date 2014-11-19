@@ -36,6 +36,6 @@ class HomeToDoListCtrl
     else if differenceNumber > 0
       return differenceNumber + " days left"
     else
-      return differenceNumber + " overdue"
+      return differenceNumber + " days overdue"
 
 controllersModule.controller('HomeToDoListCtrl', HomeToDoListCtrl)
