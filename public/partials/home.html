@@ -110,7 +110,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="rank in hlc.leaderboard" ng-class="hlc.getSelfClass(rank.id)">
+                            <tr ng-repeat="rank in hlc.leaderboard" ng-class="rank.selft ? 'active' : ''">
                                 <td>{{rank.rank}}</td>
                                 <td>{{rank.name}}</td>
                                 <td>{{rank.points}}</td>

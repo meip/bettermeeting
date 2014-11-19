@@ -1,11 +1,8 @@
 
 class HomeToDoListCtrl
 
-
-
   constructor: (@$log, @$scope, @ToDoService) ->
     @$log.debug "HomeToDoListCtrl.constructor()"
-
 
     @todos = []
 
@@ -29,7 +26,6 @@ class HomeToDoListCtrl
 
   daysLeft: (todoIndex) ->
     @$log.debug @todos[todoIndex].dueDate
-    ###
     ONE_DAY = 1000 * 60 * 60 * 24
     dueDate = new Date(@todos[todoIndex].dueDate)
     today = new Date()
@@ -40,8 +36,6 @@ class HomeToDoListCtrl
     else if differenceNumber > 0
       return differenceNumber + " days left"
     else
-      return difference + " overdue"
-
-    ###
+      return differenceNumber + " overdue"
 
 controllersModule.controller('HomeToDoListCtrl', HomeToDoListCtrl)

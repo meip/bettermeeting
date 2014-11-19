@@ -50,18 +50,6 @@ class HomeLeaderboardCtrl
       @$log.error "Unable to get Count Todos: #{error}"
     )
 
-
-
-
-
-  getSelfClass: (rankId) ->
-    ###
-    actual = @leaderboard[rankId - 1]
-    if actual.selft
-      return "active"
-    else
-      return ""
-
-    ###
+    @$log.debug @leaderboard
 
 controllersModule.controller('HomeLeaderboardCtrl', HomeLeaderboardCtrl)
