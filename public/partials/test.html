@@ -13,13 +13,11 @@
 
 
                 <!-- You can use a custom html template with the `data-template` attr -->
-                <button type="button" class="btn btn-lg btn-danger" title="{{popover.title}}" data-content="{{popover.content}}" data-template="/assets/partials/templates/popover-demo.html" data-animation="am-flip-x" data-auto-close="1" bs-popover>
-                    Pop-Over
+                <button type="button" class="btn" title="{{popover.title}}" data-content="{{popover.content}}" data-template="/assets/partials/templates/popover-demo.html" data-animation="am-flip-x" data-auto-close="1" bs-popover>
+                    <span class="glyphicon glyphicon-time"></span>
                 </button>
 
-
                 <div class="form-inline">
-
                     <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
                         <input type="text" class="form-control" ng-model="selectedDateAsNumber" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
                     </div>

@@ -18,6 +18,12 @@ class HomeToDoListCtrl
       @$log.error "Unable to get Todos: #{error}"
     )
 
+    @$scope.popover = {
+      "title": "Title",
+      "content": "Hello Popover<br />This is a multiline message!"
+    }
+    @$scope.selectedDateAsNumber = Date.now()
+
   doneClicked: (todoId) ->
     @$log.debug "HomeToDoListCtrl.doneClicked(" + todoId + ")"
 
@@ -25,7 +31,6 @@ class HomeToDoListCtrl
     @$log.debug "HomeToDoListCtrl.laterClicked(" + todoId + ")"
 
   daysLeft: (todoIndex) ->
-    @$log.debug @todos[todoIndex].dueDate
     ONE_DAY = 1000 * 60 * 60 * 24
     dueDate = new Date(@todos[todoIndex].dueDate)
     today = new Date()

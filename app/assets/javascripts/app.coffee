@@ -1,7 +1,7 @@
 
 dependencies = [
     'ngRoute',
-    'ui.bootstrap',
+
     'bmApp.filters',
     'bmApp.services',
     'bmApp.controllers',

@@ -58,7 +58,13 @@
                                 <span>DONE</span>
                             </div>
                             <div>
-                                <button type="button" class="btn" ng-click="tlc.laterClicked(todo._id.$oid)">
+                                <!--<button type="button" class="btn" ng-click="tlc.laterClicked(todo._id.$oid)">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </button>
+                                <span>LATER</span>
+                                -->
+                                <button type="button" class="btn" title="Do this Task Later" data-content="Set new Time and Date"
+                                        data-template="/assets/partials/templates/popover-demo.html" data-animation="am-flip-x" data-auto-close="1" bs-popover>
                                     <span class="glyphicon glyphicon-time"></span>
                                 </button>
                                 <span>LATER</span>
