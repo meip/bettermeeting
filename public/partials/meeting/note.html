@@ -1,6 +1,10 @@
 <div class="container-fluid" id="create-meeting">
     <div class="container" ng-controller="MeetingNoteCtrl as mnc">
-        <div class="colorbar" ng-class="mnc.meeting.color">&nbsp;</div>
+        <div class="colorbar" ng-class="mnc.meeting.color">
+            <div class="pull-right" id="close-button">
+                <a href="/">Close <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </div>
+        </div>
         <div class="content meeting">
             <form ng-submit="mnc.publishMeeting()" name="meetingForm">
                 <div class="page-header">
@@ -127,7 +131,6 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> {{mnc.saveButtonText}}</button>
-                            <a href="/" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span> Back</a>
                             <button type="button" class="btn btn-danger" ng-click="mnc.removeMeeting(mnc.meeting._id.$oid, true)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                         </div>
                     </div>
