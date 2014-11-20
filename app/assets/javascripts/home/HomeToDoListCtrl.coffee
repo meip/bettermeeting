@@ -27,7 +27,7 @@ class HomeToDoListCtrl
   doneClicked: (todoId) ->
     @$log.debug "HomeToDoListCtrl.doneClicked(" + todoId + ")"
     todo = @todos[todoId]
-    @todo.status = "done"
+    todo.status = "done"
 
     @ToDoService.putTodo(todo)
     .then(
