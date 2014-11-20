@@ -24,7 +24,7 @@ class ActionPoints extends Controller with JsonDsl with Security with Authentica
    * @return A Ok [[play.api.mvc.Result]]
    */
   def findMyActionPoints = Authenticated.async { implicit request =>
-    MeetingDao.findActionPointsForOwner(request.user.email).map {
+    MeetingDao.findOpenActionPointsForOwner(request.user.email).map {
       case actionPoints => Ok(Json.toJson(actionPoints))
     }
   }

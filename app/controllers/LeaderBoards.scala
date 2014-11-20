@@ -29,8 +29,8 @@ class LeaderBoards extends Controller with JsonDsl with Security with Authentica
   }
 
   def countActionPoints = Authenticated.async { implicit request =>
-    MeetingDao.findActionPointsForOwner(request.user.email).map {
-      case meetings => Ok(Json.toJson(meetings.size))
+    MeetingDao.findDoneActionPointsForOwner(request.user.email).map {
+      case actionPoints => Ok(Json.toJson(actionPoints.size))
     }
   }
 

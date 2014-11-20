@@ -90,13 +90,24 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
   }
 
   /**
-   * Find actionPoints for user
+   * Find open actionPoints for user
    *
    * @return [[scala.concurrent.Future]] as a [[List]]
    */
-  def findActionPointsForOwner(id: String) = {
+  def findDoneActionPointsForOwner(id: String) = {
     MeetingDao.findAll(selector = "actionPoints.owner" $eq id).map {
-      case meeting => meeting.flatMap(meeting => meeting.actionPoints).filter(_.owner.equals(Some(id)))
+      case meeting => meeting.flatMap(_.actionPoints).filter(ap => (ap.owner.equals(Some(id)) && ap.status.equals(Some("done"))))
+    }
+  }
+
+  /**
+   * Find open actionPoints for user
+   *
+   * @return [[scala.concurrent.Future]] as a [[List]]
+   */
+  def findOpenActionPointsForOwner(id: String) = {
+    MeetingDao.findAll(selector = "actionPoints.owner" $eq id).map {
+      case meeting => meeting.flatMap(_.actionPoints).filter(ap => (ap.owner.equals(Some(id)) && (ap.status.equals(Some("open")) || ap.status.isEmpty)))
     }
   }
 

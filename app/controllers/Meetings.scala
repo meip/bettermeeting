@@ -145,9 +145,12 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
             })
           }
         })
+        MeetingDao.updateById(id, meeting.copy(status = Some("finished")))
       }
+    }.map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Meeting finished"))).recover {
+      case t: Throwable =>
+        logger.error("CLOSE MEETING ERROR", t)
+        InternalServerError("Unknown error (closeMeeting).")
     }
-    //TODO Add more detailed error handling to user
-    Future(Ok("Pushes sent"))
   }
 }

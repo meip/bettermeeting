@@ -104,8 +104,9 @@ class MailActor(host: String, port: Int, userEmail: String, accountId: String, c
         case Some(meeting) => {
           Logger.info("existing meeting found!! Update existing meeting")
           MeetingDao.updateById(meeting._id.get, meeting.copy(
-            date = Some(new DateTime(startDate.getTime)),
+            date = Some(new DateTime(startDate)),
             goal = summary,
+            status = Some("updated"),
             organizer = stripMailto(organizer),
             attendees = attendeeListFiler(attendeeList, stripMailto(organizer))
           ))
@@ -113,10 +114,11 @@ class MailActor(host: String, port: Int, userEmail: String, accountId: String, c
         case None => {
           Logger.info("insert new meeting!")
           val meeting = Meeting(_id = None,
-            date = Some(new DateTime(startDate.getTime)),
+            date = Some(new DateTime(startDate)),
             goal = summary,
             organizer = stripMailto(organizer),
             color = None,
+            status = Some("new"),
             icsUuid = Some(icsUuid),
             attendees = attendeeListFiler(attendeeList, stripMailto(organizer)),
             decisions = List.empty[Decision],
