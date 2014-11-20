@@ -1,16 +1,16 @@
 
 dependencies = [
     'ngRoute',
-
     'bmApp.filters',
     'bmApp.services',
     'bmApp.controllers',
     'bmApp.directives',
     'bmApp.common',
     'bmApp.routeConfig',
-    'bmApp.localStorage',
-    'bmApp.animations',
-    'bmApp.ngStrap'
+    'LocalStorageModule',
+    'ngAnimate',
+    'mgcrea.ngStrap',
+    'ngSanitize'
 ]
 
 app = angular.module('bmApp', dependencies)
@@ -56,6 +56,3 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
 @modelsModule = angular.module('bmApp.models', [])
 @directivesModule = angular.module('bmApp.directives', [])
 @filtersModule = angular.module('bmApp.filters', [])
-@localStorageModule = angular.module('bmApp.localStorage', ['LocalStorageModule'])
-@animationsModule = angular.module('bmApp.animations', ['ngAnimate']);
-@ngStrapModule = angular.module('bmApp.ngStrap', ['mgcrea.ngStrap']);

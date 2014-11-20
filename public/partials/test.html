@@ -1,34 +1,131 @@
 <div class="container-fluid" id="create-meeting">
     <div class="container" ng-controller="TestCtrl as mnc">
         <div class="colorbar" class="color-1">&nbsp;</div>
-            <div class="content meeting">
+        <div class="content meeting">
 
-                <button type="button" class="btn btn-lg btn-primary" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">
-                    Modal
-                </button>
-                <!-- Button to trigger a default alert with a scope as an object {title:'', content:'', etc.} -->
-                <button class="btn btn-lg btn-primary" data-placement="top-right" data-container="body" data-duration="10000" bs-alert="alert">
-                    Alert
-                </button>
+            <button type="button" class="btn btn-lg btn-primary" data-animation="am-fade-and-scale"
+                    data-placement="center" bs-modal="modal">
+                Modal
+            </button>
+            <!-- Button to trigger a default alert with a scope as an object {title:'', content:'', etc.} -->
+            <button class="btn btn-lg btn-primary" data-placement="top-right" data-container="body"
+                    data-duration="10000" bs-alert="alert">
+                Alert
+            </button>
 
 
-                <!-- You can use a custom html template with the `data-template` attr -->
-                <button type="button" class="btn" title="{{popover.title}}" data-content="{{popover.content}}" data-template="/assets/partials/templates/popover-demo.html" data-animation="am-flip-x" data-auto-close="1" bs-popover>
-                    <span class="glyphicon glyphicon-time"></span>
-                </button>
+            <!-- You can use a custom html template with the `data-template` attr -->
+            <button type="button" class="btn" title="{{popover.title}}" data-content="{{popover.content}}"
+                    data-template="/assets/partials/templates/popover-demo.html" data-animation="am-flip-x"
+                    data-auto-close="1" bs-popover>
+                <span class="glyphicon glyphicon-time"></span>
+            </button>
 
-                <div class="form-inline">
-                    <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
-                        <input type="text" class="form-control" ng-model="selectedDateAsNumber" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
-                    </div>
-                    <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                        <input type="text" class="form-control" size="5" ng-model="selectedDateAsNumber" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
+            <div class="form-inline">
+                <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
+                    <input type="text" class="form-control" ng-model="selectedDateAsNumber"
+                           data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2"
+                           bs-datepicker>
+                </div>
+                <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
+                    <input type="text" class="form-control" size="5" ng-model="selectedDateAsNumber"
+                           data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2"
+                           bs-timepicker>
+                </div>
+            </div>
+
+            <div class="sandbox">
+                <label for="select-to">Email:</label>
+                <select id="select-to" class="contacts selectized" placeholder="Pick some people..." multiple="multiple" tabindex="-1" style="display: none;" ng-model="mnc.attendees">
+
+
+                    <option value="r1bader@hsr.ch" selected="selected"></option>
+                    <option value="brian@thirdroute.com" selected="selected"></option>
+
+                </select>
+                <div class="selectize-control contacts multi">
+                    <div class="selectize-dropdown multi contacts" style="display: none; width: 520px; top: 36px; left: 0px; visibility: visible;">
+                        <div class="selectize-dropdown-content">
+                        </div>
                     </div>
                 </div>
-
-                <h4>Debug:</h4>
-                <pre>{{ selectedDateAsNumber | date:'dd.MM.yyyy HH:mm' }}</pre>
             </div>
+            <p ng-repeat="attendee in mnc.attendees track by $index">{{mnc.attendees[$index]}}</p>
+
+            <h4>Debug:</h4>
+            <pre>{{ mnc.attendees | json}}</pre>
         </div>
     </div>
 </div>
+</div>
+<script>
+    var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
+            '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+
+    $('#select-to').selectize({
+        persist: true,
+        maxItems: null,
+        valueField: 'email',
+        labelField: 'name',
+        searchField: ['name', 'email'],
+
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: 'http://localhost:9000/api/users',
+                type: 'GET',
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    callback(res);
+                }
+            });
+        },
+        render: {
+            item: function(item, escape) {
+                return '<div>' +
+                        (item.firstName ? '<span class="name">' + escape(item.firstName) + ' ' + escape(item.lastName) + '</span>' : '') +
+                        (item.email ? '<span class="email" style="color:rgba(17, 34, 51, 0.14)">' + escape(item.email) + '</span>' : '') +
+                        '</div>';
+            },
+            option: function(item, escape) {
+                var label = item.firstName + ' ' + item.lastName || item.email;
+                var caption = item.firstName ? item.email : null;
+                return '<div>' +
+                        '<span class="label" style="color: blue">' + escape(label) + '</span>' +
+                        (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
+                        '</div>';
+            }
+        },
+        createFilter: function(input) {
+            var match, regex;
+
+            // email@address.com
+            regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+            match = input.match(regex);
+            if (match) return !this.options.hasOwnProperty(match[0]);
+
+            // name <email@address.com>
+            regex = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
+            match = input.match(regex);
+            if (match) return !this.options.hasOwnProperty(match[2]);
+
+            return false;
+        },
+        create: function(input) {
+            if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
+                return {email: input};
+            }
+            var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
+            if (match) {
+                return {
+                    email : match[2],
+                    name  : $.trim(match[1])
+                };
+            }
+            alert('Invalid email address.');
+            return false;
+        }
+    });
+</script>

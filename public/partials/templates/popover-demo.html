@@ -10,9 +10,5 @@
             <input type="text" class="form-control" ng-model="todo.dueDate" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker
                     ng-change="tlc.timeChanged($index)">
         </div>
-
-        <button type="button" class="btn btn-primary" ng-click="tlc.doneClicked(todo._id.$oid)">
-            <span class="glyphicon glyphicon-floppy-disk"></span> Save
-        </button>
     </div>
 </div>
