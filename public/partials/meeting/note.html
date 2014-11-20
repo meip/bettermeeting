@@ -11,12 +11,12 @@
                     </div>
                     <div class="meeting-header-information row">
                         <div class="col-md-6">
-                            <input type="email" placeholder="Organisator" class="form-control" ng-model="mnc.meeting.organizer" required
+                            <input type="email" placeholder="Organisator" class="form-control organisator" ng-model="mnc.meeting.organizer" required
                                    popover="Who is the organizer of the meeting?"  popover-trigger="focus">
 
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-inline">
+                        <div class="col-md-6 pull-right">
+                            <div class="form-inline pull-right">
 
                                 <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
                                     <input type="text" class="form-control" ng-model="mnc.meeting.date" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
@@ -25,8 +25,6 @@
                                     <input type="text" class="form-control" size="5" ng-model="mnc.meeting.date" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
                                 </div>
                             </div>
-                            <!--<input type="text" placeholder="Time" class="form-control" ng-model="mnc.meeting.date" style="text-align: right" name="Time" required
-                                   popover="When is the meeting going to start?"  popover-trigger="focus">-->
                         </div>
                     </div>
                     <div  class="meeting-header-attendees row">
@@ -88,7 +86,6 @@
                                         <input type="text" class="form-control" size="5" ng-model="actionPoint.dueDate" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
                                     </div>
                                 </div>
-                                <!--<input type="text" class="form-control" placeholder="Due Date" ng-model="actionPoint.dueDate">-->
                             </td>
                             <td class="delete" ng-click="mnc.removeTodo($index)"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></td>
                         </tr>

@@ -16,7 +16,7 @@
                     </div>
                     <div class="note" ng-repeat="meeting in mlc.meetings" ng-class="meeting.color">
                         <div class="note-frame">
-                            <div class="meeting-summary-colorbar">
+                            <div class="meeting-summary-colorbar" ng-click="mlc.openMeeting($index)">
                                 <div class="colorbar-date">
                                     <span class="month">{{meeting.date | date:'MMM'}}</span>
                                     <span class="day">{{meeting.date | date:'dd'}}</span>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="todo-info">
-                            <h5><a href="#">{{todo.subject}}</a></h5>
+                            <h5>{{todo.subject}}</h5>
                             <div>
                                 <div class="due-date">
                                     <span>{{todo.dueDate | date:'dd.MM.yyyy HH:mm'}}</span>
@@ -118,6 +118,26 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="row" id="legend-container">
+                    <h4>Legende</h4>
+                    <div class="row">
+                        <div id="color-new" class="legend-box"></div>
+                        <p>This is a new Meeting</p>
+                    </div>
+                    <div class="row">
+                        <div id="color-organizer" class="legend-box"></div>
+                        <p>You are the Organizer of the Meeting</p>
+                    </div>
+                    <div class="row">
+                        <div id="color-attendee" class="legend-box"></div>
+                        <p>You are an Attendee of the Meeting</p>
+                    </div>
+                    <div class="row">
+                        <div id="color-important" class="legend-box"></div>
+                        <p>This meeting is marked as important</p>
+                    </div>
+
                 </div>
             </div>
         </div>

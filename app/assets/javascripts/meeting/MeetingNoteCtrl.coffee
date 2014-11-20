@@ -15,6 +15,10 @@ class MeetingNoteCtrl
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
           @meeting = data
+          if @meeting.organizer == "r1bader@hsr.ch"
+            @meeting.color = "color-organizer"
+          else
+            @meeting.color = "color-attendee"
       ,
       (error) =>
         @$log.error "Unable to get Meetings: #{error}"
@@ -54,7 +58,8 @@ class MeetingNoteCtrl
       votesDown: [],
       created: @getFormattedDate(0),
       updated: @getFormattedDate(0),
-      color: "color-" + (Math.floor(Math.random() * 4) + 1)
+      status: "new",
+      color: "color-new"
     }
 
   publishMeeting: () ->
