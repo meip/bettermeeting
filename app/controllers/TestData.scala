@@ -27,6 +27,7 @@ object TestData extends Controller with JsonDsl {
       goal = "Erstellen einer neuen Benutzerübersicht",
       organizer = "r1bader@hsr.ch",
       color = Some("color-3"),
+      status = Some("open"),
       icsUuid = None,
       attendees = List("r1bader@hsr.ch", "nle@hsr.ch", "fegli@zuehlke.ch"),
       decisions = List(
@@ -102,6 +103,7 @@ object TestData extends Controller with JsonDsl {
       goal = "Decision about Prototype #1",
       organizer = "p1meier@hsr.ch",
       color = Some("color-2"),
+      status = Some("open"),
       icsUuid = None,
       attendees = List("r1bader@hsr.ch"),
       decisions = Nil,
@@ -117,6 +119,7 @@ object TestData extends Controller with JsonDsl {
       goal = "Build Summary for Project XY",
       organizer = "p1meier@hsr.ch",
       color = Some("color-2"),
+      status = Some("open"),
       icsUuid = None,
       attendees = List("r1bader@hsr.ch"),
       decisions = List(
@@ -134,7 +137,7 @@ object TestData extends Controller with JsonDsl {
           subject = Some("Close all project reports"),
           editor = Some("p1meier@hsr.ch"),
           owner = Some("p1meier@hsr.ch"),
-          status = Some("done"),
+          status = Some("finished"),
           dueDate = makeDate("14.11.2014 16:00"),
           reminderDate = makeDate("14.11.2014 15:00"),
           reminderType = Some("push"),
