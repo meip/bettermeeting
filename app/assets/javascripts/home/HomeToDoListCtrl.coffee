@@ -1,7 +1,7 @@
 
 class HomeToDoListCtrl
 
-  constructor: (@$log, @$scope, @ToDoService) ->
+  constructor: (@$log, @$scope, @ToDoService, @$alert) ->
     @$log.debug "HomeToDoListCtrl.constructor()"
 
     @todos = []
@@ -26,9 +26,35 @@ class HomeToDoListCtrl
 
   doneClicked: (todoId) ->
     @$log.debug "HomeToDoListCtrl.doneClicked(" + todoId + ")"
+    todo = @todos[todoId]
+    @todo.status = "done"
 
-  laterClicked: (todoId) ->
-    @$log.debug "HomeToDoListCtrl.laterClicked(" + todoId + ")"
+    @ToDoService.putTodo(todo)
+    .then(
+      (data) =>
+        @$log.debug "Action Point marked as Done"
+        myAlert = @$alert({title: 'Action Point Closed!', content: 'The Action Point has been successfully marked as done', placement: 'top', type: 'success', show: true, duration: 5})
+    ,
+    (error) =>
+      @$log.error "Unable to update Action-Point: #{error}"
+      myAlert = @$alert({title: 'Unable to update Action Point', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 3})
+    )
+    @todos.splice(todoId, 1)
+
+  timeChanged: (todoId) ->
+    @$log.debug "HomeToDoListCtrl.timeChanged(" + todoId + ")"
+    todo = @todos[todoId]
+    @ToDoService.putTodo(todo)
+    .then(
+      (data) =>
+        @$log.debug "Time changes Saved"
+        myAlert = @$alert({title: 'Time Changed!', content: 'The Time for the Action Point has been successfully saved', placement: 'top', type: 'success', show: true, duration: 5})
+    ,
+    (error) =>
+      @$log.error "Unable to update Action-Point: #{error}"
+      myAlert = @$alert({title: 'Unable to update Action Point', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 3})
+    )
+
 
   daysLeft: (todoIndex) ->
     ONE_DAY = 1000 * 60 * 60 * 24

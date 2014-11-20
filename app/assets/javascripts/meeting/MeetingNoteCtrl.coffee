@@ -15,9 +15,6 @@ class MeetingNoteCtrl
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
           @meeting = data
-          @meeting.date = moment(@meeting.date).format("DD.MM.YYYY HH:mm")
-          for actionPoint in @meeting.actionPoints
-            actionPoint.dueDate = moment(actionPoint.dueDate).format("DD.MM.YYYY HH:mm")
       ,
       (error) =>
         @$log.error "Unable to get Meetings: #{error}"
