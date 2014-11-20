@@ -12,10 +12,10 @@
 
                 </div>
                 <div class="panel-group" bs-collapse ng-model="mnc.activePanel">
-                    <div class="panel panel-default" ng-click="mnc.setActivePanel(0)">
+                    <div class="panel panel-primary" ng-click="mnc.setActivePanel(0)">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a bs-collapse-toggle>
+                                <a bs-collapse-toggle ng-click="mnc.setActivePanel(0)">
                                     Meeting Informations
                                 </a>
                             </h4>
@@ -58,10 +58,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default" ng-click="mnc.setActivePanel(1)">
+                    <div class="panel panel-success" ng-click="mnc.setActivePanel(1)">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a bs-collapse-toggle>
+                                <a bs-collapse-toggle ng-click="mnc.setActivePanel(1)">
                                     Meeting Protocol
                                 </a>
                             </h4>

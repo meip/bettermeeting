@@ -98,5 +98,26 @@
   .colorbar.color-important {
     background-color: @color-schema-4;
   }
+
+  .panel-heading {
+    &:hover {
+      cursor: pointer; cursor: hand;
+    }
+  }
+
+  .panel-success {
+    .panel-heading {
+      &:hover {
+        background-color: darken(@brand-success, 20%);
+      }
+    }
+  }
+  .panel-primary {
+    .panel-heading {
+      &:hover {
+        background-color: darken(@brand-primary, 20%);
+      }
+    }
+  }
 }
 
