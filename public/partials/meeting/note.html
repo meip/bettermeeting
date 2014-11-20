@@ -9,90 +9,120 @@
                         <input type="text" placeholder="Meetinggoal *" class="form-control" ng-model="mnc.meeting.goal" required
                                popover="What do you want to achieve with this meeting?"  popover-trigger="focus">
                     </div>
-                    <div class="meeting-header-information row">
-                        <div class="col-md-6">
-                            <input type="email" placeholder="Organisator" class="form-control organisator" ng-model="mnc.meeting.organizer" required
-                                   popover="Who is the organizer of the meeting?"  popover-trigger="focus">
 
+                </div>
+                <div class="panel-group" bs-collapse ng-model="mnc.activePanel">
+                    <div class="panel panel-default" ng-click="mnc.setActivePanel(0)">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a bs-collapse-toggle>
+                                    Meeting Informations
+                                </a>
+                            </h4>
                         </div>
-                        <div class="col-md-6 pull-right">
-                            <div class="form-inline pull-right">
+                        <div class="panel-collapse" bs-collapse-target>
+                            <div class="panel-body">
+                                <div class="meeting-header-information row">
+                                    <div class="col-md-6">
+                                        <input type="email" placeholder="Organisator" class="form-control organisator" ng-model="mnc.meeting.organizer" required
+                                               popover="Who is the organizer of the meeting?"  popover-trigger="focus">
 
-                                <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
-                                    <input type="text" class="form-control" ng-model="mnc.meeting.date" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
-                                </div>
-                                <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                                    <input type="text" class="form-control" size="5" ng-model="mnc.meeting.date" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div  class="meeting-header-attendees row">
-                        <h5>Attendees:</h5>
+                                    </div>
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-inline pull-right">
 
-                        <div class="col-md-4 col-sm-12 attendee" ng-repeat="attendee in mnc.meeting.attendees track by $index">
-                            <div class="input-group">
-                                <input type="email" class="form-control" placeholder="Attendee"  ng-model="mnc.meeting.attendees[$index]">
+                                            <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
+                                                <input type="text" class="form-control" ng-model="mnc.meeting.date" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
+                                            </div>
+                                            <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
+                                                <input type="text" class="form-control" size="5" ng-model="mnc.meeting.date" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="meeting-header-attendees row">
+                                    <h5>Attendees:</h5>
+
+                                    <div class="col-md-4 col-sm-12 attendee" ng-repeat="attendee in mnc.meeting.attendees track by $index">
+                                        <div class="input-group">
+                                            <input type="email" class="form-control" placeholder="Attendee"  ng-model="mnc.meeting.attendees[$index]">
                             <span class="input-group-btn">
                                 <button class="btn btn-danger" type="button" ng-click="mnc.removeAttendee($index)"><span class="glyphicon glyphicon-remove"></span></button>
                             </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1" style="padding: 0px;">
+                                        <button type="button" class="btn btn-primary" ng-click="mnc.addAttendee()"><span class="glyphicon glyphicon-plus"></span></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-1" style="padding: 0px;">
-                            <button type="button" class="btn btn-primary" ng-click="mnc.addAttendee()"><span class="glyphicon glyphicon-plus"></span></button>
-                        </div>
                     </div>
-                </div>
-                <div class="row meeting-decisions">
-                    <h5>Decisions</h5>
-                    <div class="col-xs-11" ng-repeat="decision in mnc.meeting.decisions track by $index">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Decision"  ng-model="mnc.meeting.decisions[$index].subject">
+                    <div class="panel panel-default" ng-click="mnc.setActivePanel(1)">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a bs-collapse-toggle>
+                                    Meeting Protocol
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse" bs-collapse-target>
+                            <div class="panel-body">
+                                <div class="row meeting-decisions">
+                                    <h5>Decisions</h5>
+                                    <div class="col-xs-11" ng-repeat="decision in mnc.meeting.decisions track by $index">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Decision"  ng-model="mnc.meeting.decisions[$index].subject">
                             <span class="input-group-btn">
                                 <button class="btn btn-danger" type="button" ng-click="mnc.removeDecision($index)"><span class="glyphicon glyphicon-remove"></span></button>
                             </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-1" style="padding: 0px;">
-                        <button type="button" class="btn btn-primary" ng-click="mnc.addDecision()"><span class="glyphicon glyphicon-plus"></span></button>
-                    </div>
-                </div>
-                <div class="row meeting-todos">
-                    <h5>ToDos</h5>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th style="width: 50%">Note</th>
-                            <th>Owner</th>
-                            <th>Due</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="actionPoint in mnc.meeting.actionPoints track by $index">
-                            <td class="todo-note">
-                                <input type="text" class="form-control" placeholder="Note" ng-model="actionPoint.subject">
-                            </td>
-                            <td class="todo-owner">
-                                <input type="email" class="form-control" placeholder="Owner"ng-model="actionPoint.owner" ng-focus="mnc.showAttendees()">
-                            </td>
-                            <td class="todo-due">
-                                <div class="form-inline">
-
-                                    <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
-                                        <input type="text" class="form-control" ng-model="actionPoint.dueDate" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
+                                        </div>
                                     </div>
-                                    <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                                        <input type="text" class="form-control" size="5" ng-model="actionPoint.dueDate" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
+                                    <div class="col-xs-1" style="padding: 0px;">
+                                        <button type="button" class="btn btn-primary" ng-click="mnc.addDecision()"><span class="glyphicon glyphicon-plus"></span></button>
                                     </div>
                                 </div>
-                            </td>
-                            <td class="delete" ng-click="mnc.removeTodo($index)"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <button type="button" class="btn btn-primary" ng-click="mnc.addTodo()"><span class="glyphicon glyphicon-plus"></span> Add Todo</button>
+                                <div class="row meeting-todos">
+                                    <h5>ToDos</h5>
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 50%">Note</th>
+                                            <th>Owner</th>
+                                            <th>Due</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="actionPoint in mnc.meeting.actionPoints track by $index">
+                                            <td class="todo-note">
+                                                <input type="text" class="form-control" placeholder="Note" ng-model="actionPoint.subject">
+                                            </td>
+                                            <td class="todo-owner">
+                                                <input type="email" class="form-control" placeholder="Owner"ng-model="actionPoint.owner" ng-focus="mnc.showAttendees()">
+                                            </td>
+                                            <td class="todo-due">
+                                                <div class="form-inline">
+
+                                                    <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
+                                                        <input type="text" class="form-control" ng-model="actionPoint.dueDate" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
+                                                    </div>
+                                                    <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
+                                                        <input type="text" class="form-control" size="5" ng-model="actionPoint.dueDate" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="delete" ng-click="mnc.removeTodo($index)"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-primary" ng-click="mnc.addTodo()"><span class="glyphicon glyphicon-plus"></span> Add Todo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="meeting-footer">
                     <div class="row">
                         <div class="col-xs-12">

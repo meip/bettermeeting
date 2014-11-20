@@ -5,10 +5,12 @@ class MeetingNoteCtrl
     idParam = @$routeParams.id
 
     @saveButtonText = "Save"
+    @activePanel = 1
 
     if idParam == undefined
       @initializeNewMeeting()
       @saveButtonText = "Publish"
+      @activePanel = 0
     else
       @MeetingService.getMeeting(idParam)
       .then(
@@ -33,6 +35,9 @@ class MeetingNoteCtrl
     (error) =>
       @$log.error "Unable to get Users: #{error}"
     )
+
+  setActivePanel: (panel) ->
+    @activePanel = panel
 
   initializeNewMeeting: () ->
     @meeting = {
