@@ -51,19 +51,14 @@
                     <h3>ToDo</h3>
                     <div class="todo-item" ng-repeat="todo in tlc.todos"  ng-class="todo.color">
                         <div class="todo-actions">
-                            <div>
-                                <button type="button" class="btn" ng-click="tlc.doneClicked(todo._id.$oid)">
+                            <div class="div-done">
+                                <button type="button" class="btn btn-done" ng-click="tlc.doneClicked($index)">
                                     <span class="glyphicon glyphicon-ok"></span>
                                 </button>
                                 <span>DONE</span>
                             </div>
-                            <div>
-                                <!--<button type="button" class="btn" ng-click="tlc.laterClicked(todo._id.$oid)">
-                                    <span class="glyphicon glyphicon-time"></span>
-                                </button>
-                                <span>LATER</span>
-                                -->
-                                <button type="button" class="btn" title="Do this Task Later" data-content="Set new Time and Date"
+                            <div class="div-later">
+                                <button type="button" class="btn btn-later" title="Do this Task Later" data-content="Set new Time and Date"
                                         data-template="/assets/partials/templates/popover-demo.html" data-animation="am-flip-x" data-auto-close="1" bs-popover>
                                     <span class="glyphicon glyphicon-time"></span>
                                 </button>

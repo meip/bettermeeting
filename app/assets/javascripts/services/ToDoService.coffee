@@ -28,6 +28,20 @@ class ToDoService
     )
     deferred.promise
 
+  putTodo: (todo) ->
+    @$log.debug "ToDoService.putTodo #{angular.toJson(todo, true)}"
+    deferred = @$q.defer()
 
+    @$http.put('/api/actionpoint/' + todo._id.$oid, todo)
+    .success((data, status, headers) =>
+      @$log.info("Successfully updated Action Point - status #{status}")
+      deferred.resolve(data)
+    )
+    .error((data, status, headers) =>
+      @checkLogin(status)
+      @$log.error("Failed to update Action Point - status #{status}")
+      deferred.reject(data);
+    )
+    deferred.promise
 
 servicesModule.service('ToDoService', ToDoService)
