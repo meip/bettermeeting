@@ -10,7 +10,8 @@ dependencies = [
     'LocalStorageModule',
     'ngAnimate',
     'mgcrea.ngStrap',
-    'ngSanitize'
+    'ngSanitize',
+    'cfp.hotkeys'
 ]
 
 app = angular.module('bmApp', dependencies)

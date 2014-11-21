@@ -10,6 +10,8 @@
                 <div class="page-header">
                     <div class="meeting-header-goal row">
                         <span>Please specify what you want to achieve with this meeting:</span>
+
+
                         <input type="text" placeholder="Meetinggoal *" class="form-control" ng-model="mnc.meeting.goal" required
                                popover="What do you want to achieve with this meeting?"  popover-trigger="focus">
                     </div>
@@ -20,6 +22,8 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a bs-collapse-toggle ng-click="mnc.setActivePanel(0)">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ng-show="mnc.activePanel != 0"></span>
+                                    <span class="glyphicon glyphicon-minus" aria-hidden="true" ng-show="mnc.activePanel == 0"></span>
                                     Meeting Informations
                                 </a>
                             </h4>
@@ -66,6 +70,8 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a bs-collapse-toggle ng-click="mnc.setActivePanel(1)">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ng-show="mnc.activePanel != 1"></span>
+                                    <span class="glyphicon glyphicon-minus" aria-hidden="true" ng-show="mnc.activePanel == 1"></span>
                                     Meeting Protocol
                                 </a>
                             </h4>
@@ -138,7 +144,7 @@
             </form>
             <hr />
             <h4>Debug:</h4>
-            <pre>{{ mnc.meeting | json }}</pre>
+            <pre>{{ mnc | json }}</pre>
 
         </div>
     </div>

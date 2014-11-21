@@ -1,6 +1,6 @@
 
 class MeetingNoteCtrl
-  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert) ->
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert, @hotkeys) ->
     @$log.debug "MeetingNoteCtrl.constructor()"
     idParam = @$routeParams.id
 
@@ -35,6 +35,15 @@ class MeetingNoteCtrl
     (error) =>
       @$log.error "Unable to get Users: #{error}"
     )
+    @setHotkeys()
+
+
+  setHotkeys: () ->
+    @hotkeys.add({
+      combo: 'w',
+      description: 'blah blah',
+      callback: @setActivePanel(1)
+    })
 
   setActivePanel: (panel) ->
     @activePanel = panel
@@ -124,6 +133,7 @@ class MeetingNoteCtrl
         owner: "",
         dueDate: @getFormattedDate(0)
     })
+    @activePanel = 1
 
   removeTodo: (todoIndex) ->
     @$log.debug "MeetingNoteCtrl.removeTodo(" + todoIndex + ")"
@@ -140,6 +150,7 @@ class MeetingNoteCtrl
   addDecision: () ->
     @$log.debug "MeetingNoteCtrl.addDecision()"
     @meeting.decisions.push("")
+    @activePanel = 1
 
   removeDecision: (decisionIndex) ->
     @$log.debug "MeetingNoteCtrl.removeDecision(" + decisionIndex + ")"
