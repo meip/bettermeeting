@@ -12,6 +12,7 @@ class HomeMeetingListCtrl
         for meeting in @meetings
           meeting.goalStatus = @calculateGoalStatus(meeting)
           meeting.todoStatus = @calculateTodoStatus(meeting)
+          meeting.color = @calculateMeetingColor(meeting)
 
         @freeTile()
     ,
@@ -38,6 +39,16 @@ class HomeMeetingListCtrl
 
     return Math.floor((todoDone / todoLength) * 100)
 
+  calculateMeetingColor: (meeting) ->
+    if meeting.status == "new"
+      meeting.color = "color-new"
+    else if meeting.organizer == "r1bader@hsr.ch"
+      meeting.color = "color-organizer"
+    else
+      meeting.color = "color-attendee"
+
+
+
   freeTile: () ->
     $('#note-container').freetile({
       selector: '.note',
@@ -47,5 +58,9 @@ class HomeMeetingListCtrl
 
   openNewMeeting: () ->
     @$location.path("/meeting/note");
+  openMeeting: (index) ->
+    meeting = @meetings[index]
+
+    @$location.path("/meeting/note").search(id: meeting._id.$oid)
 
 controllersModule.controller('HomeMeetingListCtrl', HomeMeetingListCtrl)

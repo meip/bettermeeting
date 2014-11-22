@@ -31,7 +31,6 @@
   margin: 0;
 }
 
-
 .home {
   background-color: white;
   @media (min-width: @screen-sm-min) {
@@ -39,21 +38,31 @@
   }
 }
 
-
 .ng-dirty.ng-invalid {
   box-shadow: inset 0 -2px 0 #e51c23;
 }
 
-
-.testeriches {
-  display: block;
-  background-color: #efa640 !important;
-  position: absolute;
-  z-index: 1000;
-  float: left;
-  min-width: 160px;
-  min-height: 160px;
-  padding: 30px;
-  margin-top: -23px;
+#legend-container {
+  .legend-box {
+    width: 30px;
+    height: 30px;
+    margin: 5px 25px 5px 0px;
+    float: left;
+  }
+  p {
+    margin-top: 10px;
+  }
+  #color-new {
+    background-color: @color-schema-1;
+  }
+  #color-organizer {
+    background-color: @color-schema-2;
+  }
+  #color-attendee {
+    background-color: @color-schema-3;
+  }
+  #color-important {
+    background-color: @color-schema-4;
+  }
 
 }

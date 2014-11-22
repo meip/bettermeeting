@@ -24,8 +24,9 @@
     white-space: normal;
 
   }
-
-
+  .organisator {
+    max-width: 300px;
+  }
 
   input {
     font-size: 12px;
@@ -85,17 +86,49 @@
     text-align: right;
   }
 
-  .colorbar.color-1 {
+  .colorbar.color-new {
     background-color: @color-schema-1;
   }
-  .colorbar.color-2 {
+  .colorbar.color-organizer {
     background-color: @color-schema-2;
   }
-  .colorbar.color-3 {
+  .colorbar.color-attendee {
     background-color: @color-schema-3;
   }
-  .colorbar.color-4 {
+  .colorbar.color-important {
     background-color: @color-schema-4;
+  }
+
+  .panel-heading {
+    &:hover {
+      cursor: pointer; cursor: hand;
+    }
+  }
+
+  .panel-success {
+    .panel-heading {
+      &:hover {
+        background-color: darken(@brand-success, 20%);
+      }
+    }
+  }
+  .panel-primary {
+    .panel-heading {
+      &:hover {
+        background-color: darken(@brand-primary, 20%);
+      }
+    }
+  }
+
+  #close-button {
+    a {
+      color: @white;
+      &:hover {
+        color: @white;
+      }
+    }
+    font-size:120%;
+    margin-right: 15px;
   }
 }
 

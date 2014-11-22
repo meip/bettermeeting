@@ -1,20 +1,26 @@
 
 class MeetingNoteCtrl
-  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert) ->
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert, @hotkeys) ->
     @$log.debug "MeetingNoteCtrl.constructor()"
     idParam = @$routeParams.id
 
     @saveButtonText = "Save"
+    @activePanel = 1
 
     if idParam == undefined
       @initializeNewMeeting()
       @saveButtonText = "Publish"
+      @activePanel = 0
     else
       @MeetingService.getMeeting(idParam)
       .then(
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
           @meeting = data
+          if @meeting.organizer == "r1bader@hsr.ch"
+            @meeting.color = "color-organizer"
+          else
+            @meeting.color = "color-attendee"
       ,
       (error) =>
         @$log.error "Unable to get Meetings: #{error}"
@@ -29,6 +35,18 @@ class MeetingNoteCtrl
     (error) =>
       @$log.error "Unable to get Users: #{error}"
     )
+    @setHotkeys()
+
+
+  setHotkeys: () ->
+    @hotkeys.add({
+      combo: 'w',
+      description: 'blah blah',
+      callback: @setActivePanel(1)
+    })
+
+  setActivePanel: (panel) ->
+    @activePanel = panel
 
   initializeNewMeeting: () ->
     @meeting = {
@@ -54,7 +72,8 @@ class MeetingNoteCtrl
       votesDown: [],
       created: @getFormattedDate(0),
       updated: @getFormattedDate(0),
-      color: "color-" + (Math.floor(Math.random() * 4) + 1)
+      status: "new",
+      color: "color-new"
     }
 
   publishMeeting: () ->
@@ -114,6 +133,7 @@ class MeetingNoteCtrl
         owner: "",
         dueDate: @getFormattedDate(0)
     })
+    @activePanel = 1
 
   removeTodo: (todoIndex) ->
     @$log.debug "MeetingNoteCtrl.removeTodo(" + todoIndex + ")"
@@ -130,6 +150,7 @@ class MeetingNoteCtrl
   addDecision: () ->
     @$log.debug "MeetingNoteCtrl.addDecision()"
     @meeting.decisions.push("")
+    @activePanel = 1
 
   removeDecision: (decisionIndex) ->
     @$log.debug "MeetingNoteCtrl.removeDecision(" + decisionIndex + ")"

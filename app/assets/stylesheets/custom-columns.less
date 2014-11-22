@@ -44,6 +44,9 @@
   .meeting-summary-colorbar {
     height: 135px;
     box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+    &:hover {
+      cursor: pointer; cursor: hand;
+    }
     .colorbar-date {
       width: 80px;
       margin: 0 auto;
@@ -87,7 +90,7 @@
 }
 #note-container {
 
-  .color-1 {
+  .color-new {
     .meeting-summary-colorbar {
       background-color: @color-schema-1;
     }
@@ -104,7 +107,7 @@
       background-color: lighten(@color-schema-1, 30%);
     }
   }
-  .color-2 {
+  .color-organizer {
     .meeting-summary-colorbar {
       background-color: @color-schema-2;
     }
@@ -121,7 +124,7 @@
       background-color: lighten(@color-schema-2, 30%);
     }
   }
-  .color-3 {
+  .color-attendee {
     .meeting-summary-colorbar {
       background-color: @color-schema-3;
     }
@@ -138,7 +141,7 @@
       background-color: lighten(@color-schema-3, 30%);
     }
   }
-  .color-4 {
+  .color-important {
     .meeting-summary-colorbar {
       background-color: @color-schema-4;
     }
