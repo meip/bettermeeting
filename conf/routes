@@ -5,51 +5,54 @@
 # ~~~~
 
 # Single endpoint for serving AngularJS
-GET     /                               @controllers.Application.index
-GET     /api/randomUUID                 @controllers.Application.randomUUID
+GET     /                                            @controllers.Application.index
+GET     /api/randomUUID                              @controllers.Application.randomUUID
 
 # User management API
-GET     /api/users                      controllers.Users.list
-GET     /api/user/email/:email          controllers.Users.findByEmail(email: String)
-POST    /api/user                       controllers.Users.create
-PUT     /api/user                       controllers.Users.update
+GET     /api/users                                   controllers.Users.list
+GET     /api/user/email/:email                       controllers.Users.findByEmail(email: String)
+POST    /api/user                                    controllers.Users.create
+PUT     /api/user                                    controllers.Users.update
 
 # User Login / Logut
-GET     /api/user/login                 controllers.Users.login
-POST    /api/user/login                 controllers.Users.login
-GET     /api/user/logout                controllers.Users.logout
-PUT     /api/user/pushtoken             controllers.Users.pushToken
-GET     /api/user/actionpoints          @controllers.ActionPoints.findMyActionPoints
-GET     /api/user/meetings              @controllers.Meetings.findMyMeetings
+GET     /api/user/login                              controllers.Users.login
+POST    /api/user/login                              controllers.Users.login
+GET     /api/user/logout                             controllers.Users.logout
+PUT     /api/user/pushtoken                          controllers.Users.pushToken
+GET     /api/user/actionpoints                       @controllers.ActionPoints.findMyActionPoints
+GET     /api/user/meetings                           @controllers.Meetings.findMyMeetings
 
 # Meeting management API
-GET     /api/meetings                   @controllers.Meetings.list
-POST    /api/meetings                   @controllers.Meetings.create
-DELETE  /api/meetings/:id               @controllers.Meetings.delete(id: BSONObjectID)
-GET     /api/meetings/:id               @controllers.Meetings.get(id: BSONObjectID)
-PUT     /api/meetings/:id               @controllers.Meetings.update(id: BSONObjectID)
-PUT     /api/meetings/:id/voteUp        @controllers.Meetings.voteUpMeeting(id: BSONObjectID)
-PUT     /api/meetings/:id/voteDown      @controllers.Meetings.voteDownMeeting(id: BSONObjectID)
-PUT     /api/meetings/:id/close         @controllers.Meetings.closeMeeting(id: BSONObjectID)
-POST    /api/meetings/:id/actionpoint   @controllers.ActionPoints.pushActionPoint(id: BSONObjectID)
+GET     /api/meetings                                @controllers.Meetings.list
+POST    /api/meetings                                @controllers.Meetings.create
+DELETE  /api/meetings/:id                            @controllers.Meetings.delete(id: BSONObjectID)
+GET     /api/meetings/:id                            @controllers.Meetings.get(id: BSONObjectID)
+PUT     /api/meetings/:id                            @controllers.Meetings.update(id: BSONObjectID)
+PUT     /api/meetings/:id/vote/goal/up                @controllers.Meetings.voteOnGoal(id: BSONObjectID, voteValue: Int ?= 1)
+PUT     /api/meetings/:id/vote/goal/down              @controllers.Meetings.voteOnGoal(id: BSONObjectID, voteValue: Int ?= -1)
+PUT     /api/meetings/:id/vote/efficiency/up          @controllers.Meetings.voteOnEfficiency(id: BSONObjectID, voteValue: Int ?= 1)
+PUT     /api/meetings/:id/vote/efficiency/down        @controllers.Meetings.voteOnEfficiency(id: BSONObjectID, voteValue: Int ?= -1)
+PUT     /api/meetings/:id/close                      @controllers.Meetings.closeMeeting(id: BSONObjectID)
+POST    /api/meetings/:id/actionpoint                @controllers.ActionPoints.pushActionPoint(id: BSONObjectID)
 
 # ActionPoint API
-DELETE  /api/actionpoint/:id            @controllers.ActionPoints.delete(id: BSONObjectID)
-PUT     /api/actionpoint/:id            @controllers.ActionPoints.update(id: BSONObjectID)
+DELETE  /api/actionpoint/:id                         @controllers.ActionPoints.delete(id: BSONObjectID)
+PUT     /api/actionpoint/:id                         @controllers.ActionPoints.update(id: BSONObjectID)
 
 # Leaderboard read API
-GET     /api/leaderboard/countOrganizer @controllers.LeaderBoards.countMeetingOrganizer
-GET     /api/leaderboard/countAttendees @controllers.LeaderBoards.countMeetingAttendee
-GET     /api/leaderboard/countActionpoints @controllers.LeaderBoards.countActionPoints
-GET     /api/leaderboard/leaderBoard    @controllers.LeaderBoards.getLeadingList
+GET     /api/leaderboard/countOrganizer              @controllers.LeaderBoards.countMeetingOrganizer
+GET     /api/leaderboard/countAttendees              @controllers.LeaderBoards.countMeetingAttendee
+GET     /api/leaderboard/countActionpoints           @controllers.LeaderBoards.countActionPoints
+GET     /api/leaderboard/leaderBoard/goal            @controllers.LeaderBoards.getLeadingListOnGoal
+GET     /api/leaderboard/leaderBoard/efficiency      @controllers.LeaderBoards.getLeadingListOnEfficiency
 
 # Testdata
-GET    /api/testdata/meetings           controllers.TestData.createMeetings
-GET    /api/testdata/users              controllers.TestData.createUsers
-GET    /api/testdata/init               controllers.TestData.init
-GET    /api/testdata/clean              controllers.TestData.clean
-GET    /api/testdata/cleaninit          controllers.TestData.cleanInit
+GET    /api/testdata/meetings                        controllers.TestData.createMeetings
+GET    /api/testdata/users                           controllers.TestData.createUsers
+GET    /api/testdata/init                            controllers.TestData.init
+GET    /api/testdata/clean                           controllers.TestData.clean
+GET    /api/testdata/cleaninit                       controllers.TestData.cleanInit
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                controllers.Assets.at(path="/public", file)
 

@@ -1,17 +1,23 @@
 // This script is only for prototyping the map reduce function. It has no production use
 var mapVotes = function() {
-  var votesUp = this.votesUp.length;
-  var votesDown = this.votesDown.length;
-    printjson(this.goal);
-    printjson(this.organizer);
-    var votesDiff = votesUp - votesDown;
-    printjson(votesDiff);
-    emit(this.organizer, votesDiff);
+  printjson(this.goal);
+  printjson(this.organizer);
+  printjson(this.votesOnGoal);
+  var summe = 0;
+  this.votesOnGoal.forEach(function(vote) {
+    printjson(vote); 
+    if (!isNaN(vote.voteValue)) {
+        summe += vote.voteValue;
+    }
+  });
+  printjson(summe);
+  //printjson(Array.reduce(voteSum.voteValue, function(pv, cv) { return pv + cv.voteValue; }, 0));
+  emit(this.organizer, summe);
 };
-var reduceVotes = function(organizer, votes) {
+var reduceVotes = function(organizer, vote) {
     print("reduce");
     printjson(organizer);
-    printjson(votes);         
-    return Array.sum(votes);
+    printjson(Array.sum(vote));
+    return Array.sum(vote);
 };
-db.meetings.mapReduce(mapVotes, reduceVotes, {out: "leaderBoard"})
+db.meetings.mapReduce(mapVotes, reduceVotes, {out: "leaderBoard_test"})

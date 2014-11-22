@@ -2,7 +2,7 @@ package controllers
 
 import dao.{LeaderBaordDao, MeetingDao, UserDao}
 import models.LeaderBoardFormattedFormats._
-import models.{LeaderBoard, LeaderBoardFormatted}
+import models.{User, LeaderBoard, LeaderBoardFormatted}
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
@@ -34,13 +34,24 @@ class LeaderBoards extends Controller with JsonDsl with Security with Authentica
     }
   }
 
-  def getLeadingList = Authenticated.async { implicit request =>
-    val leaderBoardsFormatted = LeaderBaordDao.leaderBoard.map(leaderBoardEntries => {
+  def getLeadingListOnGoal = Authenticated.async { implicit request =>
+    val leaderBoard = new LeaderBaordDao("votesOnGoal")
+    getLeadingList(leaderBoard, request.user)
+  }
+
+  def getLeadingListOnEfficiency = Authenticated.async { implicit request =>
+    request
+    val leaderBoard = new LeaderBaordDao("votesOnEfficiency")
+    getLeadingList(leaderBoard, request.user)
+  }
+
+  private def getLeadingList(leaderBoard: LeaderBaordDao, user: User): Future[Result] = {
+    val leaderBoardsFormatted = leaderBoard.mapReduceBoard.map(leaderBoardEntries => {
       leaderBoardEntries.zipWithIndex.map {
         case (leaderBoard: LeaderBoard, index: Int) => {
           UserDao.findByEMail(leaderBoard._id.get).map(_.map {
             case user => {
-              LeaderBoardFormatted(user.firstName + " " + user.lastName, index + 1, leaderBoard.value.toInt, (leaderBoard._id.get.equals(request.user.email)))
+              LeaderBoardFormatted(user.firstName + " " + user.lastName, index + 1, leaderBoard.value.toInt, (leaderBoard._id.get.equals(user.email)))
             }
           })
         }

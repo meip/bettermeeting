@@ -8,21 +8,25 @@ import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import reactivemongo.extensions.json.dao.JsonDao
 
-object LeaderBaordDao extends JsonDao[LeaderBoard, String](ReactiveMongoPlugin.db, "leaderBoard") with MapReduce[LeaderBoard, String] {
-  def leaderBoard() = {
+class LeaderBaordDao(leaderBoardType: String) extends JsonDao[LeaderBoard, String](ReactiveMongoPlugin.db, "leaderBoard_" + leaderBoardType) with MapReduce[LeaderBoard, String] {
+  def mapReduceBoard() = {
     val mapFunction =
       """
         |function() {
-        |  var votesUp = this.votesUp.length;
-        |  var votesDown = this.votesDown.length;
-        |  var votesDiff = votesUp - votesDown;
-        |  emit(this.organizer, votesDiff);
+        |  var sum = 0;
+        |  this.""".stripMargin + leaderBoardType + """.forEach(function(vote) {
+        |    sum += vote.voteValue;
+        |  });
+        |  emit(this.organizer, sum);
+        |};
+        |var reduceVotes = function(organizer, vote) {
+        |    return Array.sum(vote);
         |};
       """.stripMargin
     val reduceFunction =
       """
-        |function(organizer, votes) {
-        |    return Array.sum(votes);
+        |function(organizer, vote) {
+        |    return Array.sum(vote);
         |};
       """.stripMargin
     mapReduce(mapFunction, reduceFunction, "meetings").map{

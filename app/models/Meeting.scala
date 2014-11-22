@@ -14,8 +14,8 @@ case class Meeting(
                     attendees: List[String],
                     decisions: List[Decision],
                     actionPoints: List[ActionPoint],
-                    votesUp: List[Vote],
-                    votesDown: List[Vote] ,
+                    votesOnGoal: List[Vote],
+                    votesOnEfficiency: List[Vote],
                     override var created: Option[DateTime],
                     override var updated: Option[DateTime]
                     ) extends TemporalModel
@@ -43,6 +43,7 @@ case class ActionPoint(
 
 case class Vote(
                  email: String,
+                 voteValue: Int,
                  override var created: Option[DateTime],
                  override var updated: Option[DateTime]
                  ) extends TemporalModel

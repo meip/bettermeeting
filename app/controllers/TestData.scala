@@ -89,11 +89,18 @@ object TestData extends Controller with JsonDsl {
           updated = makeDate("14.11.2014 13:29")
         )
       ),
-      votesUp = List(
-        Vote("p1meier@hsr.ch", None, None),
-        Vote("r1bader@hsr.ch", None, None)
+      votesOnGoal = List(
+        Vote("p1meier@hsr.ch", -1, None, None),
+        Vote("r1bader@hsr.ch", 1, None, None),
+        Vote("fegli@hsr.ch", 1, None, None),
+        Vote("lblaser@hsr.ch", 1, None, None),
+        Vote("testerli@hsr.ch", 1, None, None)
       ),
-      votesDown = Nil,
+      votesOnEfficiency = List(
+        Vote("p1meier@hsr.ch", 1, None, None),
+        Vote("r1bader@hsr.ch", 1, None, None),
+        Vote("fegli@hsr.ch", 1, None, None)
+      ),
       created = makeDate("08.11.2014 09:10"),
       updated = makeDate("08.11.2014 09:10")
     ),
@@ -108,8 +115,8 @@ object TestData extends Controller with JsonDsl {
       attendees = List("r1bader@hsr.ch"),
       decisions = Nil,
       actionPoints = Nil,
-      votesUp = Nil,
-      votesDown = Nil,
+      votesOnGoal = List.empty[Vote],
+      votesOnEfficiency = List.empty[Vote],
       created = Some(DateTime.now),
       updated = Some(DateTime.now)
     ),
@@ -157,11 +164,11 @@ object TestData extends Controller with JsonDsl {
           updated = makeDate("10.11.2014 13:29")
         )
       ),
-      votesUp = List(
-        Vote("p1meier@hsr.ch", None, None),
-        Vote("r1bader@hsr.ch", None, None)
+      votesOnGoal = List(
+        Vote("p1meier@hsr.ch", 1, None, None),
+        Vote("r1bader@hsr.ch", 1, None, None)
       ),
-      votesDown = Nil,
+      votesOnEfficiency = List.empty[Vote],
       created = makeDate("08.11.2014 09:10"),
       updated = makeDate("08.11.2014 09:10")
     )

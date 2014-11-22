@@ -90,30 +90,30 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
   )
 
   /**
-   * Votes a meeting
+   * Votes a meeting on goal
    *
    * @param id BSONObject will be updated.
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def voteUpMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
-    MeetingDao.voteUpMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Up succeed"))).recover {
+  def voteOnGoal(id: BSONObjectID, voteValue: Int) = Authenticated.async { implicit request =>
+    MeetingDao.voteOnGoal(id, Vote(request.user.email, voteValue, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote on goal succeed"))).recover {
       case t: Throwable =>
-        logger.error("VoteUp error ERROR", t)
-        InternalServerError("Unknown error (voteUpMeeting).")
+        logger.error("VoteUp error", t)
+        InternalServerError("Unknown error (voteOnGoal).")
     }
   }
 
   /**
-   * Votes a meeting
+   * Votes a meeting on efficiency
    *
    * @param id BSONObject will be updated.
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
-  def voteDownMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
-    MeetingDao.voteDownMeeting(id, Vote(request.user.email, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote Down succeed"))).recover {
+  def voteOnEfficiency(id: BSONObjectID, voteValue: Int) = Authenticated.async { implicit request =>
+    MeetingDao.voteOnEfficiency(id, Vote(request.user.email, voteValue, None, None)).map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Vote on efficiency succeed"))).recover {
       case t: Throwable =>
-        logger.error("VoteDown error ERROR", t)
-        InternalServerError("Unknown error (voteDownMeeting).")
+        logger.error("Vote efficiency error", t)
+        InternalServerError("Unknown error (voteOnEfficiency).")
     }
   }
 

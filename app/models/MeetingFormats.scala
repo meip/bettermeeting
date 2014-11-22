@@ -31,11 +31,11 @@ object MeetingFormats {
       (JsPath \ "attendees").write[List[String]] and
       (JsPath \ "actionPoints").write[List[ActionPoint]] and
       (JsPath \ "decisions").write[List[Decision]] and
-      (JsPath \ "votesUp").write[List[Vote]] and
-      (JsPath \ "votesDown").write[List[Vote]] and
+      (JsPath \ "votesOnGoal").write[List[Vote]] and
+      (JsPath \ "votesOnEfficiency").write[List[Vote]] and
       (JsPath \ "created").writeNullable[DateTime] and
       (JsPath \ "updated").writeNullable[DateTime]
-    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.color, meeting.status, meeting.icsUuid, meeting.attendees, meeting.actionPoints, meeting.decisions, meeting.votesUp, meeting.votesDown, meeting.created, meeting.updated))
+    )(meeting => (meeting._id, meeting.date, meeting.goal, meeting.organizer, meeting.color, meeting.status, meeting.icsUuid, meeting.attendees, meeting.actionPoints, meeting.decisions, meeting.votesOnGoal, meeting.votesOnEfficiency, meeting.created, meeting.updated))
 
   implicit def meetingListWrites: Writes[List[Meeting]] = Writes.list(meetingWrites)
 
@@ -50,11 +50,11 @@ object MeetingFormats {
       (JsPath \ "attendees").read[List[String]] and
       (JsPath \ "actionPoints").readNullable[List[ActionPoint]] and
       (JsPath \ "decisions").readNullable[List[Decision]] and
-      (JsPath \ "votesUp").readNullable[List[Vote]] and
-      (JsPath \ "votesDown").readNullable[List[Vote]] and
+      (JsPath \ "votesOnGoal").readNullable[List[Vote]] and
+      (JsPath \ "votesOnEfficiency").readNullable[List[Vote]] and
       (JsPath \ "created").readNullable[DateTime] and
       (JsPath \ "updated").readNullable[DateTime]
-    )((_id, date, goal, organizer, color, status, icsUuid, attendees, actionPoints, decisions, votesUp, votesDown, created, updated) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, color = color, status = status, icsUuid = icsUuid, attendees = attendees, actionPoints = actionPoints.getOrElse(Nil), decisions = decisions.getOrElse(Nil), votesUp = votesUp.getOrElse(Nil), votesDown = votesDown.getOrElse(Nil), created = created, updated = updated))
+    )((_id, date, goal, organizer, color, status, icsUuid, attendees, actionPoints, decisions, votesOnGoal, votesOnEfficiency, created, updated) => Meeting(_id = _id, date = date, goal = goal, organizer = organizer, color = color, status = status, icsUuid = icsUuid, attendees = attendees, actionPoints = actionPoints.getOrElse(Nil), decisions = decisions.getOrElse(Nil), votesOnGoal = votesOnGoal.getOrElse(List.empty[Vote]), votesOnEfficiency = votesOnEfficiency.getOrElse(List.empty[Vote]), created = created, updated = updated))
 
   implicit object MeetingModelLifeCylce extends TemporalModelLifeCycle[Meeting]
 

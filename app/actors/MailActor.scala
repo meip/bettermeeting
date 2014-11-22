@@ -123,8 +123,8 @@ class MailActor(host: String, port: Int, userEmail: String, accountId: String, c
             attendees = attendeeListFiler(attendeeList, stripMailto(organizer)),
             decisions = List.empty[Decision],
             actionPoints = List.empty[ActionPoint],
-            votesUp = List.empty[Vote],
-            votesDown = List.empty[Vote],
+            votesOnGoal = List.empty[Vote],
+            votesOnEfficiency = List.empty[Vote],
             created = Some(DateTime.now),
             updated = Some(DateTime.now)
           )
