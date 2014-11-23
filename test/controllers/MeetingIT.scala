@@ -1,18 +1,14 @@
 package controllers
 
-import org.specs2.specification.BeforeExample
-
-import scala.concurrent._
-import duration._
-import org.specs2.mutable._
-
-import play.api.libs.json._
-import play.api.test._
-import play.api.test.Helpers._
 import java.util.concurrent.TimeUnit
 
-import utils.MongoDBTestUtils.withMongoDb
+import play.api.libs.json._
+import play.api.test.Helpers._
+import play.api.test._
 import utils.MongoDBTestUtils.withUserInDb
+
+import scala.concurrent._
+import scala.concurrent.duration._
 
 
 /**
@@ -57,8 +53,8 @@ class MeetingIT extends ApiTest {
       val result = Await.result(response.get, timeout)
       (contentAsJson(response.get) \ "status").as[String] mustEqual "NOT OK"
       result.header.status mustEqual BAD_REQUEST
-
     }
+
     "be find by valid id" in withUserInDb { implicit app =>
       val request = FakeRequest.apply(POST, apiUrl).withSession("username" -> "p1meier@hsr.ch").withJsonBody(meetingFull)
       val response = route(request)
@@ -84,6 +80,30 @@ class MeetingIT extends ApiTest {
 
       val theBadId = route(FakeRequest.apply(GET, apiUrl + "/" + "NotAValidId").withSession("username" -> "p1meier@hsr.ch")).get
       status(theBadId) mustEqual BAD_REQUEST
+    }
+
+    "update an existing meeting with new actionPoints should generate IDs for the APs" in withUserInDb { implicit app =>
+      val request = FakeRequest.apply(POST, apiUrl).withSession("username" -> "p1meier@hsr.ch").withJsonBody(meetingFull)
+      val response = route(request)
+      response.isDefined mustEqual true
+      val result = Await.result(response.get, timeout)
+      result.header.status must equalTo(CREATED)
+      val meetingId = (contentAsJson(response.get) \ "message").as[String]
+
+      val meetingWithAp = meetingFull ++ Json.obj("_id" -> Json.obj("$oid" -> meetingId)) ++ Json.obj("actionPoints" -> List(Json.obj(
+        "subject" -> "Mach das zum laufen!",
+        "editor" -> "r1bader@hsr.ch",
+        "owner" -> "r1bader@hsr.ch",
+        "dueDate" -> "16.10.2014 16:30",
+        "reminderDate" -> "16.11.2014 16:30",
+        "reminderType" -> "mail"
+      )))
+      val requestPut = FakeRequest.apply(PUT, apiUrl + "/" + meetingId).withSession("username" -> "p1meier@hsr.ch").withJsonBody(meetingWithAp)
+      val responsePut = route(requestPut)
+      val resultPut = Await.result(responsePut.get, timeout)
+      val apObjectId = (route(FakeRequest.apply(GET, apiUrl + "/" + meetingId).withSession("username" -> "p1meier@hsr.ch"))).map(future => (contentAsJson(future) \ "actionPoints").as[List[JsObject]]).flatMap(list => list.headOption).map(json => (json \ "_id" \ "$oid").as[String])
+      apObjectId.isDefined must equalTo(true)
+      resultPut.header.status must equalTo(OK)
     }
 
   }
