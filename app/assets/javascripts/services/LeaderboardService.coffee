@@ -16,7 +16,7 @@ class LeaderboardService
     @$log.debug "LeaderboardService.getLeaderboard()"
     deferred = @$q.defer()
 
-    @$http.get("/api/leaderboard/leaderBoard")
+    @$http.get("/api/leaderboard/leaderBoard/goal")
     .success((data, status, headers) =>
       @$log.info("Successfully listed Leaderboard - status #{status}")
       deferred.resolve(data, status, headers)

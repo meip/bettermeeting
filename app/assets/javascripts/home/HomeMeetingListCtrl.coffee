@@ -21,11 +21,24 @@ class HomeMeetingListCtrl
     )
 
   calculateGoalStatus: (meeting) ->
-    likes = meeting.votesUp.length
-    total = meeting.votesDown.length + likes
-    if total == 0
+    votesOnGoal = meeting.votesOnGoal
+    votesOnEfficiency = meeting.votesOnEfficiency
+    if meeting.goal == "Decision about Prototype #1"
+      @$log.debug votesOnGoal
+      @$log.debug votesOnEfficiency
+
+    votesPoints = 0
+    for vote in votesOnGoal
+      votesPoints += vote.voteValue
+    for vote in votesOnEfficiency
+      votesPoints += vote.voteValue
+
+    votesTotal = votesOnGoal.length + votesOnEfficiency.length
+
+    if votesTotal != 0
+      return Math.floor((votesPoints / votesTotal) * 100)
+    else
       return 0
-    return Math.floor((likes / total) * 100)
 
   calculateTodoStatus: (meeting) ->
     todoLength = meeting.actionPoints.length
@@ -46,8 +59,6 @@ class HomeMeetingListCtrl
       meeting.color = "color-organizer"
     else
       meeting.color = "color-attendee"
-
-
 
   freeTile: () ->
     $('#note-container').freetile({

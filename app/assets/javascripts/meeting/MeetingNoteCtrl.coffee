@@ -1,11 +1,12 @@
 
 class MeetingNoteCtrl
-  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert, @hotkeys) ->
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert) ->
     @$log.debug "MeetingNoteCtrl.constructor()"
     idParam = @$routeParams.id
 
     @saveButtonText = "Save"
     @activePanel = 1
+    @$scope.text = "hallo"
 
     if idParam == undefined
       @initializeNewMeeting()
@@ -35,16 +36,7 @@ class MeetingNoteCtrl
     (error) =>
       @$log.error "Unable to get Users: #{error}"
     )
-    @setHotkeys()
-
-
-  setHotkeys: () ->
-    @hotkeys.add({
-      combo: 'w',
-      description: 'blah blah',
-      callback: @setActivePanel(1)
-    })
-
+  
   setActivePanel: (panel) ->
     @activePanel = panel
 
