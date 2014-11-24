@@ -36,7 +36,12 @@ class MeetingNoteCtrl
     (error) =>
       @$log.error "Unable to get Users: #{error}"
     )
-  
+
+    body = document.getElementsByTagName('body')[0];
+    body.style.background = "#323A41";
+
+
+
   setActivePanel: (panel) ->
     @activePanel = panel
 

@@ -20,12 +20,12 @@ class HomeMeetingListCtrl
       @$log.error "Unable to get Meetings: #{error}"
     )
 
+    body = document.getElementsByTagName('body')[0];
+    body.style.background = "#FFFFFF";
+
   calculateGoalStatus: (meeting) ->
     votesOnGoal = meeting.votesOnGoal
     votesOnEfficiency = meeting.votesOnEfficiency
-    if meeting.goal == "Decision about Prototype #1"
-      @$log.debug votesOnGoal
-      @$log.debug votesOnEfficiency
 
     votesPoints = 0
     for vote in votesOnGoal
@@ -39,6 +39,8 @@ class HomeMeetingListCtrl
       return Math.floor((votesPoints / votesTotal) * 100)
     else
       return 0
+
+
 
   calculateTodoStatus: (meeting) ->
     todoLength = meeting.actionPoints.length

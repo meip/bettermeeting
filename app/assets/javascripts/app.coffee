@@ -7,7 +7,6 @@ dependencies = [
     'bmApp.directives',
     'bmApp.common',
     'bmApp.routeConfig',
-    'LocalStorageModule',
     'ngAnimate',
     'mgcrea.ngStrap',
     'ngSanitize'
@@ -29,12 +28,6 @@ angular.module('bmApp.routeConfig', ['ngRoute'])
             })
             .when('/users/create', {
                 templateUrl: '/assets/partials/users/create.html'
-            })
-            .when('/meeting-offline/create', {
-                templateUrl: '/assets/partials/meeting/edit.html'
-            })
-            .when('/meeting-offline/edit', {
-              templateUrl: '/assets/partials/meeting/edit.html'
             })
             .when('/login', {
               templateUrl: '/assets/partials/login/login.html'

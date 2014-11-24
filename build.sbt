@@ -28,7 +28,6 @@ libraryDependencies ++= Seq(
   "org.webjars" % "angular-ui-bootstrap" % "0.11.0-3",
   "org.webjars" % "bootswatch-paper" % "3.2.0+4",
   "org.webjars" % "jquery" % "2.1.1",
-  "org.webjars" % "angular-local-storage" % "0.1.3",
   "org.webjars" % "momentjs" % "2.8.3",
   "org.webjars" % "angular-ui-select" % "0.8.3",
   "org.webjars" % "angular-ui-calendar" % "0.9.0-beta.1",

@@ -1,6 +1,6 @@
 class LoginCtrl
 
-  constructor: (@$log, @UserControlService, @$location) ->
+  constructor: (@$log, @UserControlService, @$location, @$alert) ->
     @$log.debug "LoginCtrl.constructor()"
     @user = {
       email: "",
@@ -10,6 +10,8 @@ class LoginCtrl
       warning: false,
       message: ""
     }
+    body = document.getElementsByTagName('body')[0];
+    body.style.background = "#FFFFFF";
 
 
 
@@ -21,6 +23,7 @@ class LoginCtrl
       (data) =>
         @$log.debug "Promise returned #{data} Meetings"
         @$location.path("/");
+        myAlert = @$alert({title: 'Successfully Logged In!', content: "Welcome", placement: 'top', type: 'success', show: true, duration: 5})
     ,
     (error) =>
       @$log.error "Unable to Login: #{error}"
