@@ -80,7 +80,7 @@ class MeetingService
     @$log.debug "MeetingService.getRemoteMeetings()"
     deferred = @$q.defer()
 
-    @$http.get("/api/meetings")
+    @$http.get("/api/user/meetings")
     .success((data, status, headers) =>
       @$log.info("Successfully listed Meetings - status #{status}")
       deferred.resolve(data, status, headers)
