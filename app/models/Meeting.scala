@@ -9,7 +9,7 @@ case class Meeting(
                     goal: String,
                     organizer: String,
                     color: Option[String],
-                    status: Option[String],
+                    var status: Option[String],
                     icsUuid: Option[String],
                     attendees: List[String],
                     decisions: List[Decision],
