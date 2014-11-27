@@ -83,6 +83,32 @@ class MeetingNoteCtrl
   publishMeeting: () ->
     @$log.debug "MeetingNoteCtrl.publishMeeting()"
     idParam = @$routeParams.id
+
+    apToDelete = []
+    index = 0
+    for ap in @meeting.actionPoints
+      if ap.subject == ""
+        apToDelete.push(index)
+      index++
+    @$log.debug(apToDelete)
+
+    for item in apToDelete by -1
+      @meeting.actionPoints.splice(item, 1)
+
+    dcToDelete = []
+    index = 0
+    for dc in @meeting.decisions
+      if dc.subject == ""
+        dcToDelete.push(index)
+      index++
+    @$log.debug(dcToDelete)
+
+    for item in dcToDelete by -1
+      @meeting.decisions.splice(item, 1)
+
+
+
+
     if idParam == undefined
       @MeetingService.postMeeting(@meeting)
       .then(
@@ -166,7 +192,10 @@ class MeetingNoteCtrl
 
   addDecision: () ->
     @$log.debug "MeetingNoteCtrl.addDecision()"
-    @meeting.decisions.push("")
+    @meeting.decisions.push({
+      subject: "",
+      editor: @user.email
+    })
     @activePanel = 1
 
   removeDecision: (decisionIndex) ->
