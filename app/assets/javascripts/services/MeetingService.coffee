@@ -76,18 +76,18 @@ class MeetingService
     )
     deferred.promise
 
-  closeMeeting: (meetingId) ->
-    @$log.debug "MeetingService.closeMeeting #{meetingId}"
+  finishMeeting: (meetingId) ->
+    @$log.debug "MeetingService.finishMeeting #{meetingId}"
     deferred = @$q.defer()
 
-    @$http.put('/api/meetings/' + meetingId + "/close", [])
+    @$http.put('/api/meetings/' + meetingId + "/finish", [])
     .success((data, status, headers) =>
-      @$log.info("Successfully closed Meeting - status #{status}")
+      @$log.info("Successfully finished Meeting - status #{status}")
       deferred.resolve(data)
     )
     .error((data, status, headers) =>
       @checkLogin(status)
-      @$log.error("Failed to close Meeting - status #{status}")
+      @$log.error("Failed to finished Meeting - status #{status}")
       deferred.reject(data);
     )
     deferred.promise
