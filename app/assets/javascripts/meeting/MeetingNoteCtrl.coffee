@@ -124,6 +124,20 @@ class MeetingNoteCtrl
       myAlert = @$alert({title: 'Unable to delete Meeting', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 5})
     )
 
+  closeMeeting: () ->
+    @$log.debug "MeetingNoteCtrl.closeMeeting()"
+    @MeetingService.closeMeeting(@meeting._id.$oid)
+    .then(
+      (data) =>
+        @$log.debug "Closed #{data} Meeting"
+        @$location.path("/")
+        myAlert = @$alert({title: 'Meeting closed!', content: "The meeting has been successfully closed. <br />Your Attendees have been notified to Vote", placement: 'top', type: 'success', show: true, duration: 5})
+    ,
+    (error) =>
+      @$log.error "Unable to delete Meeting: #{error}"
+      myAlert = @$alert({title: 'Unable to close Meeting', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 5})
+    )
+
   getFormattedDate: (additionalHours) ->
     return Date.now()
 
