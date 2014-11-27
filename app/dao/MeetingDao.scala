@@ -61,7 +61,7 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
   def voteOnGoal(meetingId: BSONObjectID, vote: Vote) = {
-    MeetingDao.update(Json.obj(), $pull("votesOnGoal" -> Json.obj("email" -> vote.email)), multi = true)
+    MeetingDao.updateById(meetingId, $pull("votesOnGoal" -> Json.obj("email" -> vote.email)))
     MeetingDao.updateById(meetingId, $push("votesOnGoal" -> vote))
   }
 
@@ -73,7 +73,7 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
   def voteOnEfficiency(meetingId: BSONObjectID, vote: Vote) = {
-    MeetingDao.update(Json.obj(), $pull("votesOnEfficiency" -> Json.obj("email" -> vote.email)), multi = true)
+    MeetingDao.updateById(meetingId, $pull("votesOnEfficiency" -> Json.obj("email" -> vote.email)))
     MeetingDao.updateById(meetingId, $push("votesOnEfficiency" -> vote))
   }
 
