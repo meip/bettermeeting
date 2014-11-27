@@ -15,12 +15,11 @@ class LeaderBaordDao(leaderBoardType: String) extends JsonDao[LeaderBoard, Strin
         |function() {
         |  var sum = 0;
         |  this.""".stripMargin + leaderBoardType + """.forEach(function(vote) {
-        |    sum += vote.voteValue;
+        |    if (vote.voteValue > 0) {
+        |      sum += vote.voteValue;
+        |    }
         |  });
         |  emit(this.organizer, sum);
-        |};
-        |var reduceVotes = function(organizer, vote) {
-        |    return Array.sum(vote);
         |};
       """.stripMargin
     val reduceFunction =
