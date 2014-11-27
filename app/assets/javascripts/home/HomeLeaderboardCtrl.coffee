@@ -62,4 +62,11 @@ class HomeLeaderboardCtrl
       @$log.error "Unable to get Count Todos: #{error}"
     )
 
+  getRank: (rank) ->
+    if rank.selft
+      return "active-user"
+    else
+      return ""
+
+
 controllersModule.controller('HomeLeaderboardCtrl', HomeLeaderboardCtrl)

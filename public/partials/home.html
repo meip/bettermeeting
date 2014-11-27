@@ -115,10 +115,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="rank in hlc.leaderboardEfficiency" ng-class="rank.selft ? 'active' : ''">
+                                <tr ng-repeat="rank in hlc.leaderboardEfficiency" ng-class="hlc.getRank(rank)">
                                     <td>{{rank.rank}}</td>
                                     <td>{{rank.name}}</td>
-                                    <td>{{rank.points}}</td>
+                                    <td><b>{{rank.points}}</b></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -133,10 +133,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="rank in hlc.leaderboardGoal" ng-class="rank.selft ? 'active' : ''">
+                                <tr ng-repeat="rank in hlc.leaderboardGoal" ng-class="hlc.getRank(rank)">
                                     <td>{{rank.rank}}</td>
                                     <td>{{rank.name}}</td>
-                                    <td>{{rank.points}}</td>
+                                    <td><b>{{rank.points}}</b></td>
                                 </tr>
                                 </tbody>
                             </table>
