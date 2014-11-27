@@ -68,5 +68,22 @@ class UserControlService
     )
     deferred.promise
 
+  getActualUser: () ->
+    @$log.debug "UserControlService.getActualUser()"
+    deferred = @$q.defer()
+
+    @$http.get("/api/user/profile")
+    .success((data, status, headers) =>
+      @$log.info("Successfully listed User - status #{status}")
+      deferred.resolve(data)
+    )
+    .error((data, status, headers) =>
+      @checkLogin(status)
+      @$log.info("Failed to list User - status #{status}")
+      deferred.reject(data);
+    )
+    deferred.promise
+
+
 
 servicesModule.service('UserControlService', UserControlService)

@@ -8,6 +8,8 @@ class MeetingNoteCtrl
     @activePanel = 1
     @$scope.text = "hallo"
 
+    @user = {}
+
     if idParam == undefined
       @initializeNewMeeting()
       @saveButtonText = "Publish"
@@ -18,29 +20,35 @@ class MeetingNoteCtrl
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
           @meeting = data
-          if @meeting.organizer == "r1bader@hsr.ch"
-            @meeting.color = "color-organizer"
-          else
-            @meeting.color = "color-attendee"
+
+
+          @getActualUser()
       ,
       (error) =>
         @$log.error "Unable to get Meetings: #{error}"
       )
 
-    @UserControlService.getAllUsers()
-    .then(
-      (data) =>
-        @$log.debug "Promise returned #{data.length} Users"
-        @users = data
-    ,
-    (error) =>
-      @$log.error "Unable to get Users: #{error}"
-    )
-
     body = document.getElementsByTagName('body')[0];
     body.style.background = "#323A41";
 
+  getActualUser: () ->
+    @UserControlService.getActualUser()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length} ActualUser"
+        @user = data
 
+        if @meeting.organizer == ""
+          @meeting.organizer = @user.email
+
+        if @meeting.organizer == @user.email
+          @meeting.color = "color-organizer"
+        else
+          @meeting.color = "color-attendee"
+    ,
+    (error) =>
+      @$log.error "Unable to get actual User: #{error}"
+    )
 
   setActivePanel: (panel) ->
     @activePanel = panel
@@ -48,13 +56,13 @@ class MeetingNoteCtrl
   initializeNewMeeting: () ->
     @meeting = {
       goal: "",
-      organizer: "r1bader@hsr.ch",
+      organizer: "",
       date: @getFormattedDate(0),
       attendees: [""],
       decisions: [
         {
           subject: "",
-          editor: "r1bader@hsr.ch"
+          editor: ""
         }
       ],
       actionPoints: [
@@ -117,7 +125,6 @@ class MeetingNoteCtrl
     )
 
   getFormattedDate: (additionalHours) ->
-    ##return moment().add(additionalHours, "hours").format("DD.MM.YYYY HH:mm")
     return Date.now()
 
   showAttendees: () ->
@@ -127,7 +134,7 @@ class MeetingNoteCtrl
     @$log.debug "MeetingNoteCtrl.addTodo()"
     @meeting.actionPoints.push({
         subject: "",
-        owner: "",
+        owner: @user.email,
         dueDate: @getFormattedDate(0)
     })
     @activePanel = 1
@@ -139,7 +146,7 @@ class MeetingNoteCtrl
     else
       @meeting.actionPoints[todoIndex] = {
         subject: "",
-        owner: "",
+        owner: @user.email,
         status: "open",
         duedate: @getFormattedDate(0)
       }
