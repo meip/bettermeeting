@@ -12,4 +12,5 @@ case class User(
                  active: Boolean = true) {
   def checkPassword(password: String): Boolean = this.password == password
 
+  def userWithoutPassword = copy (password = "")
 }

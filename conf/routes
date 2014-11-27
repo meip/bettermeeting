@@ -10,6 +10,7 @@ GET     /api/randomUUID                              @controllers.Application.ra
 
 # User management API
 GET     /api/users                                   controllers.Users.list
+GET     /api/user/profile                            controllers.Users.profile
 GET     /api/user/email/:email                       controllers.Users.findByEmail(email: String)
 POST    /api/user                                    controllers.Users.create
 PUT     /api/user                                    controllers.Users.update

@@ -19,9 +19,13 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
   def list = Authenticated.async {
     implicit request => {
       UserDao.listUsers.map {
-        case users => Ok(Json.toJson(users))
+        case users => Ok(Json.toJson(users.map(_.userWithoutPassword)))
       }
     }
+  }
+
+  def profile = Authenticated { implicit request =>
+    Ok(Json.toJson(request.user.copy(password = "")))
   }
 
   def login = Action {
