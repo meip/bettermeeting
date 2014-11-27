@@ -62,6 +62,7 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
 
   override def autoIndexes = Seq(
     Index(Seq("_id" -> Ascending, "email" -> Ascending)),
-    Index(Seq("email" -> IndexType.Ascending), unique = true))
+    Index(Seq("email" -> IndexType.Ascending), unique = true),
+    Index(Seq("pushToken" -> IndexType.Ascending), unique = true, sparse = true))
 
 }
