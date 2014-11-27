@@ -133,7 +133,7 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
     }
   }
 
-  def closeMeeting(id: BSONObjectID) = Authenticated.async { implicit request =>
+  def finish(id: BSONObjectID) = Authenticated.async { implicit request =>
     MeetingDao.findById(id).map {
       case Some(meeting: Meeting) => {
         val apnsActor = Akka.system.actorOf(Props[APNSActor])
@@ -151,8 +151,8 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
       }
     }.map(_ => Ok(Json.obj("status" -> "OK", "message" -> "Meeting finished"))).recover {
       case t: Throwable =>
-        logger.error("CLOSE MEETING ERROR", t)
-        InternalServerError("Unknown error (closeMeeting).")
+        logger.error("FINISH MEETING ERROR", t)
+        InternalServerError("Unknown error (finish).")
     }
   }
 }

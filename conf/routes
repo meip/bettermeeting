@@ -33,7 +33,7 @@ PUT     /api/meetings/:id/vote/goal/up               @controllers.Meetings.voteO
 PUT     /api/meetings/:id/vote/goal/down             @controllers.Meetings.voteOnGoal(id: BSONObjectID, voteValue: Int ?= -1)
 PUT     /api/meetings/:id/vote/efficiency/up         @controllers.Meetings.voteOnEfficiency(id: BSONObjectID, voteValue: Int ?= 1)
 PUT     /api/meetings/:id/vote/efficiency/down       @controllers.Meetings.voteOnEfficiency(id: BSONObjectID, voteValue: Int ?= -1)
-PUT     /api/meetings/:id/close                      @controllers.Meetings.closeMeeting(id: BSONObjectID)
+PUT     /api/meetings/:id/finish                      @controllers.Meetings.finish(id: BSONObjectID)
 POST    /api/meetings/:id/actionpoint                @controllers.ActionPoints.pushActionPoint(id: BSONObjectID)
 
 # ActionPoint API
