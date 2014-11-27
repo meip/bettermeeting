@@ -137,8 +137,8 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> {{mnc.saveButtonText}}</button>
-                            <button type="button" class="btn btn-danger" ng-click="mnc.removeMeeting()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                            <button type="button" class="btn btn-info" ng-click="mnc.closeMeeting()"><span class="glyphicon glyphicon-trash"></span> Close</button>
+                            <button type="button" class="btn btn-danger" ng-click="mnc.removeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                            <button type="button" class="btn btn-info" ng-click="mnc.closeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Close</button>
                         </div>
                     </div>
                 </div>

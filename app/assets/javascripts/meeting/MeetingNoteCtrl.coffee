@@ -14,14 +14,13 @@ class MeetingNoteCtrl
       @initializeNewMeeting()
       @saveButtonText = "Publish"
       @activePanel = 0
+      @getActualUser()
     else
       @MeetingService.getMeeting(idParam)
       .then(
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
           @meeting = data
-
-
           @getActualUser()
       ,
       (error) =>
@@ -32,12 +31,12 @@ class MeetingNoteCtrl
     body.style.background = "#323A41";
 
   getActualUser: () ->
+    @$log.debug "MeetingNoteCtrl.getActualUser()"
     @UserControlService.getActualUser()
     .then(
       (data) =>
         @$log.debug "Promise returned #{data.length} ActualUser"
         @user = data
-
         if @meeting.organizer == ""
           @meeting.organizer = @user.email
 
@@ -188,5 +187,10 @@ class MeetingNoteCtrl
     else
       @meeting.attendees[attendeeIndex] = ""
 
+  isPublished: () ->
+    if @saveButtonText == "Publish"
+      return false
+    else
+      return true
 
 controllersModule.controller('MeetingNoteCtrl', MeetingNoteCtrl)
