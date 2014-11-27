@@ -44,9 +44,11 @@ class HomeMeetingListCtrl
 
     votesPoints = 0
     for vote in votesOnGoal
-      votesPoints += vote.voteValue
+      if vote.voteValue > 0
+        votesPoints += vote.voteValue
     for vote in votesOnEfficiency
-      votesPoints += vote.voteValue
+      if vote.voteValue > 0
+        votesPoints += vote.voteValue
 
     votesTotal = votesOnGoal.length + votesOnEfficiency.length
 

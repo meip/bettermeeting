@@ -9,12 +9,24 @@ class HomeLeaderboardCtrl
       meetingTodos: 0
     }
 
-    @leaderboard = []
-    @LeaderboardService.getLeaderboard()
+    @leaderboardEfficiency = []
+    @leaderboardGoal = []
+
+    @LeaderboardService.getLeaderboardEfficiency()
     .then(
       (data) =>
         @$log.debug "Promise returned #{data.length}"
-        @leaderboard = data
+        @leaderboardEfficiency = data
+    ,
+    (error) =>
+      @$log.error "Unable to get Leaderboard: #{error}"
+    )
+
+    @LeaderboardService.getLeaderboardGoal()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length}"
+        @leaderboardGoal = data
     ,
     (error) =>
       @$log.error "Unable to get Leaderboard: #{error}"
@@ -49,7 +61,5 @@ class HomeLeaderboardCtrl
     (error) =>
       @$log.error "Unable to get Count Todos: #{error}"
     )
-
-    @$log.debug @leaderboard
 
 controllersModule.controller('HomeLeaderboardCtrl', HomeLeaderboardCtrl)
