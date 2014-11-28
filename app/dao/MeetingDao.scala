@@ -60,11 +60,11 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @param vote [[Vote]] object.
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
-  def voteOnGoal(meetingId: BSONObjectID, vote: Vote) = {
-    MeetingDao.updateById(meetingId, $pull("votesOnGoal" -> Json.obj("email" -> vote.email)))
-    MeetingDao.updateById(meetingId, $push("votesOnGoal" -> vote))
-  }
-
+  def voteOnGoal(meetingId: BSONObjectID, vote: Vote) = for {
+    remove <- MeetingDao.updateById(meetingId, $pull("votesOnGoal" -> Json.obj("email" -> vote.email)))
+    setVote <- MeetingDao.updateById(meetingId, $push("votesOnGoal" -> vote))
+  } yield setVote
+  
   /**
    * Vote a meeting engagement.
    *
@@ -72,10 +72,10 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
    * @param vote [[Vote]] object.
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
-  def voteOnEfficiency(meetingId: BSONObjectID, vote: Vote) = {
-    MeetingDao.updateById(meetingId, $pull("votesOnEfficiency" -> Json.obj("email" -> vote.email)))
-    MeetingDao.updateById(meetingId, $push("votesOnEfficiency" -> vote))
-  }
+  def voteOnEfficiency(meetingId: BSONObjectID, vote: Vote) = for {
+    remove <- MeetingDao.updateById(meetingId, $pull("votesOnEfficiency" -> Json.obj("email" -> vote.email)))
+    setVote <- MeetingDao.updateById(meetingId, $push("votesOnEfficiency" -> vote))
+  } yield setVote
 
   /**
    * Update an ActionPoint
