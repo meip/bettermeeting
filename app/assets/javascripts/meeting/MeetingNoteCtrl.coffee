@@ -30,6 +30,16 @@ class MeetingNoteCtrl
     body = document.getElementsByTagName('body')[0];
     body.style.background = "#323A41";
 
+    @availableUser = []
+    @UserControlService.getAllUsers().then(
+      (data) =>
+        for user in data
+          @availableUser.push(user.email)
+    ,
+      (error) =>
+        @$log.error "Unable to get all Users: #{error}"
+    )
+
   getActualUser: () ->
     @$log.debug "MeetingNoteCtrl.getActualUser()"
     @UserControlService.getActualUser()
@@ -165,9 +175,6 @@ class MeetingNoteCtrl
 
   getFormattedDate: (additionalHours) ->
     return Date.now()
-
-  showAttendees: () ->
-    @$log.debug "MeetingNoteCtrl.showAttendees()"
 
   addTodo: () ->
     @$log.debug "MeetingNoteCtrl.addTodo()"

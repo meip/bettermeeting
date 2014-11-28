@@ -32,9 +32,7 @@
                             <div class="panel-body">
                                 <div class="meeting-header-information row">
                                     <div class="col-md-6">
-                                        <input type="email" placeholder="Organisator" class="form-control organisator" ng-model="mnc.meeting.organizer" required
-                                               popover="Who is the organizer of the meeting?"  popover-trigger="focus">
-
+                                        <input type="email" class="form-control organisator" ng-model="mnc.meeting.organizer" ng-options="organizer for organizer in mnc.availableUser" placeholder="Organisator" bs-typeahead required popover="Who is the organizer of the meeting?" popover-trigger="focus">
                                     </div>
                                     <div class="col-md-6 pull-right">
                                         <div class="form-inline pull-right">
@@ -51,12 +49,12 @@
                                 <div  class="meeting-header-attendees row">
                                     <h5>Attendees:</h5>
 
-                                    <div class="col-md-4 col-sm-12 attendee" ng-repeat="attendee in mnc.meeting.attendees track by $index">
+                                    <div class="col-md-4 col-sm-12 attendee" ng-repeat="meetingAttendee in mnc.meeting.attendees track by $index">
                                         <div class="input-group">
-                                            <input type="email" class="form-control" placeholder="Attendee"  ng-model="mnc.meeting.attendees[$index]">
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" ng-click="mnc.removeAttendee($index)"><span class="glyphicon glyphicon-remove"></span></button>
-                            </span>
+                                            <input type="email" class="form-control" ng-model="mnc.meeting.attendees[$index]" ng-options="attendee for attendee in mnc.availableUser" placeholder="Enter attendee" bs-typeahead>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-danger" type="button" ng-click="mnc.removeAttendee($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </span>
                                         </div>
                                     </div>
                                     <div class="col-sm-1" style="padding: 0px;">
@@ -109,7 +107,7 @@
                                                 <input type="text" class="form-control" placeholder="Note" ng-model="actionPoint.subject">
                                             </td>
                                             <td class="todo-owner">
-                                                <input type="email" class="form-control" placeholder="Owner"ng-model="actionPoint.owner" ng-focus="mnc.showAttendees()">
+                                                <input type="email" class="form-control" ng-model="actionPoint.owner" ng-options="attendee for attendee in mnc.meeting.attendees" placeholder="Owner" bs-typeahead>
                                             </td>
                                             <td class="todo-due">
                                                 <div class="form-inline">
