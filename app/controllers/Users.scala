@@ -103,7 +103,7 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
 
 
   /**
-   * Lists all user for E-Mail.
+   * Lists the user for E-Mail.
    *
    * @param email E-Mail attribute of users.
    * @return A Ok [[play.api.mvc.Result]]
@@ -112,6 +112,19 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
     UserDao.findByEMail(email).map {
       case None => Ok(Json.toJson(""))
       case user => Ok(Json.toJson(user))
+    }
+  }
+
+  /**
+   * Lists all user for regex.
+   *
+   * @param emailRegex E-Mail regex to lookup
+   * @return A Ok [[play.api.mvc.Result]]
+   */
+  def findByEmailRegex(emailRegex: String) = Authenticated.async {
+    UserDao.findByEMailRegex(emailRegex).map {
+      case Nil => Ok(Json.toJson(""))
+      case userList => Ok(Json.toJson(userList))
     }
   }
 

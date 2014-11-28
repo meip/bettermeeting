@@ -33,6 +33,16 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
   }
 
   /**
+   * Finds user for E-Mail Regex.
+   *
+   * @param emailRegex E-Mail attribute for for the [[User]] object.
+   * @return [[scala.concurrent.Future]] as a [[Option]]
+   */
+  def findByEMailRegex(emailRegex: String) = {
+    UserDao.findAll(Json.obj("email" -> Json.obj("$regex" -> emailRegex)))
+  }
+
+  /**
    * Create user.
    * Insert a [[User]] object.
    *

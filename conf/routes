@@ -12,6 +12,7 @@ GET     /api/randomUUID                              @controllers.Application.ra
 GET     /api/users                                   controllers.Users.list
 GET     /api/user/profile                            controllers.Users.profile
 GET     /api/user/email/:email                       controllers.Users.findByEmail(email: String)
+GET     /api/user/regex/:regex                       controllers.Users.findByEmailRegex(regex: String)
 POST    /api/user                                    controllers.Users.create
 PUT     /api/user                                    controllers.Users.update
 
