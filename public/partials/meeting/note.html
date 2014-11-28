@@ -6,6 +6,11 @@
             </div>
         </div>
         <div class="content meeting">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-danger pull-right" ng-click="mnc.removeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                </div>
+            </div>
             <form ng-submit="mnc.publishMeeting()" name="meetingForm">
                 <div class="page-header">
                     <div class="meeting-header-goal row">
@@ -133,10 +138,14 @@
 
                 <div class="meeting-footer">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> {{mnc.saveButtonText}}</button>
-                            <button type="button" class="btn btn-danger" ng-click="mnc.removeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                            <button type="button" class="btn btn-info" ng-click="mnc.finishMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Finish</button>
+                        <div class="col-xs-6">
+                            <a href="/" class="btn btn-warning"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> {{mnc.saveButtonText}}</button>
+                                <button type="button" class="btn btn-info" ng-click="mnc.finishMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-flag"></span> Finish</button>
+                            </div>
                         </div>
                     </div>
                 </div>
