@@ -85,9 +85,6 @@ class Meetings extends Controller with JsonDsl with Security with AuthenticatedA
   def update(id: BSONObjectID) = authenticatedActionWithRecover[Meeting](
     meeting => {
       meeting._id = Some(id)
-      meeting.status match {
-        case Some("new") => meeting.status = Some("open")
-      }
       meeting.actionPoints.filter(_._id.isEmpty).foreach(_._id = Some(BSONObjectID.generate))
       meeting.decisions.filter(_._id.isEmpty).foreach(_._id = Some(BSONObjectID.generate))
       MeetingDao.updateById(id, meeting)
