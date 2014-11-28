@@ -4,8 +4,23 @@ class MeetingService
   @headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
   @defaultConfig = { headers: @headers }
 
-  constructor: (@$log, @$http, @$q, @$location) ->
+  constructor: (@$log, @$http, @$q, @$location, @hotkeys) ->
     @$log.debug "MeetingService.constructor()"
+
+    @hotkeys.add({
+      combo: 'esc',
+      description: 'Creates a new meeting',
+      callback: (event, hotkey) =>
+        event.preventDefault()
+        @$location.path("/")
+    })
+    @hotkeys.add({
+      combo: 'n',
+      description: 'Creates a new meeting',
+      callback: (event, hotkey) =>
+        event.preventDefault()
+        @$location.path("/meeting/note")
+    })
 
   checkLogin: (status) ->
     if(status == 401)

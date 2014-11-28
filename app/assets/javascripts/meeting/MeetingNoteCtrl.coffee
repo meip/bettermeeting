@@ -1,6 +1,6 @@
 
 class MeetingNoteCtrl
-  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert) ->
+  constructor: (@$log, @$location, @$routeParams, @MeetingService, @UserControlService, @$scope, @$alert, @hotkeys) ->
     @$log.debug "MeetingNoteCtrl.constructor()"
     idParam = @$routeParams.id
 
@@ -39,6 +39,23 @@ class MeetingNoteCtrl
       (error) =>
         @$log.error "Unable to get all Users: #{error}"
     )
+
+    @hotkeys.del('t') #TODO: not a nice way
+    @hotkeys.add({
+      combo: 't',
+      description: 'Creates a new todo',
+      callback: (event, hotkey) =>
+        event.preventDefault()
+        @addTodo()
+    })
+    @hotkeys.del('d') #TODO: not a nice way
+    @hotkeys.add({
+      combo: 'd',
+      description: 'Creates a new decision',
+      callback: (event, hotkey) =>
+        event.preventDefault()
+        @addDecision()
+    })
 
   getActualUser: () ->
     @$log.debug "MeetingNoteCtrl.getActualUser()"
