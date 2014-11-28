@@ -38,6 +38,7 @@ object MeetingDao extends JsonDao[Meeting, BSONObjectID](ReactiveMongoPlugin.db,
   def createMeeting(meeting: Meeting) = {
     meeting.actionPoints.foreach(actionPoint => if (actionPoint._id.isEmpty) actionPoint._id = Some(BSONObjectID.generate))
     meeting.decisions.foreach(decision => if (decision._id.isEmpty) decision._id = Some(BSONObjectID.generate))
+    meeting.status = Some("new")
     MeetingDao.insert(meeting)
   }
 
