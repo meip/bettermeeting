@@ -12,8 +12,24 @@ class LeaderboardService
       @$log.info "Not logged in"
       @$location.path("/login");
 
-  getLeaderboard: () ->
-    @$log.debug "LeaderboardService.getLeaderboard()"
+  getLeaderboardEfficiency: () ->
+    @$log.debug "LeaderboardService.getLeaderboardEfficiency()"
+    deferred = @$q.defer()
+
+    @$http.get("/api/leaderboard/leaderBoard/efficiency")
+    .success((data, status, headers) =>
+      @$log.info("Successfully listed Leaderboard - status #{status}")
+      deferred.resolve(data, status, headers)
+    )
+    .error((data, status, headers) =>
+      @checkLogin(status)
+      @$log.info("Failed to list Leaderboard - status #{status}")
+      deferred.resolve(data);
+    )
+    deferred.promise
+
+  getLeaderboardGoal: () ->
+    @$log.debug "LeaderboardService.getLeaderboardGoal()"
     deferred = @$q.defer()
 
     @$http.get("/api/leaderboard/leaderBoard/goal")
