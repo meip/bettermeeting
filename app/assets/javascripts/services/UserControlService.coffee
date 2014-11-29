@@ -4,10 +4,10 @@ class UserControlService
   @defaultConfig = { headers: @headers }
 
   constructor: (@$log, @$http, @$q) ->
-    @$log.debug "UserService.constructor()"
+    @$log.debug "UserControlService.constructor()"
 
   loginUser: (username, password) ->
-    @$log.debug "UserService.loginUser(username, password)"
+    @$log.debug "UserControlService.loginUser(username, password)"
     deferred = @$q.defer()
 
     @$http.get("/api/user/login?username=" + username + "&password=" + password)
@@ -22,7 +22,7 @@ class UserControlService
     deferred.promise
 
   logoutUser: () ->
-    @$log.debug "UserService.logoutUser()"
+    @$log.debug "UserControlService.logoutUser()"
     deferred = @$q.defer()
 
     @$http.get("/api/user/logout")
@@ -52,8 +52,26 @@ class UserControlService
     )
     deferred.promise
 
+  setShowIntro: (showIntro) ->
+    @$log.debug "UserControlService.setShowIntro()"
+    deferred = @$q.defer()
+
+    @$http.put('/api/user/intro', {
+      "showIntro": showIntro
+    })
+    .success((data, status, headers) =>
+      @$log.info("Successfully updated showIntro for User - status #{status}")
+      deferred.resolve(data)
+    )
+    .error((data, status, headers) =>
+      @checkLogin(status)
+      @$log.error("Failed to update showIntro for User - status #{status}")
+      deferred.reject(data);
+    )
+    deferred.promise
+
   getAllUsers: () ->
-    @$log.debug "UserService.getAllUsers()"
+    @$log.debug "UserControlService.getAllUsers()"
     deferred = @$q.defer()
 
     @$http.get("/api/users")

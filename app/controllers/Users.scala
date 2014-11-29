@@ -86,6 +86,25 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
    * Updates user's pushToken
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
+  def intro = Authenticated.async { implicit request =>
+    val showIntroOpt = for {
+      json <- request.body.asJson
+      showIntro <- (json \ "showIntro").asOpt[Boolean]
+    } yield showIntro
+    showIntroOpt.map {
+      showIntro => UserDao.updateById(request.user._id.get, request.user.copy(showIntro = showIntro)).map(
+        _ => Created(Json.obj("status" -> "OK", "message" -> s"ShowIntro pushed $showIntro"))).recover {
+        case t: Throwable =>
+          Logger.error("CREATE ERROR", t)
+          InternalServerError("Unknown error (intro).")
+      }
+    }.getOrElse(Future(InternalServerError("Unknown error (intro).")))
+  }
+
+  /**
+   * Updates user's pushToken
+   * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
+   */
   def pushToken = Authenticated.async { implicit request =>
     val pushTokenOpt = for {
       json <- request.body.asJson
