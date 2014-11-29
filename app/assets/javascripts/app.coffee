@@ -10,7 +10,8 @@ dependencies = [
     'ngAnimate',
     'mgcrea.ngStrap',
     'ngSanitize',
-    'cfp.hotkeys'
+    'cfp.hotkeys',
+    'angular-intro'
 ]
 
 app = angular.module('bmApp', dependencies)
