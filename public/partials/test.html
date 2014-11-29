@@ -34,24 +34,6 @@
                 </div>
             </div>
 
-            <div class="sandbox">
-                <label for="select-to">Email:</label>
-                <select id="select-to" class="contacts selectized" placeholder="Pick some people..." multiple="multiple" tabindex="-1" style="display: none;" ng-model="mnc.attendees">
-
-
-                    <option value="r1bader@hsr.ch" selected="selected"></option>
-                    <option value="brian@thirdroute.com" selected="selected"></option>
-
-                </select>
-                <div class="selectize-control contacts multi">
-                    <div class="selectize-dropdown multi contacts" style="display: none; width: 520px; top: 36px; left: 0px; visibility: visible;">
-                        <div class="selectize-dropdown-content">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p ng-repeat="attendee in mnc.attendees track by $index">{{mnc.attendees[$index]}}</p>
-
             <h4>Debug:</h4>
             <pre>{{ mnc.attendees | json}}</pre>
         </div>
@@ -61,71 +43,4 @@
 <script>
     var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
             '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
-
-    $('#select-to').selectize({
-        persist: true,
-        maxItems: null,
-        valueField: 'email',
-        labelField: 'name',
-        searchField: ['name', 'email'],
-
-        load: function(query, callback) {
-            if (!query.length) return callback();
-            $.ajax({
-                url: 'http://localhost:9000/api/users',
-                type: 'GET',
-                error: function() {
-                    callback();
-                },
-                success: function(res) {
-                    callback(res);
-                }
-            });
-        },
-        render: {
-            item: function(item, escape) {
-                return '<div>' +
-                        (item.firstName ? '<span class="name">' + escape(item.firstName) + ' ' + escape(item.lastName) + '</span>' : '') +
-                        (item.email ? '<span class="email" style="color:rgba(17, 34, 51, 0.14)">' + escape(item.email) + '</span>' : '') +
-                        '</div>';
-            },
-            option: function(item, escape) {
-                var label = item.firstName + ' ' + item.lastName || item.email;
-                var caption = item.firstName ? item.email : null;
-                return '<div>' +
-                        '<span class="label" style="color: blue">' + escape(label) + '</span>' +
-                        (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
-                        '</div>';
-            }
-        },
-        createFilter: function(input) {
-            var match, regex;
-
-            // email@address.com
-            regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
-            match = input.match(regex);
-            if (match) return !this.options.hasOwnProperty(match[0]);
-
-            // name <email@address.com>
-            regex = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
-            match = input.match(regex);
-            if (match) return !this.options.hasOwnProperty(match[2]);
-
-            return false;
-        },
-        create: function(input) {
-            if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
-                return {email: input};
-            }
-            var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
-            if (match) {
-                return {
-                    email : match[2],
-                    name  : $.trim(match[1])
-                };
-            }
-            alert('Invalid email address.');
-            return false;
-        }
-    });
 </script>
