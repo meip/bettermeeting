@@ -3,12 +3,11 @@ class IntroCtrl
   constructor: (@$log, @$scope) ->
     @$log.debug "IntroCtrl.constructor()"
     intros =
-      meeting: [
+      home: [
         {
           element: ".add-meeting"
-          intro: """This is the main Menu. <br>Hover to show the
-                        tooltips and Submenu buttons."""
-          position: "top"
+          intro: """Click here to add a new Meeting"""
+          position: "auto"
         }
         {
           element: "#todo-container"
@@ -18,11 +17,11 @@ class IntroCtrl
         {
           element: "#leaderboard-container"
           intro: "See your performance stats"
-          position: "top"
+          position: "auto"
         }
       ]
 
-    steps = intros["meeting"]
+    steps = intros["home"]
     @$log.debug steps
 
     @$scope.IntroOptions =
@@ -30,12 +29,13 @@ class IntroCtrl
         steps
       showStepNumbers: true
       showProgress: true
+      showBullets: false
       exitOnOverlayClick: true
       exitOnEsc: true
-      nextLabel: "<button class=\"btn btn-primary btn-xs\"><span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>Next</button>"
+      nextLabel: "<button class=\"btn btn-success btn-xs\"><span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>Next</button>"
       prevLabel: "<button class=\"btn btn-primary btn-xs\"><span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>Previous</button>"
-      skipLabel: "Exit"
-      doneLabel: "Thanks"
+      skipLabel: "<button class=\"btn btn-danger btn-xs\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>Exit</button>"
+      doneLabel: "<button class=\"btn btn-success btn-xs\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>Thanks</button>"
 
 
 
