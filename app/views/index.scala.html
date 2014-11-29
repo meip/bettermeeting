@@ -8,24 +8,17 @@
     <meta name="author" content="">
     <title>Bettermeeting</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
     <link rel="stylesheet" media="screen" href='@routes.Assets.at("lib/angular-motion/angular-motion.css")'>
     <link rel="stylesheet" media="screen" href='@routes.Assets.at("lib/angular-hotkeys/hotkeys.min.css")'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
 </head>
-<body>
+<body ng-controller="IntroCtrl as intro">
     <!-- Fixed navbar -->
     <div class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand title" href="/#/">Bettermeeting</a>
             </div>
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Account</a></li>
-                    <li><a href="/#/logout" ua-logout>Logout</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-
         </div>
     </div>
     <div class="view-containter">
@@ -67,7 +60,11 @@
 <script src='@routes.Assets.at("javascripts/login/LogoutCtrl.js")' type="text/javascript"></script>
 <script src='@routes.Assets.at("javascripts/login/SignupCtrl.js")' type="text/javascript"></script>
 <script src='@routes.Assets.at("javascripts/TestCtrl.js")' type="text/javascript"></script>
+<script src='@routes.Assets.at("javascripts/IntroCtrl.js")' type="text/javascript"></script>
 
 <script src='@routes.Assets.at("javascripts/plugins/jquery.freetile.min.js")' type="text/javascript"></script>
+
+<script src="@routes.Assets.at("lib/intro.js/intro.min.js")" type="text/javascript"></script>
+<script src='@routes.Assets.at("javascripts/plugins/angular-intro.min.js")' type="text/javascript"></script>
 
 </html>

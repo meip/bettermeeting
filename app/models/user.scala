@@ -9,6 +9,7 @@ case class User(
                  firstName: String,
                  lastName: String,
                  pushToken: Option[String],
+                 showIntro: Boolean = true,
                  active: Boolean = true) {
   def checkPassword(password: String): Boolean = this.password == password
 

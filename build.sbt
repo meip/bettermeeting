@@ -33,6 +33,7 @@ libraryDependencies ++= Seq(
   "org.webjars" % "angular-ui-calendar" % "0.9.0-beta.1",
   "org.webjars" % "angular-strap" % "2.1.3",
   "org.webjars" % "angular-motion" % "0.3.3",
+  "org.webjars" % "intro.js" % "1.0.0",
   "com.github.nscala-time" %% "nscala-time" % "1.4.0")
 
 // Scala Compiler Options

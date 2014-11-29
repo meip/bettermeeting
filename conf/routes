@@ -15,6 +15,7 @@ GET     /api/user/email/:email                       controllers.Users.findByEma
 GET     /api/user/regex/:regex                       controllers.Users.findByEmailRegex(regex: String)
 POST    /api/user                                    controllers.Users.create
 PUT     /api/user                                    controllers.Users.update
+PUT     /api/user/intro                              controllers.Users.intro
 
 # User Login / Logut
 GET     /api/user/login                              controllers.Users.login
