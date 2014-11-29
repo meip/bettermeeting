@@ -10,6 +10,10 @@ class HomeMeetingListCtrl
       (data) =>
         @$log.debug "Promise returned #{data.length} Meetings"
         @meetings = data
+        for meeting in @meetings
+          meeting.goalStatus = @calculateGoalStatus(meeting)
+          meeting.todoStatus = @calculateTodoStatus(meeting)
+          meeting.color = @calculateMeetingColor(meeting)
         @getActualUser()
     ,
     (error) =>
@@ -25,13 +29,6 @@ class HomeMeetingListCtrl
       (data) =>
         @$log.debug "Promise returned #{data.length} ActualUser"
         @user = data
-
-
-        for meeting in @meetings
-          meeting.goalStatus = @calculateGoalStatus(meeting)
-          meeting.todoStatus = @calculateTodoStatus(meeting)
-          meeting.color = @calculateMeetingColor(meeting)
-
         @freeTile()
     ,
     (error) =>
