@@ -233,4 +233,7 @@ class MeetingNoteCtrl
   setActionPointFocus: (index) ->
     @actionPointFocus = index
 
+  setDecisionFocus: (index) ->
+    @decisionFocus = index
+
 controllersModule.controller('MeetingNoteCtrl', MeetingNoteCtrl)
