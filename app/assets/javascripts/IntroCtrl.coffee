@@ -2,7 +2,6 @@
 class IntroCtrl
   constructor: (@$log, @$scope, @UserControlService) ->
     @$log.debug "IntroCtrl.constructor()"
-    @foo = @UserControlService
     intros =
       home: [
           element: ".add-meeting"
@@ -42,7 +41,7 @@ class IntroCtrl
 
   showIntroFunc: ->
     @UserControlService.getActualUser().then((user) =>
-      console.log("foooo:" + user.showIntro)
+      @$log.debug("User (#{user.email}) showIntro: #{user.showIntro}")
       @$scope.showIntro = user.showIntro
     , (error) =>
       @$log.error "Unable to get actual User: #{error}"
