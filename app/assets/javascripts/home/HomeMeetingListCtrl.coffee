@@ -15,7 +15,6 @@ class HomeMeetingListCtrl
           meeting.goalStatus = @calculateGoalStatus(meeting)
           meeting.todoStatus = @calculateTodoStatus(meeting)
           meeting.color = @calculateMeetingColor(meeting)
-        @getActualUser()
     ,
     (error) =>
       @$log.error "Unable to get Meetings: #{error}"
@@ -70,9 +69,7 @@ class HomeMeetingListCtrl
     return Math.floor((todoDone / todoLength) * 100)
 
   calculateMeetingColor: (meeting) ->
-    if meeting.status == "new"
-      meeting.color = "color-new"
-    else if meeting.organizer == @user.email
+    if meeting.organizer == @user.email
       meeting.color = "color-organizer"
     else
       meeting.color = "color-attendee"

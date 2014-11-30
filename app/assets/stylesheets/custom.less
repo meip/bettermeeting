@@ -52,18 +52,27 @@
   p {
     margin-top: 10px;
   }
-  #color-new {
-    background-color: @color-schema-1;
-  }
   #color-organizer {
     background-color: @color-schema-2;
   }
   #color-attendee {
     background-color: @color-schema-3;
   }
-  #color-important {
-    background-color: @color-schema-4;
-  }
+}
+
+.label-new {
+  background-color: @color-schema-1;
+  font-size: @font-size-large;
+  border-radius: 0;
+}
+.label-open,
+.label-updated {
+  display: none;
+}
+.label-important {
+  background-color: @color-schema-4;
+  font-size: @font-size-large;
+  border-radius: 0;
 }
 
 .alert {
