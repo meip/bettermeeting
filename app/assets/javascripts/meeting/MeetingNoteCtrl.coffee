@@ -83,21 +83,9 @@ class MeetingNoteCtrl
       goal: "",
       organizer: "",
       date: @getFormattedDate(0),
-      attendees: [""],
-      decisions: [
-        {
-          subject: "",
-          editor: ""
-        }
-      ],
-      actionPoints: [
-        {
-          subject: "",
-          owner: "",
-          dueDate: @getFormattedDate(0),
-          status: "open"
-        }
-      ],
+      attendees: [],
+      decisions: [],
+      actionPoints: [],
       votesUp: [],
       votesDown: [],
       created: @getFormattedDate(0),
