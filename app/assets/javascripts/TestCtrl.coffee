@@ -1,47 +1,27 @@
 
 class TestCtrl
-  constructor: (@$log, @$scope) ->
-    @$log.debug "TestCtrl.constructor()"
+  constructor: (@$location, @$scope) ->
+    @field = 'Field'
+    @i = 1
 
-    @$scope.alert = {
-      "title": "Holy guacamole!",
-      "content": "Best check yo self, you're not looking too good.",
-      "type": "info"
-    }
+    @$scope.$watch(
+      angular.bind(@,
+        () ->
+          @field # `this` IS the `this` above!!
+      ),
+      () -> console.log("asdfeesadf")
+    )
 
-    @$scope.modal = {
-      "title": "Title",
-      "content": "Hello Modal<br />This is a multiline message!"
-    }
+  method: ->
+    'Method'
 
-    @$scope.popover = {
-      "title": "Title",
-      "content": "Hello Popover<br />This is a multiline message!"
-    }
+  methodWithParam: (param) ->
+    "Param: #{param}"
 
-    @$scope.selectedDateAsNumber = Date.now()
+  accessFieldFromMethod: ->
+    "Path: #{@$location.absUrl()}"
 
-    @$scope.disabled = false
-
-    @$scope.selectedAttendees = {}
-    @$scope.availableAttendees = [
-      { name: 'Adam',      email: 'adam@email.com' },
-      { name: 'Amalie',    email: 'amalie@email.com' },
-      { name: 'Wladimir',  email: 'wladimir@email.com' },
-      { name: 'Samantha',  email: 'samantha@email.com' },
-      { name: 'Estefanía', email: 'estefanía@email.com' },
-      { name: 'Natasha',   email: 'natasha@email.com' },
-      { name: 'Nicole',    email: 'nicole@email.com' },
-      { name: 'Adrian',    email: 'adrian@email.com' },
-      { name: 'Robin', email: 'r1bader@hsr.ch'}
-    ]
-
-    @attendees = [
-      "r1bader@hsr.ch",
-      "p1meier@hsr.ch"
-    ]
-
-
-
+  testClick: () ->
+    @field = "sadf" + @i++
 
 controllersModule.controller('TestCtrl', TestCtrl)

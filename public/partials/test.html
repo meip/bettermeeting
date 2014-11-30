@@ -1,46 +1,14 @@
 <div class="container-fluid" id="create-meeting">
-    <div class="container" ng-controller="TestCtrl as mnc">
-        <div class="colorbar" class="color-1">&nbsp;</div>
-        <div class="content meeting">
+    <div class="container" ng-controller="TestCtrl as test">
+        <p>{{test.field}}</p>
 
-            <button type="button" class="btn btn-lg btn-primary" data-animation="am-fade-and-scale"
-                    data-placement="center" bs-modal="modal">
-                Modal
-            </button>
-            <!-- Button to trigger a default alert with a scope as an object {title:'', content:'', etc.} -->
-            <button class="btn btn-lg btn-primary" data-placement="top-right" data-container="body"
-                    data-duration="10000" bs-alert="alert">
-                Alert
-            </button>
+        <p>{{test.method()}}</p>
 
+        <p>{{test.methodWithParam('param1')}}</p>
 
-            <!-- You can use a custom html template with the `data-template` attr -->
-            <button type="button" class="btn" title="{{popover.title}}" data-content="{{popover.content}}"
-                    data-template="/assets/partials/templates/popover-demo.html" data-animation="am-flip-x"
-                    data-auto-close="1" bs-popover>
-                <span class="glyphicon glyphicon-time"></span>
-            </button>
+        <p>{{test.accessFieldFromMethod()}}</p>
 
-            <div class="form-inline">
-                <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
-                    <input type="text" class="form-control" ng-model="selectedDateAsNumber"
-                           data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2"
-                           bs-datepicker>
-                </div>
-                <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                    <input type="text" class="form-control" size="5" ng-model="selectedDateAsNumber"
-                           data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2"
-                           bs-timepicker>
-                </div>
-            </div>
-
-            <h4>Debug:</h4>
-            <pre>{{ mnc.attendees | json}}</pre>
-        </div>
+        <button ng-click="test.testClick()">Event</button>
     </div>
 </div>
 </div>
-<script>
-    var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
-            '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
-</script>
