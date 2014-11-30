@@ -5,6 +5,7 @@ class HomeMeetingListCtrl
     @meetings = []
     @user = {}
 
+    @getActualUser()
     @MeetingService.getRemoteMeetings()
     .then(
       (data) =>
