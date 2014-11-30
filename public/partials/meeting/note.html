@@ -107,25 +107,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="actionPoint in mnc.meeting.actionPoints track by $index">
+                                        <tr ng-repeat="actionPoint in mnc.meeting.actionPoints track by $index" ng-mouseenter="mnc.setActionPointFocus($index)">
                                             <td class="todo-note">
-                                                <input type="text" class="form-control" placeholder="Note" ng-model="actionPoint.subject">
+                                                <input type="text" class="form-control" placeholder="Note" ng-model="actionPoint.subject" ng-focus="mnc.setActionPointFocus($index)">
                                             </td>
                                             <td class="todo-owner">
-                                                <input type="email" class="form-control" ng-model="actionPoint.owner" ng-options="attendee for attendee in mnc.meeting.attendees" placeholder="Owner" bs-typeahead>
+                                                <input type="email" class="form-control" ng-model="actionPoint.owner" ng-options="attendee for attendee in mnc.meeting.attendees" placeholder="Owner" bs-typeahead ng-focus="mnc.setActionPointFocus($index)">
                                             </td>
                                             <td class="todo-due">
                                                 <div class="form-inline">
 
                                                     <div class="form-group date-time-picker" ng-class="{'has-error': datepickerForm.date2.$invalid}">
-                                                        <input type="text" class="form-control" ng-model="actionPoint.dueDate" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
+                                                        <input type="text" class="form-control" ng-model="actionPoint.dueDate" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker ng-focus="mnc.setActionPointFocus($index)">
                                                     </div>
                                                     <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                                                        <input type="text" class="form-control" size="5" ng-model="actionPoint.dueDate" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
+                                                        <input type="text" class="form-control" size="5" ng-model="actionPoint.dueDate" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker ng-focus="mnc.setActionPointFocus($index)">
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="delete" ng-click="mnc.removeTodo($index)"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                            <td class="delete"><button class="btn btn-danger animate-hide" type="button" ng-click="mnc.removeTodo($index)" ng-show="$index == mnc.actionPointFocus"><span class="glyphicon glyphicon-remove"></span></button></td>
                                         </tr>
                                         </tbody>
                                     </table>

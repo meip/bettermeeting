@@ -7,6 +7,7 @@ class MeetingNoteCtrl
     @saveButtonText = "Save"
     @activePanel = 1
     @user = {}
+    @actionPointFocus = false
 
     if idParam == undefined
       @initializeNewMeeting()
@@ -25,6 +26,19 @@ class MeetingNoteCtrl
     @getActualUser()
     @initAvailableUsers()
     @initHotKeys()
+
+    @$scope.$watch(
+      angular.bind(@,
+        () ->
+          @meeting.actionPoints # `this` IS the `this` above!!
+      ),
+      (newActionPoints, oldActionPoints) ->
+        console.log(newActionPoints)
+        for ap in newActionPoints
+          ap.ownerValid = true
+      ,
+      true
+    )
 
   getActualUser: () ->
     @$log.debug "MeetingNoteCtrl.getActualUser()"
@@ -240,5 +254,8 @@ class MeetingNoteCtrl
       return false
     else
       return true
+
+  setActionPointFocus: (index) ->
+    @actionPointFocus = index
 
 controllersModule.controller('MeetingNoteCtrl', MeetingNoteCtrl)
