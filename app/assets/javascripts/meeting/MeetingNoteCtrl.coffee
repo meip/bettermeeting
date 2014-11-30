@@ -27,19 +27,6 @@ class MeetingNoteCtrl
     @initAvailableUsers()
     @initHotKeys()
 
-    @$scope.$watch(
-      angular.bind(@,
-        () ->
-          @meeting.actionPoints # `this` IS the `this` above!!
-      ),
-      (newActionPoints, oldActionPoints) ->
-        console.log(newActionPoints)
-        for ap in newActionPoints
-          ap.ownerValid = true
-      ,
-      true
-    )
-
   getActualUser: () ->
     @$log.debug "MeetingNoteCtrl.getActualUser()"
     @UserControlService.getActualUser()
