@@ -17,11 +17,6 @@ class HomeToDoListCtrl
     (error) =>
       @$log.error "Unable to get Todos: #{error}"
     )
-
-    @$scope.popover = {
-      "title": "Title",
-      "content": "Hello Popover<br />This is a multiline message!"
-    }
     @$scope.selectedDateAsNumber = Date.now()
 
   doneClicked: (todoId) ->
