@@ -30,6 +30,7 @@ class UsersIT extends ApiTest {
         "lastName" -> "London",
         "email" -> "jack.london@testmail.com",
         "password" -> "jack.london",
+        "showIntro" -> true,
         "active" -> true))
       val response = route(request)
       response.isDefined mustEqual true
@@ -42,7 +43,8 @@ class UsersIT extends ApiTest {
         "firstName" -> 98,
         "lastName" -> "London",
         "email" -> "jack.london@testmail.com",
-        "password" -> "jack.london"))
+        "password" -> "jack.london",
+        "showIntro" -> true))
       val response = route(request)
       response.isDefined mustEqual true
       val result = Await.result(response.get, timeout)
