@@ -2,15 +2,10 @@
     <div class="container" ng-controller="MeetingNoteCtrl as mnc">
         <div class="colorbar" ng-class="mnc.meeting.color">
             <div class="pull-right" id="close-button">
-                <a href="/">Close <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                <a href="/">Back <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
             </div>
         </div>
         <div class="content meeting">
-            <div class="row">
-                <div class="col-xs-12">
-                    <button type="button" class="btn btn-danger pull-right" ng-click="mnc.removeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                </div>
-            </div>
             <form ng-submit="mnc.publishMeeting()" name="meetingForm">
                 <div class="page-header">
                     <div class="meeting-header-goal row">
@@ -46,7 +41,7 @@
                                                 <input type="text" class="form-control" ng-model="mnc.meeting.date" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
                                             </div>
                                             <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                                                <input type="text" class="form-control" size="5" ng-model="mnc.meeting.date" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
+                                                <input type="text" class="form-control" size="5" ng-model="mnc.meeting.date" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" minuteStep="30" name="time2" bs-timepicker>
                                             </div>
                                         </div>
                                     </div>
@@ -57,9 +52,9 @@
                                     <div class="col-md-4 col-sm-12 attendee" ng-repeat="meetingAttendee in mnc.meeting.attendees track by $index">
                                         <div class="input-group">
                                             <input type="email" class="form-control" ng-model="mnc.meeting.attendees[$index]" ng-options="attendee for attendee in mnc.availableUser" placeholder="Enter attendee" bs-typeahead>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-danger" type="button" ng-click="mnc.removeAttendee($index)"><span class="glyphicon glyphicon-remove"></span></button>
-                                        </span>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-danger" type="button" ng-click="mnc.removeAttendee($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-sm-1" style="padding: 0px;">
@@ -121,7 +116,7 @@
                                                         <input type="text" class="form-control" ng-model="actionPoint.dueDate" data-date-format="dd.MM.yyyy" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
                                                     </div>
                                                     <div class="form-group date-time-picker" ng-class="{'has-error': timepickerForm.time2.$invalid}">
-                                                        <input type="text" class="form-control" size="5" ng-model="actionPoint.dueDate" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
+                                                        <input type="text" class="form-control" size="5" ng-model="actionPoint.dueDate" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" minuteStep="30" name="time2" bs-timepicker>
                                                     </div>
                                                 </div>
                                             </td>
@@ -143,8 +138,9 @@
                         </div>
                         <div class="col-xs-6">
                             <div class="pull-right">
-                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> {{mnc.saveButtonText}}</button>
                                 <button type="button" class="btn btn-info" ng-click="mnc.finishMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-flag"></span> Finish</button>
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> {{mnc.saveButtonText}}</button>
+                                <button type="button" class="btn btn-danger pull-right" ng-click="mnc.removeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                             </div>
                         </div>
                     </div>
