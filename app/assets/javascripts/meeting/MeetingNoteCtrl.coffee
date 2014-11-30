@@ -6,56 +6,25 @@ class MeetingNoteCtrl
 
     @saveButtonText = "Save"
     @activePanel = 1
-    @$scope.text = "hallo"
-
     @user = {}
 
     if idParam == undefined
       @initializeNewMeeting()
       @saveButtonText = "Publish"
       @activePanel = 0
-      @getActualUser()
     else
       @MeetingService.getMeeting(idParam)
       .then(
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
           @meeting = data
-          @getActualUser()
       ,
       (error) =>
         @$log.error "Unable to get Meetings: #{error}"
       )
-
-    body = document.getElementsByTagName('body')[0];
-    body.style.background = "#323A41";
-
-    @availableUser = []
-    @UserControlService.getAllUsers().then(
-      (data) =>
-        for user in data
-          @availableUser.push(user.email)
-    ,
-      (error) =>
-        @$log.error "Unable to get all Users: #{error}"
-    )
-
-    @hotkeys.del('t') #TODO: not a nice way
-    @hotkeys.add({
-      combo: 't',
-      description: 'Creates a new todo',
-      callback: (event, hotkey) =>
-        event.preventDefault()
-        @addTodo()
-    })
-    @hotkeys.del('d') #TODO: not a nice way
-    @hotkeys.add({
-      combo: 'd',
-      description: 'Creates a new decision',
-      callback: (event, hotkey) =>
-        event.preventDefault()
-        @addDecision()
-    })
+    @getActualUser()
+    @initAvailableUsers()
+    @initHotKeys()
 
   getActualUser: () ->
     @$log.debug "MeetingNoteCtrl.getActualUser()"
@@ -72,9 +41,38 @@ class MeetingNoteCtrl
         else
           @meeting.color = "color-attendee"
     ,
-    (error) =>
-      @$log.error "Unable to get actual User: #{error}"
+      (error) =>
+        @$log.error "Unable to get actual User: #{error}"
     )
+
+  initAvailableUsers: () ->
+    @availableUser = []
+    @UserControlService.getAllUsers().then(
+      (data) =>
+        for user in data
+          @availableUser.push(user.email)
+    ,
+      (error) =>
+        @$log.error "Unable to get all Users: #{error}"
+    )
+
+  initHotKeys: () ->
+    @hotkeys.del('t') #TODO: not a nice way
+    @hotkeys.add({
+      combo: 't',
+      description: 'Creates a new todo',
+      callback: (event, hotkey) =>
+        event.preventDefault()
+        @addTodo()
+    })
+    @hotkeys.del('d') #TODO: not a nice way
+    @hotkeys.add({
+      combo: 'd',
+      description: 'Creates a new decision',
+      callback: (event, hotkey) =>
+        event.preventDefault()
+        @addDecision()
+    })
 
   setActivePanel: (panel) ->
     @activePanel = panel
@@ -132,9 +130,6 @@ class MeetingNoteCtrl
 
     for item in dcToDelete by -1
       @meeting.decisions.splice(item, 1)
-
-
-
 
     if idParam == undefined
       @MeetingService.postMeeting(@meeting)
