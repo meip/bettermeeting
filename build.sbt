@@ -23,6 +23,7 @@ libraryDependencies ++= Seq(
   "com.sun.mail" % "javax.mail" % "1.5.1",
   "com.google.api-client" % "google-api-client-jackson2" % "1.18.0-rc",
   "org.mnode.ical4j" % "ical4j" % "2.0-beta1-SNAPSHOT",
+  "org.mindrot"  % "jbcrypt"   % "0.3m",
   "org.webjars" % "bootstrap" % "3.2.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angularjs" % "1.3.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angular-ui-bootstrap" % "0.11.0-3",

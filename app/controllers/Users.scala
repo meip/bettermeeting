@@ -78,7 +78,7 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
    */
   def update = authenticatedActionWithRecover[User](
     user => {
-      UserDao.updateById(user._id.get, user)
+      UserDao.updateUser(user)
     }, "User updated", "Unknown error (UPDATE) user"
   )
 

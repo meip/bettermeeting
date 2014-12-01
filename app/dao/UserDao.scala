@@ -3,6 +3,7 @@ package dao
 import extensions.BSONFormatsBM._
 import models.User
 import models.UserFormats._
+import org.mindrot.jbcrypt.BCrypt
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json.Json
@@ -13,7 +14,6 @@ import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dao.JsonDao
 
 object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "users") {
-
   /**
    * Lists users.
    * Fetchs from database
@@ -50,7 +50,18 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
   def createUser(user: User) = {
-    UserDao.insert(user)
+    UserDao.insert(user.copy(password = BCrypt.hashpw(user.password, BCrypt.gensalt())))
+  }
+
+  /**
+   * Update user.
+   * Update a [[User]] object.
+   *
+   * @param user Inserted [[User]] object.
+   * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
+   */
+  def updateUser(user: User) = {
+    UserDao.updateById(user._id.get, user.copy(password = BCrypt.hashpw(user.password, BCrypt.gensalt())))
   }
 
   /**

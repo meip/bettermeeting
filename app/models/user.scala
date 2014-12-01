@@ -1,5 +1,6 @@
 package models
 
+import org.mindrot.jbcrypt.BCrypt
 import reactivemongo.bson.BSONObjectID
 
 case class User(
@@ -11,7 +12,7 @@ case class User(
                  pushToken: Option[String],
                  showIntro: Boolean = true,
                  active: Boolean = true) {
-  def checkPassword(password: String): Boolean = this.password == password
+  def checkPassword(password: String): Boolean = BCrypt.checkpw(password, this.password)
 
   def userWithoutPassword = copy (password = "")
 }
