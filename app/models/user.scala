@@ -10,7 +10,7 @@ case class User(
                  firstName: String,
                  lastName: String,
                  pushToken: Option[String],
-                 showIntro: Boolean = true,
+                 showIntro: Option[Boolean] = Some(true),
                  active: Boolean = true) {
   def checkPassword(password: String): Boolean = BCrypt.checkpw(password, this.password)
 

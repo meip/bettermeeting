@@ -92,7 +92,7 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
       showIntro <- (json \ "showIntro").asOpt[Boolean]
     } yield showIntro
     showIntroOpt.map {
-      showIntro => UserDao.updateById(request.user._id.get, request.user.copy(showIntro = showIntro)).map(
+      showIntro => UserDao.updateById(request.user._id.get, request.user.copy(showIntro = Some(showIntro))).map(
         _ => Created(Json.obj("status" -> "OK", "message" -> s"ShowIntro pushed $showIntro"))).recover {
         case t: Throwable =>
           Logger.error("CREATE ERROR", t)
