@@ -15,6 +15,7 @@ class HomeMeetingListCtrl
           meeting.goalStatus = @calculateGoalStatus(meeting)
           meeting.todoStatus = @calculateTodoStatus(meeting)
           meeting.color = @calculateMeetingColor(meeting)
+        @freeTile()
     ,
     (error) =>
       @$log.error "Unable to get Meetings: #{error}"
