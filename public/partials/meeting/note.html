@@ -1,26 +1,15 @@
 <div class="container-fluid" id="create-meeting">
     <div class="container" ng-controller="MeetingNoteCtrl as mnc">
-        <div class="colorbar" ng-class="mnc.meeting.color">
-            <div class="pull-right" id="close-button">
-                <a href="/">Close <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-            </div>
-        </div>
+        <div class="colorbar" ng-class="mnc.meeting.color">&nbsp;</div>
         <div class="content meeting">
-            <div class="row">
-                <div class="col-xs-12">
-                    <button type="button" class="btn btn-danger pull-right" ng-click="mnc.removeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                </div>
-            </div>
+
             <form ng-submit="mnc.publishMeeting()" name="meetingForm">
                 <div class="page-header">
                     <div class="meeting-header-goal row">
                         <span>Please specify what you want to achieve with this meeting:</span>
-
-
                         <input type="text" placeholder="Meetinggoal *" class="form-control" ng-model="mnc.meeting.goal" required
                                popover="What do you want to achieve with this meeting?"  popover-trigger="focus">
                     </div>
-
                 </div>
                 <div class="panel-group" bs-collapse ng-model="mnc.activePanel">
                     <div class="panel panel-primary" ng-click="mnc.setActivePanel(0)">
@@ -143,6 +132,7 @@
                         </div>
                         <div class="col-xs-6">
                             <div class="pull-right">
+                                <button type="button" class="btn btn-danger pull-right" ng-click="mnc.removeMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> {{mnc.saveButtonText}}</button>
                                 <button type="button" class="btn btn-info" ng-click="mnc.finishMeeting()" ng-show="mnc.isPublished()"><span class="glyphicon glyphicon-flag"></span> Finish</button>
                             </div>
