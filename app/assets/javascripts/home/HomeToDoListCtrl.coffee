@@ -12,7 +12,7 @@ class HomeToDoListCtrl
         @$log.debug "Promise @ToDoService.getActionPoints returned #{data.length} ActionPoints"
         @todos = data
         for todo in @todos
-          todo.color = "color-" + (Math.floor(Math.random() * 4) + 1)
+          todo.color = "color-1"
     ,
     (error) =>
       @$log.error "Unable to get Todos: #{error}"
