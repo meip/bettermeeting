@@ -32,7 +32,7 @@ class IntroCtrl
       skipLabel: "<button class=\"btn btn-danger btn-xs\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>Exit</button>"
       doneLabel: "<button class=\"btn btn-success btn-xs\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>Thanks</button>"
 
-    @$scope.showIntro = true
+    @$scope.showIntro = false
     @showIntroFunc()
 
   introHide: =>

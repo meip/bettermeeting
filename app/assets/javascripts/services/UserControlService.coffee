@@ -3,8 +3,13 @@ class UserControlService
   @headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
   @defaultConfig = { headers: @headers }
 
-  constructor: (@$log, @$http, @$q) ->
+  constructor: (@$log, @$http, @$q, @$location) ->
     @$log.debug "UserControlService.constructor()"
+
+  checkLogin: (status) ->
+    if(status == 401)
+      @$log.info "Not logged in"
+      @$location.path("/login");
 
   loginUser: (username, password) ->
     @$log.debug "UserControlService.loginUser(username, password)"
