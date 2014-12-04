@@ -9,7 +9,7 @@ class HomeToDoListCtrl
     @ToDoService.getActionPoints()
     .then(
       (data) =>
-        @$log.debug "Promise returned #{data.length} ActionPoints"
+        @$log.debug "Promise @ToDoService.getActionPoints returned #{data.length} ActionPoints"
         @todos = data
         for todo in @todos
           todo.color = "color-" + (Math.floor(Math.random() * 4) + 1)
@@ -49,7 +49,6 @@ class HomeToDoListCtrl
       @$log.error "Unable to update Action-Point: #{error}"
       myAlert = @$alert({title: 'Unable to update Action Point', content: "Error: #{error}", placement: 'top', type: 'info', show: true, duration: 3})
     )
-
 
   daysLeft: (todoIndex) ->
     ONE_DAY = 1000 * 60 * 60 * 24

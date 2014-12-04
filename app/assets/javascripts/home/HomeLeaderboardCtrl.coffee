@@ -15,7 +15,7 @@ class HomeLeaderboardCtrl
     @LeaderboardService.getLeaderboardEfficiency()
     .then(
       (data) =>
-        @$log.debug "Promise returned #{data.length}"
+        @$log.debug "Promise @LeaderboardService.getLeaderboardEfficiency returned #{data.length}"
         @leaderboardEfficiency = data
     ,
     (error) =>
@@ -25,7 +25,7 @@ class HomeLeaderboardCtrl
     @LeaderboardService.getLeaderboardGoal()
     .then(
       (data) =>
-        @$log.debug "Promise returned #{data.length}"
+        @$log.debug "Promise @LeaderboardService.getLeaderboardGoal returned #{data.length}"
         @leaderboardGoal = data
     ,
     (error) =>
@@ -35,7 +35,7 @@ class HomeLeaderboardCtrl
     @LeaderboardService.getCountOrganizer()
     .then(
       (data) =>
-        @$log.debug "Promise returned #{data.length}"
+        @$log.debug "Promise @LeaderboardService.getCountOrganizer returned #{data.length}"
         @ownPoints.meetingLeader = data
     ,
     (error) =>
@@ -45,7 +45,7 @@ class HomeLeaderboardCtrl
     @LeaderboardService.getCountAttendees()
     .then(
       (data) =>
-        @$log.debug "Promise returned #{data.length}"
+        @$log.debug "Promise @LeaderboardService.getCountAttendees returned #{data.length}"
         @ownPoints.meetingAttendee = data
     ,
     (error) =>
@@ -55,7 +55,7 @@ class HomeLeaderboardCtrl
     @LeaderboardService.getCountActionpoints()
     .then(
       (data) =>
-        @$log.debug "Promise returned #{data.length}"
+        @$log.debug "Promise @LeaderboardService.getCountActionpoints returned #{data.length}"
         @ownPoints.meetingTodos = data
     ,
     (error) =>

@@ -10,10 +10,6 @@ class LoginCtrl
       warning: false,
       message: ""
     }
-    body = document.getElementsByTagName('body')[0];
-    body.style.background = "#FFFFFF";
-
-
 
   login: () ->
     @$log.debug "LoginCtrl.login()"

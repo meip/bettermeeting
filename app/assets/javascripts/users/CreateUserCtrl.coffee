@@ -2,7 +2,7 @@
 class CreateUserCtrl
 
     constructor: (@$log, @$location,  @UserService) ->
-        @$log.debug "constructing CreateUserController"
+        @$log.debug "CreateUserCtrl.constructor()"
         @user = {}
 
     createUser: () ->
@@ -11,7 +11,7 @@ class CreateUserCtrl
         @UserService.createUser(@user)
         .then(
             (data) =>
-                @$log.debug "Promise returned #{data} User"
+                @$log.debug "Promise @UserService.createUser returned #{data} User"
                 @user = data
                 @$location.path("/")
             ,
