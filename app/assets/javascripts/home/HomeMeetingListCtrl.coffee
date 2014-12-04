@@ -5,35 +5,25 @@ class HomeMeetingListCtrl
     @meetings = []
     @user = {}
 
-    @getActualUser()
-    @MeetingService.getRemoteMeetings()
-    .then(
-      (data) =>
-        @$log.debug "Promise returned #{data.length} Meetings"
-        @meetings = data
-        for meeting in @meetings
-          meeting.goalStatus = @calculateGoalStatus(meeting)
-          meeting.todoStatus = @calculateTodoStatus(meeting)
-          meeting.color = @calculateMeetingColor(meeting)
-    ,
-    (error) =>
-      @$log.error "Unable to get Meetings: #{error}"
-    )
-
-    body = document.getElementsByTagName('body')[0];
-    body.style.background = "#FFFFFF";
-
-  getActualUser: () ->
     @UserControlService.getActualUser()
-    .then(
-      (data) =>
+      .then((data) =>
         @$log.debug "Promise returned #{data.length} ActualUser"
         @user = data
-        @freeTile()
-    ,
-    (error) =>
-      @$log.error "Unable to get actual User: #{error}"
-    )
+        @MeetingService.getRemoteMeetings()
+          .then(
+            (data) =>
+              @$log.debug "Promise returned #{data.length} Meetings"
+              @meetings = data
+              for meeting in @meetings
+                meeting.goalStatus = @calculateGoalStatus(meeting)
+                meeting.todoStatus = @calculateTodoStatus(meeting)
+                meeting.color = @calculateMeetingColor(meeting)
+              @freeTile()
+          ,
+            (error) =>
+              @$log.error "Unable to get Meetings: #{error}"
+          )
+      )
 
   calculateGoalStatus: (meeting) ->
     votesOnGoal = meeting.votesOnGoal
@@ -53,8 +43,6 @@ class HomeMeetingListCtrl
       return Math.floor((votesPoints / votesTotal) * 100)
     else
       return 0
-
-
 
   calculateTodoStatus: (meeting) ->
     todoLength = meeting.actionPoints.length
