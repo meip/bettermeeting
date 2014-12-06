@@ -25,6 +25,13 @@ class HomeMeetingListCtrl
           )
       )
 
+    @setBackgroundColor()
+
+  setBackgroundColor: () ->
+      ## Is needed for dark Background in MeetingnoteCreation
+    body = document.getElementsByTagName('body')[0];
+    body.style.background = "#FFFFFF";
+
   calculateGoalStatus: (meeting) ->
     votesOnGoal = meeting.votesOnGoal
     votesOnEfficiency = meeting.votesOnEfficiency

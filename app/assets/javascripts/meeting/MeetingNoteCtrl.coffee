@@ -26,6 +26,12 @@ class MeetingNoteCtrl
     @getActualUser()
     @initAvailableUsers()
     @initHotKeys()
+    @setBackgroundColor()
+
+  setBackgroundColor: () ->
+    ## Is needed for dark Background in MeetingnoteCreation
+    body = document.getElementsByTagName('body')[0];
+    body.style.background = "#323a41";
 
   getActualUser: () ->
     @$log.debug "MeetingNoteCtrl.getActualUser()"

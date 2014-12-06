@@ -10,6 +10,12 @@ class LoginCtrl
       warning: false,
       message: ""
     }
+    @setBackgroundColor()
+
+  setBackgroundColor: () ->
+    ## Is needed for dark Background in MeetingnoteCreation
+    body = document.getElementsByTagName('body')[0];
+    body.style.background = "#FFFFFF";
 
   login: () ->
     @$log.debug "LoginCtrl.login()"
