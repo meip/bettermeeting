@@ -83,7 +83,7 @@ object Users extends Controller with JsonDsl with Security with AuthenticatedAct
   )
 
   /**
-   * Updates user's pushToken
+   * Updates user's intro status
    * @return A Ok [[play.api.mvc.Result]] or InternalServerError [[play.api.mvc.Results.Status]]
    */
   def intro = Authenticated.async { implicit request =>

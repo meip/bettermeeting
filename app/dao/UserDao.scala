@@ -50,7 +50,7 @@ object UserDao extends JsonDao[User, BSONObjectID](ReactiveMongoPlugin.db, "user
    * @return [[scala.concurrent.Future]] as a [[reactivemongo.core.commands.LastError]]
    */
   def createUser(user: User) = {
-    UserDao.insert(user.copy(password = BCrypt.hashpw(user.password, BCrypt.gensalt())))
+    UserDao.insert(user.copy(password = BCrypt.hashpw(user.password, BCrypt.gensalt()), showIntro = Some(true)))
   }
 
   /**
