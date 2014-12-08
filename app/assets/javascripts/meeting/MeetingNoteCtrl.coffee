@@ -19,11 +19,11 @@ class MeetingNoteCtrl
         (data) =>
           @$log.debug "Promise returned #{data.length} Meetings"
           @meeting = data
+          @getActualUser()
       ,
       (error) =>
         @$log.error "Unable to get Meetings: #{error}"
       )
-    @getActualUser()
     @initAvailableUsers()
     @initHotKeys()
     @setBackgroundColor()
@@ -99,6 +99,7 @@ class MeetingNoteCtrl
       status: "new",
       color: "color-new"
     }
+    @getActualUser()
 
   publishMeeting: () ->
     @$log.debug "MeetingNoteCtrl.publishMeeting()"
