@@ -80,6 +80,14 @@ class MeetingNoteCtrl
         event.preventDefault()
         @addDecision()
     })
+    @hotkeys.del('mod+s') #TODO: not a nice way
+    @hotkeys.add({
+      combo: 'mod+s',
+      description: 'Save Meeting',
+      callback: (event, hotkey) =>
+        event.preventDefault()
+        @publishMeeting()
+    })
 
   setActivePanel: (panel) ->
     @activePanel = panel

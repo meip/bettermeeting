@@ -9,7 +9,7 @@ class MeetingService
 
     @hotkeys.add({
       combo: 'esc',
-      description: 'Creates a new meeting',
+      description: 'Close meeting without saving',
       callback: (event, hotkey) =>
         event.preventDefault()
         @$location.path("/")
