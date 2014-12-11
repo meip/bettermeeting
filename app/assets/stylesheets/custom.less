@@ -38,9 +38,19 @@
   }
 }
 
-.ng-dirty.ng-invalid {
-  box-shadow: inset 0 -2px 0 #e51c23;
+form {
+  .ng-dirty.ng-invalid {
+    box-shadow: inset 0 -2px 0 @brand-danger;
+  }
+  .ng-dirty.ng-valid {
+    box-shadow: inset 0 -2px 0 @brand-success;
+  }
+  .ng-pristine.ng-valid {
+    box-shadow: inset 0 -2px 0 @brand-success;
+  }
+
 }
+
 
 #legend-container {
   .legend-box {
