@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/meip/bettermeeting.png?label=ready&title=Ready)](https://waffle.io/meip/bettermeeting)
 [![Build Status](https://travis-ci.org/meip/bettermeeting.svg)](https://travis-ci.org/meip/bettermeeting)
 # Verbesserung von Meetingnotizen durch Gamification (HSR SA)
 
